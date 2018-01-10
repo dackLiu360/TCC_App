@@ -15,12 +15,14 @@ public class Profile extends AppCompatActivity {
         final Button buttonAddTime = (Button) findViewById(R.id.buttonAddTime);
         Intent intent = getIntent();
         final String username = intent.getStringExtra("username");
+        final String user_id = intent.getStringExtra("user_id");
 
         buttonAddTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Profile.this, Time.class);
                 intent.putExtra("username", username);
+                intent.putExtra("user_id", user_id);
                 Profile.this.startActivity(intent);
 
             }

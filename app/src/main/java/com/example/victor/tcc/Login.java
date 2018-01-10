@@ -51,9 +51,13 @@ public class Login extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
                             if(success){
                                 String username = jsonResponse.getString("username");
-
+                                int user_id = jsonResponse.getInt("user_id");
+                                System.out.println("AQUI10");
+                                System.out.println(user_id);
                                 Intent intent = new Intent(Login.this, HomePage.class);
                                 intent.putExtra("username", username);
+                                intent.putExtra("user_id", Integer.toString(user_id));
+
 
                                 Login.this.startActivity(intent);
                             }else{

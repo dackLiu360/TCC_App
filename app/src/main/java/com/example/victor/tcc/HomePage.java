@@ -22,6 +22,7 @@ public class HomePage extends AppCompatActivity {
          TextView textoInicial = (TextView) findViewById(R.id.textoInicial);
         Intent intent = getIntent();
         final String username = intent.getStringExtra("username");
+        final String user_id = intent.getStringExtra("user_id");
         textoInicial.setText("Bem-vindo "+username);
 
         buttonProfile.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +30,7 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomePage.this, Profile.class);
                 intent.putExtra("username", username);
+                intent.putExtra("user_id", user_id);
                 HomePage.this.startActivity(intent);
             }
         });
