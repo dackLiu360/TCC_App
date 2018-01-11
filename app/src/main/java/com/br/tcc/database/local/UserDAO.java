@@ -25,7 +25,7 @@ public class UserDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2+" VARCHAR(30) ,"+ COL2+" VARCHAR(30) ,"+COL3+" VARCHAR(30));";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2+" VARCHAR(30) ,"+COL3+" VARCHAR(30));";
         db.execSQL(createTable);
 
     }
