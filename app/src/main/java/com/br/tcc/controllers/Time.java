@@ -1,7 +1,8 @@
-package com.example.victor.tcc;
+package com.br.tcc.controllers;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.database.local.UserDAO;
+import com.example.victor.tcc.R;
+import com.br.tcc.database.remote.TimeDAO;
+import com.br.tcc.assistants.TimePickerFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,9 +30,16 @@ public class Time extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
-
+        String id = null;
         Intent intent = getIntent();
-        final String user_id = intent.getStringExtra("user_id");
+        final UserDAO udao = new UserDAO(this);
+        Cursor data = udao.getData();
+        while(data.moveToNext()){
+
+            id = data.getString(0);
+
+        }
+        final String user_id = id;
         final Button initialTime = (Button) findViewById(R.id.initial_time);
         final Button finalTime = (Button) findViewById(R.id.final_time);
         final Button confirm = (Button) findViewById(R.id.confirm);
@@ -88,17 +100,13 @@ public class Time extends AppCompatActivity {
                         }
                     };
                 if(dayOfWeek.isChecked()){
-                    System.out.println("AQUI");
                     TimeDAO tdao = new TimeDAO(user_id,dayOfWeek.getText().toString(),initialTimeLabel.getText().toString()+":00",finalTimeLabel.getText().toString()+":00", responseListener);
                     System.out.println(user_id);
                     System.out.println(dayOfWeek.getText().toString());
                     System.out.println(initialTimeLabel.getText().toString()+":00");
                     System.out.println(finalTimeLabel.getText().toString()+":00");
-                    System.out.println("AQUI2");
                     RequestQueue queue = Volley.newRequestQueue(Time.this);
-                    System.out.println("AQUI3");
                     queue.add(tdao);
-                    System.out.println("AQUI4");
                 }
                 }
 

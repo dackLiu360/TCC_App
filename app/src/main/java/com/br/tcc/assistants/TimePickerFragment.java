@@ -1,4 +1,4 @@
-package com.example.victor.tcc;
+package com.br.tcc.assistants;
 
 
 import android.annotation.SuppressLint;

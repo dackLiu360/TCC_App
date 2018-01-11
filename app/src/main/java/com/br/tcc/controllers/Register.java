@@ -1,4 +1,4 @@
-package com.example.victor.tcc;
+package com.br.tcc.controllers;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.victor.tcc.R;
+import com.br.tcc.database.remote.RegisterDAO;
 
 import org.json.JSONException;
 import org.json.JSONObject;

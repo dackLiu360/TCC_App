@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.victor.tcc.Profile">
+    tools:context="com.example.victor.tcc.com.br.tcc.controllers.Profile">
 
     <ListView
         android:layout_width="359dp"

@@ -1,4 +1,4 @@
-package com.example.victor.tcc;
+package com.br.tcc.controllers;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.LoginDAO;
+import com.example.victor.tcc.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +26,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final UserDAO udao = new UserDAO(this);
+        udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
@@ -49,15 +54,14 @@ public class Login extends AppCompatActivity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            if(success){
+                            if(success){;
+
                                 String username = jsonResponse.getString("username");
                                 int user_id = jsonResponse.getInt("user_id");
-                                System.out.println("AQUI10");
-                                System.out.println(user_id);
-                                Intent intent = new Intent(Login.this, HomePage.class);
-                                intent.putExtra("username", username);
-                                intent.putExtra("user_id", Integer.toString(user_id));
+                                String email = jsonResponse.getString("email");
 
+                                udao.addData(Integer.toString(user_id),username,email);
+                                Intent intent = new Intent(Login.this, HomePage.class);
 
                                 Login.this.startActivity(intent);
                             }else{
