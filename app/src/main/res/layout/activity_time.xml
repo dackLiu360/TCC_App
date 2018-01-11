@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.victor.tcc.com.br.tcc.controllers.Time">
+    tools:context="com.br.tcc.controllers.Time">
     <CheckBox
         android:id="@+id/monday"
         android:layout_width="wrap_content"
