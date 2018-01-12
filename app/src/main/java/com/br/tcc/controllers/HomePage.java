@@ -72,13 +72,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("aqui22");
-
+        Intent intent;
         switch (item.getItemId()) {
 
             case R.id.buttonProfile:
-                Intent intent = new Intent(HomePage.this, Profile.class);
+                intent = new Intent(HomePage.this, Profile.class);
                 HomePage.this.startActivity(intent);
+                break;
+            case R.id.buttonHome:
+                intent = new Intent(HomePage.this, HomePage.class);
+                HomePage.this.startActivity(intent);
+                break;
         }
         return true;
     }

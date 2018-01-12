@@ -3,9 +3,14 @@ package com.br.tcc.controllers;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,12 +29,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Time extends AppCompatActivity {
+public class Time extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NavigationView navigationView = findViewById(R.id.navMenuHome);
+
         setContentView(R.layout.activity_time);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerLayout.requestLayout();
+        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mDrawerLayout.bringToFront();
+        setNavigationViewListener();
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String id = null;
         Intent intent = getIntent();
         final UserDAO udao = new UserDAO(this);
@@ -99,19 +117,57 @@ public class Time extends AppCompatActivity {
                             }
                         }
                     };
-                if(dayOfWeek.isChecked()){
-                    TimeDAO tdao = new TimeDAO(user_id,dayOfWeek.getText().toString(),initialTimeLabel.getText().toString()+":00",finalTimeLabel.getText().toString()+":00", responseListener);
-                    System.out.println(user_id);
-                    System.out.println(dayOfWeek.getText().toString());
-                    System.out.println(initialTimeLabel.getText().toString()+":00");
-                    System.out.println(finalTimeLabel.getText().toString()+":00");
-                    RequestQueue queue = Volley.newRequestQueue(Time.this);
-                    queue.add(tdao);
-                }
+                    if(dayOfWeek.isChecked()){
+                        TimeDAO tdao = new TimeDAO(user_id,dayOfWeek.getText().toString(),initialTimeLabel.getText().toString()+":00",finalTimeLabel.getText().toString()+":00", responseListener);
+                        System.out.println(user_id);
+                        System.out.println(dayOfWeek.getText().toString());
+                        System.out.println(initialTimeLabel.getText().toString()+":00");
+                        System.out.println(finalTimeLabel.getText().toString()+":00");
+                        RequestQueue queue = Volley.newRequestQueue(Time.this);
+                        queue.add(tdao);
+                    }
                 }
 
             }
         });
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(mToggle.onOptionsItemSelected(item)){
+
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+
+            case R.id.buttonProfile:
+                intent = new Intent(Time.this, Profile.class);
+                Time.this.startActivity(intent);
+                break;
+            case R.id.buttonHome:
+                intent = new Intent(Time.this, HomePage.class);
+                Time.this.startActivity(intent);
+                break;
+        }
+        return true;
+    }
+    private void setNavigationViewListener() {
+        NavigationView navigationView = findViewById(R.id.navMenuHome);
+        System.out.println(navigationView.toString());
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
+    }
+
+
+
 }
