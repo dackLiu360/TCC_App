@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
@@ -20,19 +21,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
-
+    LottieAnimationView animationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         final UserDAO udao = new UserDAO(this);
         udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        final Button buttonTest = (Button) findViewById(R.id.buttonTest);
         final TextView buttonGoToRegister = (TextView) findViewById(R.id.buttonGoToRegister);
 
+
+        buttonTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent testIntent = new Intent(Login.this, Test.class);
+                Login.this.startActivity(testIntent);
+            }
+        });
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +76,12 @@ public class Login extends AppCompatActivity {
 
                                 Login.this.startActivity(intent);
                             }else{
+                                userLogin.setVisibility(View.VISIBLE);
+                                passwordLogin.setVisibility(View.VISIBLE);
+                                buttonLogin.setVisibility(View.VISIBLE);
+                                buttonTest.setVisibility(View.VISIBLE);
+                                buttonGoToRegister.setVisibility(View.VISIBLE);
+                                animationView.setVisibility(View.INVISIBLE);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                                 builder.setMessage("O Login falhou").setNegativeButton("Tentar novamente", null).create().show();
                             }
@@ -74,6 +91,23 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 };
+                userLogin.setVisibility(View.INVISIBLE);
+                passwordLogin.setVisibility(View.INVISIBLE);
+                buttonLogin.setVisibility(View.INVISIBLE);
+                buttonTest.setVisibility(View.INVISIBLE);
+                buttonGoToRegister.setVisibility(View.INVISIBLE);
+                animationView = (LottieAnimationView) findViewById(R.id.loadAnimation);
+                animationView.setAnimation("loading.json");
+
+                animationView.loop(true);
+                animationView.setVisibility(View.VISIBLE);
+                animationView.bringToFront();
+                animationView.playAnimation();
+
+
+
+
+
                 LoginDAO ldao = new LoginDAO(username,password,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(Login.this);
                 queue.add(ldao);

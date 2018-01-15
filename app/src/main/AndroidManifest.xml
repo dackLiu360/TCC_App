@@ -21,7 +21,8 @@
         <activity android:name="com.br.tcc.controllers.Register" />
         <activity android:name="com.br.tcc.controllers.HomePage" />
         <activity android:name="com.br.tcc.controllers.Profile" />
-        <activity android:name="com.br.tcc.controllers.Time"></activity>
+        <activity android:name="com.br.tcc.controllers.Time" />
+        <activity android:name="com.br.tcc.controllers.Test"></activity>
     </application>
 
 </manifest>
