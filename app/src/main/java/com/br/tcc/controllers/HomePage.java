@@ -3,7 +3,10 @@ package com.br.tcc.controllers;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,22 +16,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.br.tcc.database.local.UserDAO;
 import com.example.victor.tcc.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_page);
+
+
+        FloatingActionButton buttonAddTask = findViewById(R.id.buttonAddTask);
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent taskIntent = new Intent(HomePage.this, AddTask.class);
+                HomePage.this.startActivity(taskIntent);
+            }
+        });
         NavigationView navigationView = findViewById(R.id.navMenuHome);
 
-        setContentView(R.layout.activity_home_page);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
@@ -50,11 +80,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         }
         final Button buttonProfile = (Button) findViewById(R.id.buttonProfile);
-
-         TextView textoInicial = (TextView) findViewById(R.id.textoInicial);
-
-        textoInicial.setText("Bem-vindo "+username);
-
 
 
 
@@ -91,6 +116,41 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         System.out.println(navigationView.toString());
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
+        }
+    }
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Recomendacoes(), "Recomendações");
+        adapter.addFragment(new Atividades(), "Atividades");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 }
