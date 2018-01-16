@@ -1,12 +1,18 @@
 package com.br.tcc.controllers;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -20,11 +26,12 @@ import com.example.victor.tcc.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     LottieAnimationView animationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
 
@@ -33,17 +40,18 @@ public class Login extends AppCompatActivity {
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
-        final Button buttonTest = (Button) findViewById(R.id.buttonTest);
+        final TextView forgot = (TextView) findViewById(R.id.forgot);
         final TextView buttonGoToRegister = (TextView) findViewById(R.id.buttonGoToRegister);
+        final RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layout1);
+        final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
 
-
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent testIntent = new Intent(Login.this, Test.class);
-                Login.this.startActivity(testIntent);
-            }
-        });
+       // buttonTest.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+       //     public void onClick(View view) {
+        //        Intent testIntent = new Intent(Login.this, Test.class);
+         //       Login.this.startActivity(testIntent);
+         //   }
+       // });
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +66,9 @@ public class Login extends AppCompatActivity {
                 System.out.println("LOGIN");
                 final String username = userLogin.getText().toString();
                 final String password = passwordLogin.getText().toString();
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(userLogin.getWindowToken(), 0);
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -76,11 +87,8 @@ public class Login extends AppCompatActivity {
 
                                 Login.this.startActivity(intent);
                             }else{
-                                userLogin.setVisibility(View.VISIBLE);
-                                passwordLogin.setVisibility(View.VISIBLE);
-                                buttonLogin.setVisibility(View.VISIBLE);
-                                buttonTest.setVisibility(View.VISIBLE);
-                                buttonGoToRegister.setVisibility(View.VISIBLE);
+                                layout1.setVisibility(View.VISIBLE);
+                                layout2.setVisibility(View.VISIBLE);
                                 animationView.setVisibility(View.INVISIBLE);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                                 builder.setMessage("O Login falhou").setNegativeButton("Tentar novamente", null).create().show();
@@ -91,12 +99,9 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 };
-                userLogin.setVisibility(View.INVISIBLE);
-                passwordLogin.setVisibility(View.INVISIBLE);
-                buttonLogin.setVisibility(View.INVISIBLE);
-                buttonTest.setVisibility(View.INVISIBLE);
-                buttonGoToRegister.setVisibility(View.INVISIBLE);
-                animationView = (LottieAnimationView) findViewById(R.id.loadAnimation);
+                layout1.setVisibility(View.INVISIBLE);
+                layout2.setVisibility(View.INVISIBLE);
+                animationView = findViewById(R.id.loadAnimation);
                 animationView.setAnimation("loading.json");
 
                 animationView.loop(true);
