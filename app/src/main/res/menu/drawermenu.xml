@@ -2,4 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/drawermenu">
     <item android:id="@+id/buttonHome" android:title="Home"/>
     <item android:id="@+id/buttonProfile" android:title="Perfil"/>
+    <item android:id="@+id/buttonLogout" android:title="Sair"/>
 </menu>
