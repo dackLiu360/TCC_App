@@ -121,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f4f4f4"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:drawableRight="@drawable/padlock"
             android:drawablePadding="20dp"
             android:layout_below="@id/userLogin"

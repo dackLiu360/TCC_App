@@ -56,16 +56,59 @@
             android:inputType="text"
             android:hint="Descrição" />
 
-        <Button
+        <TextView
+
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estimativa para término da tarefa"
             android:layout_below="@id/description"
             android:onClick="showTimePickerDialog"
-            android:id="@+id/button" />
+            android:id="@+id/labelChoose" />
+        <EditText
+            android:id="@+id/hour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelChoose"
+            android:layout_alignParentLeft="true"
+            android:inputType="text"
+            android:hint="Hora" />
+        <EditText
+            android:id="@+id/second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hour"
+            android:layout_alignParentLeft="true"
+            android:inputType="text"
+            android:hint="Minuto" />
+        <Button
 
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data da entrega"
+            android:layout_below="@id/second"
+            android:onClick="showTimePickerDialog"
+            android:id="@+id/btn_set_date_time" />
+        <TextView
 
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@id/btn_set_date_time"
+            android:onClick="showTimePickerDialog"
+            android:id="@+id/et_show_date_time" />
 
+        <Button
+
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finalizar"
+            android:layout_below="@id/et_show_date_time"
+            android:onClick="showTimePickerDialog"
+            android:id="@+id/addTask" />
 
 
 
