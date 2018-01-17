@@ -1,7 +1,9 @@
 package com.br.tcc.controllers;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -156,6 +158,35 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.buttonHome:
                 intent = new Intent(Time.this, HomePage.class);
                 Time.this.startActivity(intent);
+                break;
+            case R.id.buttonLogout:
+                AlertDialog.Builder builder=new AlertDialog.Builder(Time.this);
+                builder.setMessage("Você quer mesmo sair?");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        finish();
+                        Intent i=new Intent();
+                        i = new Intent(Time.this, Login.class);
+                        Time.this.startActivity(i);
+
+                        finish();
+
+                    }
+                });
+
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert=builder.create();
+                alert.show();
+
+
                 break;
         }
         return true;
