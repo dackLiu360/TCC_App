@@ -15,14 +15,15 @@ public class TaskDAO extends StringRequest {
     private static final String REQUISTER_REQUEST_URL="https://vicmc14.000webhostapp.com/activities.php";
     private Map<String, String> params;
 
-    public TaskDAO(String title, String subject,  String description, String difficulty_level, String day_end,Response.Listener<String> listener){
+    public TaskDAO(String user_id, String title, String subject,  String description, String difficulty_level, String end_date,Response.Listener<String> listener){
         super(Method.POST, REQUISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
+        params.put("user_id", user_id);
         params.put("title", title);
         params.put("subject", subject);
         params.put("description", description);
         params.put("difficulty_level", difficulty_level);
-        params.put("day_end", day_end);
+        params.put("end_date", end_date);
 
     }
 

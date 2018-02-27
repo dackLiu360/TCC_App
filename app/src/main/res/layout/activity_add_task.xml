@@ -74,7 +74,7 @@
             android:inputType="text"
             android:hint="Hora" />
         <EditText
-            android:id="@+id/second"
+            android:id="@+id/minute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hour"
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data da entrega"
-            android:layout_below="@id/second"
+            android:layout_below="@id/minute"
             android:onClick="showTimePickerDialog"
             android:id="@+id/btn_set_date_time" />
         <TextView

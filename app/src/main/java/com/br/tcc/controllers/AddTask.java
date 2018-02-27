@@ -23,9 +23,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.TimePickerFragment;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.RegisterDAO;
+import com.br.tcc.database.remote.TaskDAO;
 import com.example.victor.tcc.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -83,6 +91,13 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         et_show_date_time = (TextView) findViewById(R.id.et_show_date_time);
         btn_set_date_time = (Button) findViewById(R.id.btn_set_date_time);
 
+        final EditText titleTask = (EditText) findViewById(R.id.title);
+        final EditText subjectTask = (EditText) findViewById(R.id.subject);
+        final EditText descriptionTask = (EditText) findViewById(R.id.description);
+        final EditText hourTask = (EditText) findViewById(R.id.hour);
+        final EditText minuteTask = (EditText) findViewById(R.id.minute);
+        final Button buttonAddTask = (Button) findViewById(R.id.addTask);
+
 
 
         btn_set_date_time.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +119,53 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         Intent intent = getIntent();
         final UserDAO udao = new UserDAO(this);
         Cursor data = udao.getData();
+        while(data.moveToNext()){
+
+            id = data.getString(0);
+
+        }
+        final String user_id = id;
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String title = titleTask.getText().toString();
+                final String subject = subjectTask.getText().toString();
+                final String description = descriptionTask.getText().toString();
+                final String hour = hourTask.getText().toString();
+                final String minute = minuteTask.getText().toString();
+                final String end_date = et_show_date_time.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            System.out.println("RESPOSTA "+response.toString());
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                Intent intent = new Intent(AddTask.this, HomePage.class);
+                                AddTask.this.startActivity(intent);
+
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
+                                builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                    TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour+":"+minute, end_date, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                    queue.add(rdao);
+
+
+            }
+        });
 
 
     }
@@ -196,7 +258,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                     @Override
                     public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
 
-                        date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        date_time = year + "-"+ (monthOfYear + 1 + "-" + dayOfMonth);
                         //*************Call Time Picker Here ********************
                         timePicker();
                     }
