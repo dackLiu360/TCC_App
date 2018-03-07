@@ -143,6 +143,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             System.out.println("RESPOSTA "+response.toString());
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
+                            int id_last_inserted = jsonResponse.geInt("id");
                             if (success) {
                                 Intent intent = new Intent(AddTask.this, HomePage.class);
                                 AddTask.this.startActivity(intent);
