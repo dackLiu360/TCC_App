@@ -30,6 +30,7 @@ import com.br.tcc.assistants.TimePickerFragment;
 import com.br.tcc.database.local.UserDAO;
 import com.br.tcc.database.remote.RegisterDAO;
 import com.br.tcc.database.remote.TaskDAO;
+import com.br.tcc.database.remote.User_taskDAO;
 import com.example.victor.tcc.R;
 
 import org.json.JSONException;
@@ -143,12 +144,39 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             System.out.println("RESPOSTA "+response.toString());
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            int id_last_inserted = jsonResponse.geInt("id");
-                            if (success) {
-                                Intent intent = new Intent(AddTask.this, HomePage.class);
-                                AddTask.this.startActivity(intent);
+                            int id_last_inserted = jsonResponse.getInt("id");
+                            String id_task = Integer.toString(id_last_inserted);
 
-                            } else {
+                            if (success) {
+                                                            Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+                                                                    try {
+                                                                        System.out.println("RESPOSTA "+response.toString());
+                                                                        JSONObject jsonResponse = new JSONObject(response);
+                                                                        boolean success = jsonResponse.getBoolean("success");
+                                                                        if (success) {
+
+                                                                            Intent intent = new Intent(AddTask.this, HomePage.class);
+                                                                            AddTask.this.startActivity(intent);
+
+                                                                        } else {
+                                                                            AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
+                                                                            builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
+
+                                                                        }
+
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                            };
+
+                                                            User_taskDAO rdao = new User_taskDAO(user_id, id_task, responseListener2);
+                                                            RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                                            queue.add(rdao);
+
+                       } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
                                 builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
 
