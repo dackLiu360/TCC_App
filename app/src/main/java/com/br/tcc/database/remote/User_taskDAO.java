@@ -10,18 +10,17 @@ import java.util.Map;
  * Created by Victor on 1/8/2018.
  */
 
-public class TimeDAO extends StringRequest{
+public class User_taskDAO extends StringRequest{
 
-    private static final String TIME_REQUEST_URL="https://vicmc14.000webhostapp.com/time.php";
+    private static final String TIME_REQUEST_URL="https://vicmc14.000webhostapp.com/user_task.php";
     private Map<String, String> params;
 
-    public TimeDAO(String id_user,String day,String time_start,String time_end, Response.Listener<String> listener){
+    public User_taskDAO(String id_user, String id_task, Response.Listener<String> listener){
         super(Method.POST, TIME_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("id_user", id_user);
-        params.put("day", day);
-        params.put("time_start", time_start);
-        params.put("time_end", time_end);
+        params.put("id_task", id_task);
+
 
     }
 

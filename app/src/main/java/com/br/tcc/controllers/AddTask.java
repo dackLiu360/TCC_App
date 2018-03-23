@@ -141,56 +141,26 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                     @Override
                     public void onResponse(String response) {
                         try {
+                            System.out.println("");
                             System.out.println("RESPOSTA "+response.toString());
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            int id_last_inserted = jsonResponse.getInt("id");
-                            String id_task = Integer.toString(id_last_inserted);
-
                             if (success) {
-                                                            Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-                                                                @Override
-                                                                public void onResponse(String response) {
-                                                                    try {
-                                                                        System.out.println("RESPOSTA "+response.toString());
-                                                                        JSONObject jsonResponse = new JSONObject(response);
-                                                                        boolean success = jsonResponse.getBoolean("success");
-                                                                        if (success) {
-
-                                                                            Intent intent = new Intent(AddTask.this, HomePage.class);
-                                                                            AddTask.this.startActivity(intent);
-
-                                                                        } else {
-                                                                            AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
-                                                                            builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
-
-                                                                        }
-
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-                                                                }
-                                                            };
-
-                                                            User_taskDAO rdao = new User_taskDAO(user_id, id_task, responseListener2);
-                                                            RequestQueue queue = Volley.newRequestQueue(AddTask.this);
-                                                            queue.add(rdao);
-
-                       } else {
+                                Intent intent = new Intent(AddTask.this, HomePage.class);
+                                AddTask.this.startActivity(intent);
+                            } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
                                 builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
-
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 };
 
-                    TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour+":"+minute, end_date, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(AddTask.this);
-                    queue.add(rdao);
+                TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour+":"+minute, end_date, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                queue.add(rdao);
 
 
             }
@@ -273,7 +243,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
     }
     private void datePicker(){
 
-        // Get Current Date
+// Get Current Date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -295,7 +265,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         datePickerDialog.show();
     }
     private void timePicker(){
-        // Get Current Time
+// Get Current Time
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);

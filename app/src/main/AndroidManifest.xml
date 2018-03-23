@@ -23,10 +23,7 @@
         <activity android:name="com.br.tcc.controllers.Profile" />
         <activity android:name="com.br.tcc.controllers.Time" />
         <activity android:name="com.br.tcc.controllers.Test" />
-        <activity android:name="com.br.tcc.controllers.Recomendacoes" />
-        <activity android:name="com.br.tcc.controllers.Atividades" />
         <activity android:name="com.br.tcc.controllers.AddTask" />
-        <activity android:name="com.br.tcc.controllers.content_main" />
     </application>
 
 </manifest>

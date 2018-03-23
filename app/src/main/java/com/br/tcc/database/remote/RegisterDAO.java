@@ -15,9 +15,10 @@ public class RegisterDAO extends StringRequest{
     private static final String REQUISTER_REQUEST_URL="https://vicmc14.000webhostapp.com/register.php";
     private Map<String, String> params;
 
-    public RegisterDAO(String username, String email, String password, Response.Listener<String> listener){
+    public RegisterDAO(String name, String username, String email, String password, Response.Listener<String> listener){
         super(Method.POST, REQUISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
+        params.put("name", name);
         params.put("username", username);
         params.put("email", email);
         params.put("password", password);

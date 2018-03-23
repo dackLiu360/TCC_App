@@ -13,11 +13,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -152,8 +150,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Recomendacoes(), "Recomendações");
-        adapter.addFragment(new Atividades(), "Atividades");
+        adapter.addFragment(new Recommendations(), "Recomendações");
+        adapter.addFragment(new Tasks(), "Tasks");
         viewPager.setAdapter(adapter);
     }
 

@@ -9,10 +9,20 @@
 
 
     <EditText
+        android:id="@+id/nameRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome/Apelido" />
+
+
+    <EditText
         android:id="@+id/userRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/nameRegister"
+        android:layout_alignParentLeft="true"
         android:hint="Usuário" />
+
 
     <EditText
         android:id="@+id/emailRegister"

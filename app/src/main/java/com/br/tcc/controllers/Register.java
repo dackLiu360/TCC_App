@@ -24,8 +24,9 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrar);
+        setContentView(R.layout.activity_register);
 
+        final EditText nameRegister = (EditText) findViewById(R.id.nameRegister);
         final EditText userRegister = (EditText) findViewById(R.id.userRegister);
         final EditText emailRegister = (EditText) findViewById(R.id.emailRegister);
         final EditText passwordRegister = (EditText) findViewById(R.id.passwordRegister);
@@ -49,6 +50,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                final String name = nameRegister.getText().toString();
                 final String username = userRegister.getText().toString();
                 final String email = emailRegister.getText().toString();
                 final String password = passwordRegister.getText().toString();
@@ -76,7 +78,7 @@ public class Register extends AppCompatActivity {
                             }
                         }
                     };
-                    RegisterDAO rdao = new RegisterDAO(username, email, password, responseListener);
+                    RegisterDAO rdao = new RegisterDAO(name, username, email, password, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(Register.this);
                     queue.add(rdao);
 
