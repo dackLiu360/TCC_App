@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +23,7 @@ import com.example.victor.tcc.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Login extends Activity {
+public class ActivityMain extends Activity {
     LottieAnimationView animationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +45,15 @@ public class Login extends Activity {
        // buttonTest.setOnClickListener(new View.OnClickListener() {
         //    @Override
        //     public void onClick(View view) {
-        //        Intent testIntent = new Intent(Login.this, Test.class);
-         //       Login.this.startActivity(testIntent);
+        //        Intent testIntent = new Intent(ActivityMain.this, Test.class);
+         //       ActivityMain.this.startActivity(testIntent);
          //   }
        // });
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(Login.this, Register.class);
-                Login.this.startActivity(registerIntent);
+                Intent registerIntent = new Intent(ActivityMain.this, Register.class);
+                ActivityMain.this.startActivity(registerIntent);
             }
         });
 
@@ -83,15 +80,15 @@ public class Login extends Activity {
                                 String email = jsonResponse.getString("email");
 
                                 udao.addData(Integer.toString(user_id),username,email);
-                                Intent intent = new Intent(Login.this, HomePage.class);
+                                Intent intent = new Intent(ActivityMain.this, HomePage.class);
 
-                                Login.this.startActivity(intent);
+                                ActivityMain.this.startActivity(intent);
                             }else{
                                 layout1.setVisibility(View.VISIBLE);
                                 layout2.setVisibility(View.VISIBLE);
                                 animationView.setVisibility(View.INVISIBLE);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setMessage("O Login falhou").setNegativeButton("Tentar novamente", null).create().show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                                builder.setMessage("O ActivityMain falhou").setNegativeButton("Tentar novamente", null).create().show();
                             }
 
                         } catch (JSONException e) {
@@ -114,7 +111,7 @@ public class Login extends Activity {
 
 
                 LoginDAO ldao = new LoginDAO(username,password,responseListener);
-                RequestQueue queue = Volley.newRequestQueue(Login.this);
+                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
                 queue.add(ldao);
 
             }
