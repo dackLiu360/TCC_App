@@ -22,8 +22,10 @@ import com.example.victor.tcc.R;
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     int button,textId;
     Button buttonToActivate;
+    private final static int TIME_PICKER_INTERVAL = 30;
 
     public TimePickerFragment() {
+
     }
 
     @SuppressLint("ValidFragment")
@@ -31,6 +33,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         this.button = buttonId;
         this.textId = textId;
         this.buttonToActivate = buttonToActivate;
+
     }
 
     @Override
@@ -41,8 +44,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         int minute = c.get(Calendar.MINUTE);
 
         //Create and return a new instance of TimePickerDialog
-        return new TimePickerDialog(getActivity(),this, hour, minute,
-                DateFormat.is24HourFormat(getActivity()));
+        return new CustomTimePickerDialog(getActivity(),this, hour, minute,true);
     }
 
     //onTimeSet() callback method
@@ -56,5 +58,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         //Display the user changed time on TextView
         text.setText(String.valueOf(hourOfDay)+ ":" + String.valueOf(minute));
     }
+
 
 }

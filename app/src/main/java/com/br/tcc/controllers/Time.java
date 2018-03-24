@@ -30,8 +30,11 @@ import com.br.tcc.assistants.TimePickerFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Time extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
@@ -123,11 +126,35 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                     }
                 }
                 System.out.println(days.size());
+                String dtStart = initialTimeLabel.getText().toString();
+                String dtEnd = finalTimeLabel.getText().toString();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                Date dateStart = null;
+                Date dateEnd = null;
+                try {
+                    dateStart = format.parse(dtStart+":00");
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                try {
+                    dateEnd = format.parse(dtEnd+":00");
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println("Start: "+dateEnd.getTime());
+                System.out.println("End: "+dateStart.getTime());
+                System.out.println("DIFERENÇA: "+(dateEnd.getTime() - dateStart.getTime()));
+
                     if(totalChecked == 0){
                         AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
                         builder.setMessage("Selecione pelo menos 1 dia da semana").setNegativeButton("Ok", null).create().show();
                     }
-                    else{
+                    else if(dateEnd.getTime() - dateStart.getTime()<=0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
+                        builder.setMessage("O horário final deve ser maior que o horário inicial").setNegativeButton("Ok", null).create().show();
+                    }else{
 
 
                 for (CheckBox dayOfWeek : days) {

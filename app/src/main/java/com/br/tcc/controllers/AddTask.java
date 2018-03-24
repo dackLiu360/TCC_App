@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.assistants.CustomTimePickerDialog;
 import com.br.tcc.database.local.UserDAO;
 import com.br.tcc.database.remote.TaskDAO;
 import com.example.victor.tcc.R;
@@ -55,6 +56,8 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
+
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
@@ -63,7 +66,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            return new CustomTimePickerDialog(getActivity(),this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
 
@@ -268,8 +271,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         mMinute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
+        CustomTimePickerDialog timePickerDialog = new CustomTimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,int minute) {
@@ -281,6 +283,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                         date_time = date_time+" "+hourOfDay + ":" + minute;
                     }
                 }, mHour, mMinute, false);
+
         timePickerDialog.show();
     }
 }
