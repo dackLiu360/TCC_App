@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class TimeDAO extends StringRequest{
 
-    private static final String TIME_REQUEST_URL="https://vicmc14.000webhostapp.com/time.php";
+    private static final String TIME_REQUEST_URL="http://tcctarefas.xyz/time.php";
     private Map<String, String> params;
 
-    public TimeDAO(String id_user,String day,String time_start,String time_end, Response.Listener<String> listener){
+    public TimeDAO(String id_user,String day,String time_start,String time_end,Response.Listener<String> listener){
         super(Method.POST, TIME_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("id_user", id_user);

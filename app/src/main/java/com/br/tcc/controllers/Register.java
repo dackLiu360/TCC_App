@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
         buttonGoToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(Register.this, Login.class);
+                Intent loginIntent = new Intent(Register.this, ActivityMain.class);
                 Register.this.startActivity(loginIntent);
             }
         });
@@ -64,7 +64,7 @@ public class Register extends AppCompatActivity {
                                 JSONObject jsonResponse = new JSONObject(response);
                                 boolean success = jsonResponse.getBoolean("success");
                                 if (success) {
-                                    Intent intent = new Intent(Register.this, Login.class);
+                                    Intent intent = new Intent(Register.this, ActivityMain.class);
                                     Register.this.startActivity(intent);
 
                                 } else {

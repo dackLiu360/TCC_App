@@ -149,15 +149,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/initial_time"
             android:layout_centerHorizontal="true"
-            android:text="Horário" />
+            android:text="" />
 
-        <Button
-            android:id="@+id/final_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/initialTimeLabel"
-            android:layout_centerHorizontal="true"
-            android:text="Escolher horário final" />
+            <Button
+                android:id="@+id/final_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/initialTimeLabel"
+                android:layout_centerHorizontal="true"
+                android:text="Escolher horário final" />
 
         <TextView
             android:id="@+id/finalTimeLabel"
@@ -165,13 +165,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/final_time"
             android:layout_centerHorizontal="true"
-            android:text="Horário" />
+            android:text="" />
 
+            <TextView
+                android:id="@+id/repeatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/finalTimeLabel"
+                android:layout_centerHorizontal="true"
+                android:text="Repitir por quantas semanas?" />
+
+            <Spinner
+                android:id="@+id/repeatTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/repeatLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
         <Button
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/finalTimeLabel"
+            android:layout_below="@id/repeatTime"
             android:layout_centerHorizontal="true"
             android:text="Confirmar" />
             <View

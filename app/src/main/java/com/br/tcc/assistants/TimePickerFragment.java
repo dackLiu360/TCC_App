@@ -21,14 +21,16 @@ import com.example.victor.tcc.R;
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     int button,textId;
+    Button buttonToActivate;
 
     public TimePickerFragment() {
     }
 
     @SuppressLint("ValidFragment")
-    public TimePickerFragment(int buttonId, int textId) {
+    public TimePickerFragment(int buttonId, int textId, Button buttonToActivate) {
         this.button = buttonId;
         this.textId = textId;
+        this.buttonToActivate = buttonToActivate;
     }
 
     @Override
@@ -49,9 +51,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         //Get reference of host activity (XML Layout File) TextView widget
         TextView tv = (TextView) getActivity().findViewById(button);
         //Set a message for user
-        TextView buttonGoToRegister = (TextView) getActivity().findViewById(textId);
+        TextView text = (TextView) getActivity().findViewById(textId);
+        buttonToActivate.setEnabled(true);
         //Display the user changed time on TextView
-        buttonGoToRegister.setText(String.valueOf(hourOfDay)+ ":" + String.valueOf(minute));
+        text.setText(String.valueOf(hourOfDay)+ ":" + String.valueOf(minute));
     }
 
 }

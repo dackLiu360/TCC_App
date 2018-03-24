@@ -26,11 +26,8 @@ import android.widget.TimePicker;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.br.tcc.assistants.TimePickerFragment;
 import com.br.tcc.database.local.UserDAO;
-import com.br.tcc.database.remote.RegisterDAO;
 import com.br.tcc.database.remote.TaskDAO;
-import com.br.tcc.database.remote.User_taskDAO;
 import com.example.victor.tcc.R;
 
 import org.json.JSONException;
@@ -204,7 +201,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
 
                         finish();
                         Intent i=new Intent();
-                        i = new Intent(AddTask.this, Login.class);
+                        i = new Intent(AddTask.this, ActivityMain.class);
                         AddTask.this.startActivity(i);
 
                         finish();

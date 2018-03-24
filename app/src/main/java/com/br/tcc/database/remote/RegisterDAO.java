@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RegisterDAO extends StringRequest{
 
-    private static final String REQUISTER_REQUEST_URL="https://vicmc14.000webhostapp.com/register.php";
+    private static final String REQUISTER_REQUEST_URL="http://tcctarefas.xyz/register.php";
     private Map<String, String> params;
 
     public RegisterDAO(String name, String username, String email, String password, Response.Listener<String> listener){

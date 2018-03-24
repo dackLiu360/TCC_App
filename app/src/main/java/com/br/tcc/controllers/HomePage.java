@@ -118,7 +118,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                         finish();
                         Intent i=new Intent();
-                        i = new Intent(HomePage.this, Login.class);
+                        i = new Intent(HomePage.this, ActivityMain.class);
                         HomePage.this.startActivity(i);
 
                         finish();

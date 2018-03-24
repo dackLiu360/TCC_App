@@ -80,7 +80,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
                         finish();
                         Intent i=new Intent();
-                        i = new Intent(Profile.this, Login.class);
+                        i = new Intent(Profile.this, ActivityMain.class);
                         Profile.this.startActivity(i);
 
                         finish();

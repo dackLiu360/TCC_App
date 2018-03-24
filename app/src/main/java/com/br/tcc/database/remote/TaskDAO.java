@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TaskDAO extends StringRequest {
 
-    private static final String REQUISTER_REQUEST_URL="https://vicmc14.000webhostapp.com/task.php";
+    private static final String REQUISTER_REQUEST_URL="http://tcctarefas.xyz/task.php";
     private Map<String, String> params;
 
     public TaskDAO(String user_id, String title, String subject,  String description, String estimated_time, String deadline,Response.Listener<String> listener){
