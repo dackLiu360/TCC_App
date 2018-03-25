@@ -58,13 +58,13 @@ public class ActivityMain extends Activity {
         final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
         final ArrayList idTimes = new ArrayList();
 
-       // buttonTest.setOnClickListener(new View.OnClickListener() {
+        // buttonTest.setOnClickListener(new View.OnClickListener() {
         //    @Override
-       //     public void onClick(View view) {
+        //     public void onClick(View view) {
         //        Intent testIntent = new Intent(ActivityMain.this, Test.class);
-         //       ActivityMain.this.startActivity(testIntent);
-         //   }
-       // });
+        //       ActivityMain.this.startActivity(testIntent);
+        //   }
+        // });
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +79,25 @@ public class ActivityMain extends Activity {
                 System.out.println("LOGIN");
                 final String username = userLogin.getText().toString();
                 final String password = passwordLogin.getText().toString();
+                if (username.trim().length() != 0) {
+                    userLogin.setBackgroundResource(R.drawable.edtnormal);
+                } else {
+                    userLogin.setError("error");
+                    userLogin.setBackgroundResource(R.drawable.edterr);
+                }
 
+                if (password.trim().length() != 0) {
+                    passwordLogin.setBackgroundResource(R.drawable.edtnormal);
+                } else {
+                    passwordLogin.setError("error");
+                    passwordLogin.setBackgroundResource(R.drawable.edterr);
+                }
+
+
+
+
+                if (username.trim().length() != 0) {
+                    if (password.trim().length() != 0) {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(userLogin.getWindowToken(), 0);
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -105,7 +123,7 @@ public class ActivityMain extends Activity {
                                                     for (int i = 0; i < jArray.length(); i++)
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
-                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
+                                                        dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
 
 
 
@@ -202,7 +220,9 @@ public class ActivityMain extends Activity {
                                 String username = jsonResponse.getString("username");
                                 int user_id = jsonResponse.getInt("user_id");
                                 String email = jsonResponse.getString("email");
-                                udao.addData(Integer.toString(user_id),username,email);
+                                String name = jsonResponse.getString("name");
+                                String password = jsonResponse.getString("password");
+                                udao.addData(Integer.toString(user_id),name,username,email,password);
 
 
                                 System.out.println("ID DO USER "+Integer.toString(user_id));
@@ -220,6 +240,10 @@ public class ActivityMain extends Activity {
                                 layout1.setVisibility(View.VISIBLE);
                                 layout2.setVisibility(View.VISIBLE);
                                 animationView.setVisibility(View.INVISIBLE);
+                                userLogin.setError("error");
+                                userLogin.setBackgroundResource(R.drawable.edterr);
+                                passwordLogin.setError("error");
+                                passwordLogin.setBackgroundResource(R.drawable.edterr);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
                                 builder.setMessage("O ActivityMain falhou").setNegativeButton("Tentar novamente", null).create().show();
                             }
@@ -246,7 +270,14 @@ public class ActivityMain extends Activity {
                 LoginDAO ldao = new LoginDAO(username,password,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
                 queue.add(ldao);
-
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                        builder.setMessage("Digite todos os campos").setNegativeButton("Tentar novamente", null).create().show();
+                    }
+                } else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                    builder.setMessage("Digite todos os campos").setNegativeButton("Tentar novamente", null).create().show();
+                }
 
 
             }
