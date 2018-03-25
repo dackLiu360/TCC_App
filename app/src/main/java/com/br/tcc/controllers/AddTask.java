@@ -29,8 +29,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.CustomTimePickerDialog;
 import com.br.tcc.database.local.DataDAO;
+import com.br.tcc.database.local.TasksDAO;
 import com.br.tcc.database.local.TimeBlockDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTasksDAO;
 import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.TaskDAO;
@@ -115,7 +117,8 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                 datePicker();
             }
         });
-
+        final TasksDAO tasksDAO = new TasksDAO(this);
+        tasksDAO.create();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
@@ -155,6 +158,49 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
+
+
+
+                                Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response4) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response4);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if(success){
+                                                try
+                                                {
+                                                    JSONArray jArray = jsonResponse.getJSONArray("tasksArray");
+                                                    for (int i = 0; i < jArray.length(); i++)
+                                                    {
+                                                        JSONObject json_data = jArray.getJSONObject(i);
+                                                        tasksDAO.addData(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
+                                                        System.out.println("TABELA TASKS");
+                                                    }
+                                                    System.out.println("AGORA1");
+                                                    Intent intent = new Intent(AddTask.this, HomePage.class);
+                                                    AddTask.this.startActivity(intent);
+
+
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
+                                                Intent intent = new Intent(AddTask.this, HomePage.class);
+                                                AddTask.this.startActivity(intent);
+                                            }else{
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+
+
+
+
                                 Response.Listener<String> responseListener2 = new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response2) {
@@ -234,16 +280,17 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                     }
                                 };
 
-
+                                GetTasksDAO gtsksdao = new GetTasksDAO(user_id,responseListener4);
+                                RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                queue.add(gtsksdao);
 
 
                                 GetTimeDAO gtdao = new GetTimeDAO(user_id,responseListener2);
-                                RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                queue = Volley.newRequestQueue(AddTask.this);
                                 queue.add(gtdao);
 
 
-                                Intent intent = new Intent(AddTask.this, HomePage.class);
-                                AddTask.this.startActivity(intent);
+
                             } else {
                                 String totalAvailable = jsonResponse.getString("available");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);

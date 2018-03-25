@@ -65,7 +65,7 @@ public class UserDAO extends SQLiteOpenHelper {
         boolean exists=false;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM "+ TABLE_NAME +" WHERE "+ COL3 +" = " + username + " ;";
+        String query = "SELECT * FROM "+ TABLE_NAME +" WHERE "+ COL3 +" = " + username + ";";
         Cursor cursor = db.rawQuery(query,null);
         if(cursor!=null && cursor.getCount()>0) exists=true;
         cursor.close();
