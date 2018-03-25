@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/consLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#138599">
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,18 +13,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.br.tcc.controllers.AddTask">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verGuideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="100" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+
+
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.br.tcc.controllers.ActivityMain">
+        android:layout_height="wrap_content"
+        tools:context="com.br.tcc.controllers.ActivityMain"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/layout_bg_login"
+
+
+        app:layout_constraintLeft_toLeftOf="@id/verGuideline1"
+        app:layout_constraintRight_toRightOf="@id/verGuideline2"
+        app:layout_constraintTop_toTopOf="@id/horGuideline3" >
+        <TextView
+            android:id="@+id/tarefa"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:text="Tarefa"/>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/taskGroupId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#f4f4f4"
+            android:drawablePadding="10dp"
+            android:layout_below="@id/cadastro"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:orientation="horizontal">
             <RadioButton android:id="@+id/radio_individual"
                 android:layout_width="wrap_content"
@@ -37,14 +131,37 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/taskGroupId"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+
+        android:background="#f4f4f4"
+        android:drawablePadding="20dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:inputType="text"
         android:hint="Título" />
+
         <EditText
             android:id="@+id/subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+
+            android:background="#f4f4f4"
+            android:drawablePadding="20dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:inputType="text"
             android:hint="Matéria" />
         <EditText
@@ -53,6 +170,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/subject"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+
+            android:background="#f4f4f4"
+            android:drawablePadding="20dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:inputType="text"
             android:hint="Descrição" />
 
@@ -71,6 +200,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/labelChoose"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+
+            android:background="#f4f4f4"
+            android:drawablePadding="20dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:inputType="text"
             android:hint="Hora" />
         <EditText
@@ -79,15 +220,31 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hour"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+
+            android:background="#f4f4f4"
+            android:drawablePadding="20dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:inputType="text"
             android:hint="Minuto" />
         <Button
-
+            android:layout_width="125dp"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Data da entrega"
             android:layout_below="@id/minute"
+            android:layout_marginTop="5dp"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="5dp"
+            android:textSize="15sp"
+            android:background="@drawable/bluebutton"
             android:onClick="showTimePickerDialog"
             android:id="@+id/btn_set_date_time" />
         <TextView
@@ -103,17 +260,20 @@
         <Button
 
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
             android:text="Finalizar"
             android:layout_below="@id/et_show_date_time"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/redbutton"
             android:onClick="showTimePickerDialog"
             android:id="@+id/addTask" />
 
 
 
-
     </RelativeLayout>
+
+
 
 
 
@@ -125,3 +285,5 @@
         android:layout_gravity="start"
         ></android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
+    </android.support.constraint.ConstraintLayout>
+
