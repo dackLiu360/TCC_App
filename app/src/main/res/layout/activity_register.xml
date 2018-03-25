@@ -100,22 +100,23 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:text="CADASTRO"/>
+
         <EditText
             android:id="@+id/nameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-
-            android:background="#f4f4f4"
-            android:inputType="textPersonName"
-            android:drawablePadding="20dp"
             android:layout_below="@id/cadastro"
+            android:layout_marginLeft="5dp"
+
+            android:layout_marginRight="5dp"
+            android:background="#f4f4f4"
+            android:drawablePadding="20dp"
+            android:hint="Nome/Apelido"
+            android:inputType="textPersonName"
+            android:paddingBottom="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="12dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:hint="Nome/Apelido" />
+            android:paddingTop="12dp" />
 
 
         <EditText

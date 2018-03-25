@@ -66,6 +66,10 @@ public class ActivityMain extends Activity {
          //       ActivityMain.this.startActivity(testIntent);
          //   }
        // });
+
+
+
+
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,134 +85,167 @@ public class ActivityMain extends Activity {
                 final String username = userLogin.getText().toString();
                 final String password = passwordLogin.getText().toString();
 
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(userLogin.getWindowToken(), 0);
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("RESPONSE");
+                if (username.trim().length() != 0) {
+                    userLogin.setBackgroundResource(R.drawable.edtnormal);
+                } else {
+                    userLogin.setError("error");
+                    userLogin.setBackgroundResource(R.drawable.edterr);
+                }
 
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if(success){;
-
-                                Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response2) {
-                                        try {
-                                            JSONObject jsonResponse = new JSONObject(response2);
-                                            boolean success = jsonResponse.getBoolean("success");
-                                            if(success){
-                                                try
-                                                {
-
-                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");
-                                                    for (int i = 0; i < jArray.length(); i++)
-                                                    {
-                                                        JSONObject json_data = jArray.getJSONObject(i);
-                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"),json_data.getString("time_start"),json_data.getString("time_end"));
+                if (password.trim().length() != 0) {
+                    passwordLogin.setBackgroundResource(R.drawable.edtnormal);
+                } else {
+                    passwordLogin.setError("error");
+                    passwordLogin.setBackgroundResource(R.drawable.edterr);
+                }
 
 
 
 
-                                                        Response.Listener<String> responseListener3 = new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response23) {
-                                                                try {
-                                                                    JSONObject jsonResponse = new JSONObject(response23);
-                                                                    boolean success = jsonResponse.getBoolean("success");
-                                                                    if(success){
-                                                                        try
-                                                                        {
-                                                                            JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
-                                                                            for (int i = 0; i < jArray2.length(); i++)
-                                                                            {
-                                                                                JSONObject json_data = jArray2.getJSONObject(i);
-                                                                                timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
-                                                                                System.out.println("AQUI");
+                if (username.trim().length() != 0) {
+                    if (password.trim().length() != 0) {
+
+
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(userLogin.getWindowToken(), 0);
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                System.out.println("RESPONSE");
+
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if (success) {
+                                        userLogin.setBackgroundResource(R.drawable.edtnormal);
+                                        passwordLogin.setBackgroundResource(R.drawable.edtnormal);
+
+
+                                        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response2) {
+                                                try {
+                                                    JSONObject jsonResponse = new JSONObject(response2);
+                                                    boolean success = jsonResponse.getBoolean("success");
+                                                    if (success) {
+                                                        try {
+
+                                                            JSONArray jArray = jsonResponse.getJSONArray("timesArray");
+                                                            for (int i = 0; i < jArray.length(); i++) {
+                                                                JSONObject json_data = jArray.getJSONObject(i);
+                                                                dataDAO.addData(json_data.getString("id_time"), json_data.getString("id_user"), json_data.getString("day"), json_data.getString("time_start"), json_data.getString("time_end"));
+
+
+                                                                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                                                    @Override
+                                                                    public void onResponse(String response23) {
+                                                                        try {
+                                                                            JSONObject jsonResponse = new JSONObject(response23);
+                                                                            boolean success = jsonResponse.getBoolean("success");
+                                                                            if (success) {
+                                                                                try {
+                                                                                    JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
+                                                                                    for (int i = 0; i < jArray2.length(); i++) {
+                                                                                        JSONObject json_data = jArray2.getJSONObject(i);
+                                                                                        timeBlockDAO.addData(json_data.getString("id_time_block"), json_data.getString("id_time"), json_data.getString("time_start"), json_data.getString("time_end"), json_data.getString("part"), json_data.getString("availability"));
+                                                                                        System.out.println("AQUI");
+                                                                                    }
+                                                                                } catch (Exception e) {
+                                                                                    e.printStackTrace();
+                                                                                }
+                                                                            } else {
                                                                             }
-                                                                        }
-                                                                        catch (Exception e)
-                                                                        {
+
+                                                                        } catch (JSONException e) {
                                                                             e.printStackTrace();
                                                                         }
-                                                                    }else{
                                                                     }
+                                                                };
 
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
+
+                                                                GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"), responseListener3);
+                                                                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                                                queue.add(gtbdao);
                                                             }
-                                                        };
 
 
-
-
-
-                                                        GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
-                                                        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-                                                        queue.add(gtbdao);
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    } else {
                                                     }
 
-
-                                                }
-                                                catch (Exception e)
-                                                {
+                                                } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
-                                            }else{
                                             }
+                                        };
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                                        String username = jsonResponse.getString("username");
+                                        String name = jsonResponse.getString("name");
+                                        int user_id = jsonResponse.getInt("user_id");
+                                        String password = jsonResponse.getString("password");
+
+                                        String email = jsonResponse.getString("email");
+
+                                        udao.addData(Integer.toString(user_id), name, username, email, password);
+
+                                        GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id), responseListener2);
+                                        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                        queue.add(gtdao);
+
+
+                                        Intent intent = new Intent(ActivityMain.this, HomePage.class);
+
+                                        ActivityMain.this.startActivity(intent);
+                                    } else {
+                                        layout1.setVisibility(View.VISIBLE);
+                                        layout2.setVisibility(View.VISIBLE);
+                                        animationView.setVisibility(View.INVISIBLE);
+                                        userLogin.setError("error");
+                                        userLogin.setBackgroundResource(R.drawable.edterr);
+                                        passwordLogin.setError("error");
+                                        passwordLogin.setBackgroundResource(R.drawable.edterr);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                                        builder.setMessage("O ActivityMain falhou").setNegativeButton("Tentar novamente", null).create().show();
                                     }
-                                };
 
-                                String username = jsonResponse.getString("username");
-                                int user_id = jsonResponse.getInt("user_id");
-                                String email = jsonResponse.getString("email");
-                                udao.addData(Integer.toString(user_id),username,email);
-
-                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
-                                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-                                queue.add(gtdao);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
 
-                                Intent intent = new Intent(ActivityMain.this, HomePage.class);
-
-                                ActivityMain.this.startActivity(intent);
-                            }else{
-                                layout1.setVisibility(View.VISIBLE);
-                                layout2.setVisibility(View.VISIBLE);
-                                animationView.setVisibility(View.INVISIBLE);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
-                                builder.setMessage("O ActivityMain falhou").setNegativeButton("Tentar novamente", null).create().show();
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
+                        };
+                        layout1.setVisibility(View.INVISIBLE);
+                        layout2.setVisibility(View.INVISIBLE);
+                        animationView = findViewById(R.id.loadAnimation);
+                        animationView.setAnimation("loading.json");
+
+                        animationView.loop(true);
+                        animationView.setVisibility(View.VISIBLE);
+                        animationView.bringToFront();
+                        animationView.playAnimation();
+                        LoginDAO ldao = new LoginDAO(username,password,responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                        queue.add(ldao);
+
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                        builder.setMessage("Digite todos os campos").setNegativeButton("Tentar novamente", null).create().show();
                     }
-                };
-                layout1.setVisibility(View.INVISIBLE);
-                layout2.setVisibility(View.INVISIBLE);
-                animationView = findViewById(R.id.loadAnimation);
-                animationView.setAnimation("loading.json");
-
-                animationView.loop(true);
-                animationView.setVisibility(View.VISIBLE);
-                animationView.bringToFront();
-                animationView.playAnimation();
+                } else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+                    builder.setMessage("Digite todos os campos").setNegativeButton("Tentar novamente", null).create().show();
+                }
 
 
 
 
 
-                LoginDAO ldao = new LoginDAO(username,password,responseListener);
-                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-                queue.add(ldao);
+
 
 
 
