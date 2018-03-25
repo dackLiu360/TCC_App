@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-        ListView timeList = (ListView) findViewById(R.id.listTime);
+        CalendarView calendar = (CalendarView) findViewById(R.id.CalendarView); // get the reference of CalendarView
         setContentView(R.layout.activity_profile);
         DataDAO dataDAO = new DataDAO(this);
         dataDAO.create();
