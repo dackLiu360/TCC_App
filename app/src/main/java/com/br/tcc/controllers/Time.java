@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -23,12 +24,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.database.local.DataDAO;
+import com.br.tcc.database.local.TimeBlockDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.example.victor.tcc.R;
 import com.br.tcc.database.remote.TimeDAO;
 import com.br.tcc.assistants.TimePickerFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,12 +42,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Time extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private DataDAO dataDAO;
+
 
 
     @Override
@@ -53,10 +62,11 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
         setContentView(R.layout.activity_time);
 
-        Spinner dropdown = findViewById(R.id.repeatTime);
+        final Spinner[] dropdown = {findViewById(R.id.repeatTime)};
         String[] items = new String[]{"1", "2", "3", "4"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
+        dropdown[0].setAdapter(adapter);
+
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -108,7 +118,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
                 DialogFragment newFragment = new TimePickerFragment(time_start.getId(), initialTimeLabel.getId(), time_end);
                newFragment.show(getFragmentManager(),"TimePicker");
-                System.out.println("ID :"+initialTimeLabel.getId());
+
 
             }
         });
@@ -124,14 +134,14 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
                 Calendar date = Calendar.getInstance();
                 Calendar dateAssistent;
-
+                final Boolean[] isFinished = {false};
                 int totalChecked = 0;
                 for (CheckBox dayOfWeek : days) {
                     if(dayOfWeek.isChecked()){
                         totalChecked++;
                     }
                 }
-                System.out.println(days.size());
+
                 String dtStart = initialTimeLabel.getText().toString();
                 String dtEnd = finalTimeLabel.getText().toString();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
@@ -149,11 +159,10 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                System.out.println("Start: "+dateEnd.getTime());
-                System.out.println("End: "+dateStart.getTime());
-                System.out.println("DIFERENÇA: "+(dateEnd.getTime() - dateStart.getTime()));
+
 
                     if(totalChecked == 0){
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
                         builder.setMessage("Selecione pelo menos 1 dia da semana").setNegativeButton("Ok", null).create().show();
                     }
@@ -161,10 +170,15 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
                         builder.setMessage("O horário final deve ser maior que o horário inicial").setNegativeButton("Ok", null).create().show();
                     }else{
+                        final TimeBlockDAO timeBlockDAO = new TimeBlockDAO(Time.this);
+                        timeBlockDAO.create();
+                        final DataDAO dataDAO = new DataDAO(Time.this);
+                        dataDAO.create();
 
 
-                for (CheckBox dayOfWeek : days) {
-                    System.out.println("associa denovo");
+
+                        for (CheckBox dayOfWeek : days) {
+
                     dateAssistent = Calendar.getInstance();
                     for (int i = 0; i < Integer.parseInt(repeat.getSelectedItem().toString()) ; i++) {
 
@@ -178,8 +192,118 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
                                 boolean success = jsonResponse.getBoolean("success");
                                 if (success) {
-                                    Intent intent = new Intent(Time.this, Profile.class);
-                                    Time.this.startActivity(intent);
+                                    Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response2) {
+                                            isFinished[0] = false;
+                                            try {
+                                                JSONObject jsonResponse = new JSONObject(response2);
+                                                boolean success = jsonResponse.getBoolean("success");
+                                                if(success){
+                                                    try
+                                                    {
+
+                                                        JSONArray jArray = jsonResponse.getJSONArray("timesArray");
+                                                        for (int i = 0; i < jArray.length(); i++)
+                                                        {
+                                                            JSONObject json_data = jArray.getJSONObject(i);
+                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
+                                                            System.out.println("Adicionou "+json_data.getString("id_time")+" "+json_data.getString("id_user")+" "+json_data.getString("day"));
+
+
+
+
+                                                            Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response23) {
+                                                                    isFinished[0] = false;
+                                                                    try {
+                                                                        JSONObject jsonResponse = new JSONObject(response23);
+                                                                        boolean success = jsonResponse.getBoolean("success");
+                                                                        if(success){
+                                                                            try
+                                                                            {
+                                                                                JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
+                                                                                for (int i = 0; i < jArray2.length(); i++)
+                                                                                {
+                                                                                    JSONObject json_data = jArray2.getJSONObject(i);
+                                                                                    timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
+                                                                                    System.out.println("ADICIONOU2 "+json_data.getString("id_time_block")+" "+json_data.getString("id_time")+" "+json_data.getString("time_start")+" "+json_data.getString("time_end")+" "+json_data.getString("part")+" "+ json_data.getString("availability"));
+                                                                                }
+                                                                            }
+                                                                            catch (Exception e)
+                                                                            {
+                                                                                e.printStackTrace();
+                                                                            }
+
+                                                                        }else{
+                                                                        }
+
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                            };
+
+
+
+
+
+                                                            GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
+                                                            RequestQueue queue = Volley.newRequestQueue(Time.this);
+                                                            queue.add(gtbdao);
+                                                        }
+
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                        e.printStackTrace();
+                                                    }
+                                                }else{
+                                                }
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+
+
+
+
+                                    GetTimeDAO gtdao = new GetTimeDAO(user_id,responseListener2);
+                                    RequestQueue queue = Volley.newRequestQueue(Time.this);
+                                    queue.add(gtdao);
+
+                                    //Faz fica checando até a variavel parar de ser mudada para false
+                                    int delay = 0; // delay for 0 sec.
+                                    int period = 300;
+                                    final Timer timer = new Timer();
+                                    final Handler handler = new Handler();
+                                    timer.scheduleAtFixedRate(new TimerTask()
+                                    {
+                                        public void run()
+                                        {
+                                            System.out.println("AQUI");
+                                            isFinished[0] = true;
+
+                                            handler.postDelayed(new Runnable() {
+
+                                                public void run() {
+
+                                                    if(isFinished[0]==true){
+
+                                                        timer.cancel();
+                                                        Intent intent = new Intent(Time.this, Profile.class);
+                                                        Time.this.startActivity(intent);
+                                                    }
+                                                }
+                                            }, 600);
+                                        }
+                                    }, delay, period);
+
+
                                 } else {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
                                     builder.setMessage("Falhou").setNegativeButton("Tentar novamente", null).create().show();
@@ -193,7 +317,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                     if (dayOfWeek.isChecked()) {
                         String dayString = dayOfWeek.getText().toString();
                         if (dayString.equals("Segunda-feira")) {
-                            System.out.println(dateAssistent.get(Calendar.DAY_OF_WEEK));
+
                             while (dateAssistent.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
                                 dateAssistent.add(Calendar.DATE, 1);
                             }
@@ -228,12 +352,20 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                 dateAssistent.add(Calendar.DATE, 1);
                             }
                         }
-                        System.out.println("aqui");
+
                         int cDayAssistent= dateAssistent.get(Calendar.DAY_OF_MONTH);
                         int cMonthAssistent = dateAssistent.get(Calendar.MONTH);
                         int cYearAssistent = dateAssistent.get(Calendar.YEAR);
-                        TimeDAO tdao = new TimeDAO(user_id, cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
-                        System.out.println("DATA GRAVADA: "+cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent);
+                        int assistentOfMothAssistent = cMonthAssistent+1;
+                        String AssistentOfassistentOfMothAssistent="";
+                        if(assistentOfMothAssistent>=1&&assistentOfMothAssistent<=9){
+                            AssistentOfassistentOfMothAssistent = "0"+assistentOfMothAssistent;
+                        }else{
+                            AssistentOfassistentOfMothAssistent = Integer.toString(assistentOfMothAssistent);
+                        }
+
+                        TimeDAO tdao = new TimeDAO(user_id, cYearAssistent +"-"+ AssistentOfassistentOfMothAssistent+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
+
                         RequestQueue queue = Volley.newRequestQueue(Time.this);
                         queue.add(tdao);
                         dateAssistent.add(Calendar.DATE, 1);
@@ -241,6 +373,17 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
                 }
                 }
+
+
+
+
+
+
+
+
+
+
+
                     }
 
             }
@@ -306,7 +449,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
     }
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-        System.out.println(navigationView.toString());
+
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }

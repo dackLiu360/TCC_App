@@ -36,7 +36,7 @@ public class TimeBlockDAO extends SQLiteOpenHelper {
     }
     public void create() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
+        db.execSQL("DROP TABLE " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_TIME + "," +COL3+" TIME ," + COL4 + " TIME ,"+ COL5 + " INTEGER ," + COL6 + " INTEGER); ";
         db.execSQL(createTable);
