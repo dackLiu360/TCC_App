@@ -91,7 +91,7 @@ public class ActivityMain extends Activity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            if(success){;
+                            if(success){
 
                                 Response.Listener<String> responseListener2 = new Response.Listener<String>() {
                                     @Override
@@ -107,7 +107,7 @@ public class ActivityMain extends Activity {
                                                     for (int i = 0; i < jArray.length(); i++)
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
-                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"),json_data.getString("time_start"),json_data.getString("time_end"));
+                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
 
 
 
