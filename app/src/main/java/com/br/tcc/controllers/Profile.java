@@ -2,6 +2,7 @@ package com.br.tcc.controllers;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.br.tcc.database.local.DataDAO;
 import com.example.victor.tcc.R;
+
+import java.util.ArrayList;
+
 
 public class Profile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,8 +33,10 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-
+        ListView timeList = (ListView) findViewById(R.id.listTime);
         setContentView(R.layout.activity_profile);
+        final DataDAO dataDAO = new DataDAO(this);
+        dataDAO.create();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
@@ -45,6 +56,19 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
             }
         });
+
+        ArrayList<String> theList = new ArrayList<>();
+        Cursor data = dataDAO.getData();
+        if(data.getCount()==0){
+            Toast.makeText(Profile.this, "Ta zerado", Toast.LENGTH_LONG).show();
+
+        }else{
+            while(data.moveToNext()){
+                theList.add(data.getString(1));
+                ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
+                timeList.setAdapter(listAdapter);
+            }
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

@@ -137,7 +137,7 @@
         android:scrollbarAlwaysDrawHorizontalTrack="true">
 
         <Button
-            android:id="@+id/initial_time"
+            android:id="@+id/time_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -147,12 +147,12 @@
             android:id="@+id/initialTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/initial_time"
+            android:layout_below="@id/time_start"
             android:layout_centerHorizontal="true"
             android:text="" />
 
             <Button
-                android:id="@+id/final_time"
+                android:id="@+id/time_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/initialTimeLabel"
@@ -163,7 +163,7 @@
             android:id="@+id/finalTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/final_time"
+            android:layout_below="@id/time_end"
             android:layout_centerHorizontal="true"
             android:text="" />
 

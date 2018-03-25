@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.database.local.DataDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTimeDAO;
 import com.example.victor.tcc.R;
 import com.br.tcc.database.remote.TimeDAO;
 import com.br.tcc.assistants.TimePickerFragment;
@@ -41,6 +43,8 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private DataDAO dataDAO;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String id = null;
+        String id2 = null;
         Intent intent = getIntent();
         final UserDAO udao = new UserDAO(this);
         Cursor data = udao.getData();
@@ -72,10 +77,11 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
             id = data.getString(0);
 
         }
+
         final String user_id = id;
-        final Button initialTime = (Button) findViewById(R.id.initial_time);
-        final Button finalTime = (Button) findViewById(R.id.final_time);
-        finalTime.setEnabled(false);
+        final Button time_start = (Button) findViewById(R.id.time_start);
+        final Button time_end = (Button) findViewById(R.id.time_end);
+        time_end.setEnabled(false);
         final Button confirm = (Button) findViewById(R.id.confirm);
         confirm.setEnabled(false);
         final TextView initialTimeLabel = (TextView) findViewById(R.id.initialTimeLabel);
@@ -97,19 +103,19 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
         days.add(saturday);
         days.add(sunday);
 
-        initialTime.setOnClickListener(new View.OnClickListener() {
+        time_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new TimePickerFragment(initialTime.getId(), initialTimeLabel.getId(), finalTime);
+                DialogFragment newFragment = new TimePickerFragment(time_start.getId(), initialTimeLabel.getId(), time_end);
                newFragment.show(getFragmentManager(),"TimePicker");
                 System.out.println("ID :"+initialTimeLabel.getId());
 
             }
         });
-        finalTime.setOnClickListener(new View.OnClickListener() {
+        time_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new TimePickerFragment(finalTime.getId(), finalTimeLabel.getId(), confirm);
+                DialogFragment newFragment = new TimePickerFragment(time_end.getId(), finalTimeLabel.getId(), confirm);
                 newFragment.show(getFragmentManager(),"TimePicker");
             }
         });
@@ -168,8 +174,15 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         public void onResponse(String response) {
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
+
+
                                 boolean success = jsonResponse.getBoolean("success");
                                 if (success) {
+                                    int id_time = jsonResponse.getInt("id_time");
+                                    String day = jsonResponse.getString("day");
+                                    String time_start = jsonResponse.getString("time_start");
+                                    String time_end = jsonResponse.getString("time_end");
+                                    dataDAO.addData(Integer.toString(id_time), user_id, day, time_start,time_end);
                                     Intent intent = new Intent(Time.this, Profile.class);
                                     Time.this.startActivity(intent);
                                 } else {
@@ -225,9 +238,12 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         int cMonthAssistent = dateAssistent.get(Calendar.MONTH);
                         int cYearAssistent = dateAssistent.get(Calendar.YEAR);
                         TimeDAO tdao = new TimeDAO(user_id, cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
+                        GetTimeDAO gtdao = new GetTimeDAO(user_id, cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
                         System.out.println("DATA GRAVADA: "+cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent);
                         RequestQueue queue = Volley.newRequestQueue(Time.this);
+                        RequestQueue queue2 = Volley.newRequestQueue(Time.this);
                         queue.add(tdao);
+                        queue2.add(gtdao);
                         dateAssistent.add(Calendar.DATE, 1);
                     }
 
