@@ -107,7 +107,6 @@
             android:layout_marginRight="5dp"
             android:background="#f4f4f4"
             android:drawablePadding="10dp"
-            android:layout_below="@id/cadastro"
             android:paddingLeft="8dp"
             android:paddingRight="12dp"
             android:paddingTop="12dp"

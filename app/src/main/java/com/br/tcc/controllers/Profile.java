@@ -85,9 +85,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
             cal.setTime(d);
 
             Cursor dataEach = timeBlockDAO.getDataId(data.getString(0));
-            while(dataEach.moveToNext()){
-                dialogFragment.addListItems(dataEach.getString(2));
-            }
+            dialogFragment.addListItems(dataEach);
             Event ev1 = new Event(Color.GREEN, cal.getTimeInMillis(), dialogFragment);
             compactCalendarView.addEvent(ev1);
 
