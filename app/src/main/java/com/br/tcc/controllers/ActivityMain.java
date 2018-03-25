@@ -22,7 +22,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.database.local.DataDAO;
+import com.br.tcc.database.local.TimeBlockDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
 import com.example.victor.tcc.R;
@@ -45,6 +47,8 @@ public class ActivityMain extends Activity {
         final UserDAO udao = new UserDAO(this);
         final DataDAO dataDAO = new DataDAO(this);
         dataDAO.create();
+        final TimeBlockDAO timeBlockDAO = new TimeBlockDAO(this);
+        timeBlockDAO.create();
         udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
@@ -53,6 +57,7 @@ public class ActivityMain extends Activity {
         final TextView buttonGoToRegister = (TextView) findViewById(R.id.buttonGoToRegister);
         final RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layout1);
         final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
+        final ArrayList idTimes = new ArrayList();
 
        // buttonTest.setOnClickListener(new View.OnClickListener() {
         //    @Override
@@ -82,6 +87,7 @@ public class ActivityMain extends Activity {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("RESPONSE");
+
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
@@ -97,13 +103,54 @@ public class ActivityMain extends Activity {
                                                 try
                                                 {
 
-                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");;
+                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");
                                                     for (int i = 0; i < jArray.length(); i++)
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
                                                             dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"),json_data.getString("time_start"),json_data.getString("time_end"));
 
+
+
+
+                                                        Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                                            @Override
+                                                            public void onResponse(String response23) {
+                                                                try {
+                                                                    JSONObject jsonResponse = new JSONObject(response23);
+                                                                    boolean success = jsonResponse.getBoolean("success");
+                                                                    if(success){
+                                                                        try
+                                                                        {
+                                                                            JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
+                                                                            for (int i = 0; i < jArray2.length(); i++)
+                                                                            {
+                                                                                JSONObject json_data = jArray2.getJSONObject(i);
+                                                                                timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
+                                                                                System.out.println("AQUI");
+                                                                            }
+                                                                        }
+                                                                        catch (Exception e)
+                                                                        {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                    }else{
+                                                                    }
+
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        };
+
+
+
+
+
+                                                        GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
+                                                        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                                        queue.add(gtbdao);
                                                     }
+
 
                                                 }
                                                 catch (Exception e)
