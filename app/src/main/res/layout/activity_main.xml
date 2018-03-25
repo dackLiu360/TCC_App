@@ -69,7 +69,8 @@
         android:id="@+id/monday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGO"
+        android:fontFamily="@font/luckiest_guy"
+        android:text="TaskAtHand"
         android:textColor="#ffffff"
         android:textSize="32sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -181,15 +182,15 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:text="Não é um membro ainda?"/>
-    <Button
-        android:id="@+id/buttonGoToRegister"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/registerText"
-        android:background="@drawable/redbutton"
-        android:text="Cadastrar" />
+        <Button
+            android:id="@+id/buttonGoToRegister"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/registerText"
+            android:background="@drawable/redbutton"
+            android:text="Cadastrar" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
