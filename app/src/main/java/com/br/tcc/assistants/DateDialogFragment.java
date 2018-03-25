@@ -23,14 +23,22 @@ public class DateDialogFragment extends DialogFragment {
     Cursor dataEach;
     Cursor dataEach2;
     ArrayList listItems=new ArrayList();
+    ArrayList <Integer>positions =new ArrayList();
+
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<String> adapter;
     int clickCounter=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        int cotador=0;
         while(dataEach.moveToNext()){
             listItems.add(dataEach.getString(2)+"-"+dataEach.getString(3));
+            if(dataEach.getString(5).equals("0")){
+                positions.add(cotador);
+            }
+            cotador++;
+
         }
 
 
@@ -38,19 +46,27 @@ public class DateDialogFragment extends DialogFragment {
         getDialog().setTitle("Simple Dialog");
         Button dismiss = (Button) rootView.findViewById(R.id.dismiss);
         ListView list = (ListView) rootView.findViewById(R.id.listDates);
-        adapter = new ArrayAdapter(getActivity(), R.layout.listdate, R.id.textview, listItems);
-        list.setAdapter(adapter);
-        int contador=0;
-        while(dataEach2.moveToNext()){
-            System.out.println("TESTE1: "+dataEach2.getString(5));
-            if(dataEach2.getString(5).equals("0")){
+        System.out.println("TAMANHO: "+positions.size());
+        adapter = new ArrayAdapter(getActivity(), R.layout.listdate, R.id.textview, listItems){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the current item from ListView
+                View view = super.getView(position,convertView,parent);
+                for (int i = 0; i < positions.size(); i++) {
+                    if(positions.get(i)==(position)){
+                        view.setBackgroundColor(Color.parseColor("#ff0000"));
+                    }
 
-                list.getChildAt( contador );
-                View item_4 = list.getChildAt(contador);
-                item_4.setBackgroundColor(Color.RED);
+                }
+
+
+                return view;
             }
-            contador++;
-        }
+        };
+        list.setAdapter(adapter);
+
+                //View item_4 = list.getChildAt(1);
+                //item_4.setBackgroundColor(Color.RED);
 
         dismiss.setOnClickListener(new View.OnClickListener() {
 
