@@ -15,14 +15,10 @@ public class GetTimeDAO extends StringRequest{
     private static final String TIME_REQUEST_URL="http://tcctarefas.xyz/gettimedao.php";
     private Map<String, String> params;
 
-    public GetTimeDAO(String user_id,String day,String time_start,String time_end,Response.Listener<String> listener){
+    public GetTimeDAO(String user_id,Response.Listener<String> listener){
         super(Method.POST, TIME_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("user_id", user_id);
-        params.put("day", day);
-        params.put("time_start", time_start);
-        params.put("time_end", time_end);
-
     }
 
     @Override

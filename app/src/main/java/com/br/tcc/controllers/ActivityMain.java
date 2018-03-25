@@ -3,25 +3,35 @@ package com.br.tcc.controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.database.local.DataDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
 import com.example.victor.tcc.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ActivityMain extends Activity {
     LottieAnimationView animationView;
@@ -33,6 +43,8 @@ public class ActivityMain extends Activity {
 
 
         final UserDAO udao = new UserDAO(this);
+        final DataDAO dataDAO = new DataDAO(this);
+        dataDAO.create();
         udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
@@ -75,11 +87,48 @@ public class ActivityMain extends Activity {
                             boolean success = jsonResponse.getBoolean("success");
                             if(success){;
 
+                                Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response2) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response2);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if(success){
+                                                try
+                                                {
+
+                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");;
+                                                    for (int i = 0; i < jArray.length(); i++)
+                                                    {
+                                                        JSONObject json_data = jArray.getJSONObject(i);
+                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"),json_data.getString("time_start"),json_data.getString("time_end"));
+
+                                                    }
+
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
+                                            }else{
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+
                                 String username = jsonResponse.getString("username");
                                 int user_id = jsonResponse.getInt("user_id");
                                 String email = jsonResponse.getString("email");
-
                                 udao.addData(Integer.toString(user_id),username,email);
+
+                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
+                                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                queue.add(gtdao);
+
+
                                 Intent intent = new Intent(ActivityMain.this, HomePage.class);
 
                                 ActivityMain.this.startActivity(intent);
@@ -113,6 +162,8 @@ public class ActivityMain extends Activity {
                 LoginDAO ldao = new LoginDAO(username,password,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
                 queue.add(ldao);
+
+
 
             }
         });

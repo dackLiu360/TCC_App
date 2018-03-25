@@ -178,11 +178,6 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
                                 boolean success = jsonResponse.getBoolean("success");
                                 if (success) {
-                                    int id_time = jsonResponse.getInt("id_time");
-                                    String day = jsonResponse.getString("day");
-                                    String time_start = jsonResponse.getString("time_start");
-                                    String time_end = jsonResponse.getString("time_end");
-                                    dataDAO.addData(Integer.toString(id_time), user_id, day, time_start,time_end);
                                     Intent intent = new Intent(Time.this, Profile.class);
                                     Time.this.startActivity(intent);
                                 } else {
@@ -238,12 +233,9 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         int cMonthAssistent = dateAssistent.get(Calendar.MONTH);
                         int cYearAssistent = dateAssistent.get(Calendar.YEAR);
                         TimeDAO tdao = new TimeDAO(user_id, cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
-                        GetTimeDAO gtdao = new GetTimeDAO(user_id, cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent, initialTimeLabel.getText().toString() + ":00", finalTimeLabel.getText().toString() + ":00", responseListener);
                         System.out.println("DATA GRAVADA: "+cYearAssistent +"-"+ (cMonthAssistent+1)+"-"+ cDayAssistent);
                         RequestQueue queue = Volley.newRequestQueue(Time.this);
-                        RequestQueue queue2 = Volley.newRequestQueue(Time.this);
                         queue.add(tdao);
-                        queue2.add(gtdao);
                         dateAssistent.add(Calendar.DATE, 1);
                     }
 

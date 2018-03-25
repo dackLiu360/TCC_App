@@ -32,7 +32,7 @@ public class DataDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + "," +COL3+" DATE " + COL4 + " TIME " + COL5 + " TIME); ";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + "," +COL3+" DATE ," + COL4 + " TIME ," + COL5 + " TIME); ";
         db.execSQL(createTable);
 
     }
@@ -40,14 +40,12 @@ public class DataDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + "," +COL3+" DATE " + COL4 + " TIME " + COL5 + " TIME); ";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + "," +COL3+" DATE ," + COL4 + " TIME ," + COL5 + " TIME); ";
         db.execSQL(createTable);
 
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
-        onCreate(db);
     }
 
     public boolean addData(String id_time, String id_user, String day, String time_start, String time_end){

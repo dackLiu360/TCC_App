@@ -35,7 +35,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
         NavigationView navigationView = findViewById(R.id.navMenuHome);
         ListView timeList = (ListView) findViewById(R.id.listTime);
         setContentView(R.layout.activity_profile);
-        final DataDAO dataDAO = new DataDAO(this);
+        DataDAO dataDAO = new DataDAO(this);
         dataDAO.create();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
@@ -57,18 +57,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
 
-        ArrayList<String> theList = new ArrayList<>();
-        Cursor data = dataDAO.getData();
-        if(data.getCount()==0){
-            Toast.makeText(Profile.this, "Ta zerado", Toast.LENGTH_LONG).show();
 
-        }else{
-            while(data.moveToNext()){
-                theList.add(data.getString(1));
-                ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
-                timeList.setAdapter(listAdapter);
-            }
-        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
