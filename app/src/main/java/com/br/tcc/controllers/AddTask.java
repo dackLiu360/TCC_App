@@ -145,12 +145,14 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             System.out.println("RESPOSTA "+response.toString());
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
+
                             if (success) {
                                 Intent intent = new Intent(AddTask.this, HomePage.class);
                                 AddTask.this.startActivity(intent);
                             } else {
+                                String totalAvailable = jsonResponse.getString("available");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
-                                builder.setMessage("Falha").setNegativeButton("Tentar novamente", null).create().show();
+                                builder.setMessage("Você possui apenas "+totalAvailable+" horas até a data da entrega, e quer cadastrar "+hour+":"+minute+" Horas."+ " Cadastre mais horas acessando o seu Perfil").setNegativeButton("Ok", null).create().show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
