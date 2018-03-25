@@ -3,27 +3,24 @@ package com.br.tcc.controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.database.local.DataDAO;
+import com.br.tcc.database.local.TasksDAO;
 import com.br.tcc.database.local.TimeBlockDAO;
 import com.br.tcc.database.local.UserDAO;
+import com.br.tcc.database.remote.GetTasksDAO;
 import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
@@ -49,6 +46,8 @@ public class ActivityMain extends Activity {
         dataDAO.create();
         final TimeBlockDAO timeBlockDAO = new TimeBlockDAO(this);
         timeBlockDAO.create();
+        final TasksDAO tasksDAO = new TasksDAO(this);
+        tasksDAO.create();
         udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
@@ -86,7 +85,6 @@ public class ActivityMain extends Activity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("RESPONSE");
 
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
@@ -128,6 +126,7 @@ public class ActivityMain extends Activity {
                                                                                 timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
                                                                                 System.out.println("AQUI");
                                                                             }
+
                                                                         }
                                                                         catch (Exception e)
                                                                         {
@@ -165,20 +164,58 @@ public class ActivityMain extends Activity {
                                         }
                                     }
                                 };
+                                Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response4) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response4);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if(success){
+                                                try
+                                                {
+                                                    JSONArray jArray = jsonResponse.getJSONArray("tasksArray");
+                                                    for (int i = 0; i < jArray.length(); i++)
+                                                    {
+                                                        JSONObject json_data = jArray.getJSONObject(i);
+                                                        tasksDAO.addData(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
+                                                        System.out.println("TABELA TASKS");
+                                                    }
+                                                    System.out.println("AGORA1");
+                                                    Intent intent = new Intent(ActivityMain.this, HomePage.class);
+                                                    ActivityMain.this.startActivity(intent);
+
+
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
+                                            }else{
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
 
                                 String username = jsonResponse.getString("username");
                                 int user_id = jsonResponse.getInt("user_id");
                                 String email = jsonResponse.getString("email");
                                 udao.addData(Integer.toString(user_id),username,email);
 
-                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
+
+                                System.out.println("ID DO USER "+Integer.toString(user_id));
+
+
+                                GetTasksDAO gtsksdao = new GetTasksDAO(Integer.toString(user_id),responseListener4);
                                 RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                queue.add(gtsksdao);
+
+                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
+                                queue = Volley.newRequestQueue(ActivityMain.this);
                                 queue.add(gtdao);
 
-
-                                Intent intent = new Intent(ActivityMain.this, HomePage.class);
-
-                                ActivityMain.this.startActivity(intent);
                             }else{
                                 layout1.setVisibility(View.VISIBLE);
                                 layout2.setVisibility(View.VISIBLE);

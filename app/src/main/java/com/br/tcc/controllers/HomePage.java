@@ -34,6 +34,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +76,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         Cursor data = udao.getData();
         while(data.moveToNext()){
-
             username = data.getString(1);
 
         }
+
+
+
         final Button buttonProfile = (Button) findViewById(R.id.buttonProfile);
 
 
@@ -151,7 +154,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Recommendations(), "Recomendações");
-        adapter.addFragment(new Tasks(), "Tasks");
+
+
+
+
+        adapter.addFragment(new Tasks(this), "Tarefas");
         viewPager.setAdapter(adapter);
     }
 
