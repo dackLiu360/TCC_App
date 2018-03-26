@@ -171,6 +171,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         builder.setMessage("O horário final deve ser maior que o horário inicial").setNegativeButton("Ok", null).create().show();
                     }else{
                         final TimeBlockDAO timeBlockDAO = new TimeBlockDAO(Time.this);
+                        timeBlockDAO.drop();
                         timeBlockDAO.create();
                         final DataDAO dataDAO = new DataDAO(Time.this);
                         dataDAO.create();
@@ -192,116 +193,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
                                 boolean success = jsonResponse.getBoolean("success");
                                 if (success) {
-                                    Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response2) {
-                                            isFinished[0] = false;
-                                            try {
-                                                JSONObject jsonResponse = new JSONObject(response2);
-                                                boolean success = jsonResponse.getBoolean("success");
-                                                if(success){
-                                                    try
-                                                    {
 
-                                                        JSONArray jArray = jsonResponse.getJSONArray("timesArray");
-                                                        for (int i = 0; i < jArray.length(); i++)
-                                                        {
-                                                            JSONObject json_data = jArray.getJSONObject(i);
-                                                            dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
-                                                            System.out.println("Adicionou "+json_data.getString("id_time")+" "+json_data.getString("id_user")+" "+json_data.getString("day"));
-
-
-
-
-                                                            Response.Listener<String> responseListener3 = new Response.Listener<String>() {
-                                                                @Override
-                                                                public void onResponse(String response23) {
-                                                                    isFinished[0] = false;
-                                                                    try {
-                                                                        JSONObject jsonResponse = new JSONObject(response23);
-                                                                        boolean success = jsonResponse.getBoolean("success");
-                                                                        if(success){
-                                                                            try
-                                                                            {
-                                                                                JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
-                                                                                for (int i = 0; i < jArray2.length(); i++)
-                                                                                {
-                                                                                    JSONObject json_data = jArray2.getJSONObject(i);
-                                                                                    timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
-                                                                                    System.out.println("ADICIONOU2 "+json_data.getString("id_time_block")+" "+json_data.getString("id_time")+" "+json_data.getString("time_start")+" "+json_data.getString("time_end")+" "+json_data.getString("part")+" "+ json_data.getString("availability"));
-                                                                                }
-                                                                            }
-                                                                            catch (Exception e)
-                                                                            {
-                                                                                e.printStackTrace();
-                                                                            }
-
-                                                                        }else{
-                                                                        }
-
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-                                                                }
-                                                            };
-
-
-
-
-
-                                                            GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
-                                                            RequestQueue queue = Volley.newRequestQueue(Time.this);
-                                                            queue.add(gtbdao);
-                                                        }
-
-
-                                                    }
-                                                    catch (Exception e)
-                                                    {
-                                                        e.printStackTrace();
-                                                    }
-                                                }else{
-                                                }
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    };
-
-
-
-
-                                    GetTimeDAO gtdao = new GetTimeDAO(user_id,responseListener2);
-                                    RequestQueue queue = Volley.newRequestQueue(Time.this);
-                                    queue.add(gtdao);
-
-                                    //Faz fica checando até a variavel parar de ser mudada para false
-                                    int delay = 0; // delay for 0 sec.
-                                    int period = 300;
-                                    final Timer timer = new Timer();
-                                    final Handler handler = new Handler();
-                                    timer.scheduleAtFixedRate(new TimerTask()
-                                    {
-                                        public void run()
-                                        {
-                                            System.out.println("AQUI");
-                                            isFinished[0] = true;
-
-                                            handler.postDelayed(new Runnable() {
-
-                                                public void run() {
-
-                                                    if(isFinished[0]==true){
-
-                                                        timer.cancel();
-                                                        Intent intent = new Intent(Time.this, Profile.class);
-                                                        Time.this.startActivity(intent);
-                                                    }
-                                                }
-                                            }, 600);
-                                        }
-                                    }, delay, period);
 
 
                                 } else {
@@ -378,7 +270,119 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
+                        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response2) {
+                                isFinished[0] = false;
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response2);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if(success){
+                                        try
+                                        {
 
+                                            JSONArray jArray = jsonResponse.getJSONArray("timesArray");
+
+                                            for (int i = 0; i < jArray.length(); i++) {
+                                                JSONObject json_data = jArray.getJSONObject(i);
+                                                dataDAO.addData(json_data.getString("id_time"), json_data.getString("id_user"), json_data.getString("day"));
+
+
+
+
+
+
+
+
+                                                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response23) {
+                                                        isFinished[0] = false;
+                                                        try {
+                                                            JSONObject jsonResponse = new JSONObject(response23);
+                                                            boolean success = jsonResponse.getBoolean("success");
+                                                            if(success){
+                                                                try
+                                                                {
+                                                                    JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
+                                                                    for (int i = 0; i < jArray2.length(); i++)
+                                                                    {
+                                                                        JSONObject json_data = jArray2.getJSONObject(i);
+                                                                        timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
+
+                                                                    }
+                                                                }
+                                                                catch (Exception e)
+                                                                {
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                            }else{
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                };
+
+
+
+
+
+                                                GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
+                                                RequestQueue queue = Volley.newRequestQueue(Time.this);
+                                                queue.add(gtbdao);
+                                            }
+
+
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    }else{
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+
+
+
+                        GetTimeDAO gtdao = new GetTimeDAO(user_id,responseListener2);
+                        RequestQueue queue = Volley.newRequestQueue(Time.this);
+                        queue.add(gtdao);
+
+                        //Faz fica checando até a variavel parar de ser mudada para false
+                        int delay = 0; // delay for 0 sec.
+                        int period = 300;
+                        final Timer timer = new Timer();
+                        final Handler handler = new Handler();
+                        timer.scheduleAtFixedRate(new TimerTask()
+                        {
+                            public void run()
+                            {
+
+                                isFinished[0] = true;
+
+                                handler.postDelayed(new Runnable() {
+
+                                    public void run() {
+
+                                        if(isFinished[0]==true){
+
+                                            timer.cancel();
+                                            Intent intent = new Intent(Time.this, Profile.class);
+                                            Time.this.startActivity(intent);
+                                        }
+                                    }
+                                }, 600);
+                            }
+                        }, delay, period);
 
 
 

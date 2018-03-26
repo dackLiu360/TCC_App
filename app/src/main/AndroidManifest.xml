@@ -8,6 +8,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="TaskAtHand"
+        android:exported="true"
+        android:timePickerMode="spinner"
+        android:calendarViewShown="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

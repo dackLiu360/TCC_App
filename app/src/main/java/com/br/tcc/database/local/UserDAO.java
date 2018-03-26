@@ -33,7 +33,7 @@ public class UserDAO extends SQLiteOpenHelper {
     }
     public void create() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
+        db.execSQL("DROP TABLE  IF EXISTS " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 " ("+COL1+" INTEGER PRIMARY KEY , "+COL2+" VARCHAR(20) ,"+COL3+" VARCHAR(16), " +COL4+" VARCHAR(30) ," +COL5+" VARCHAR(16));";
         db.execSQL(createTable);

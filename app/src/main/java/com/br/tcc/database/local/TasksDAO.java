@@ -40,7 +40,7 @@ public class TasksDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE  IF EXISTS " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + ","+COL3+" VARCHAR(30) ,"+COL4+" VARCHAR(30) ,"+COL5+" VARCHAR(30) ,"+COL6+" VARCHAR(30) ,"+COL7+" VARCHAR(30) ,"+COL8+" VARCHAR(30)); ";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER" + TABLE_USER + ","+COL3+" VARCHAR(30) ,"+COL4+" VARCHAR(30) ,"+COL5+" VARCHAR(30) ,"+COL6+" VARCHAR(30) ,"+COL7+" VARCHAR(30) ,"+COL8+" VARCHAR(30)); ";
         db.execSQL(createTable);
 
     }

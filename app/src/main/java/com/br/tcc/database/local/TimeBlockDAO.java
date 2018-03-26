@@ -19,7 +19,7 @@ public class TimeBlockDAO extends SQLiteOpenHelper {
     private static  String TAG = "TimeBlockDAO";
     private static  String TABLE_NAME = "time_block";
     private static  String TABLE_TIME = "time";
-    private static  String COL1 = "id_task_block";
+    private static  String COL1 = "id_time_block";
     private static  String COL2 = "id_time";
     private static  String COL3 = "time_start";
     private static  String COL4 = "time_end";
@@ -36,26 +36,31 @@ public class TimeBlockDAO extends SQLiteOpenHelper {
     }
     public void create() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE " +TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_TIME + "," +COL3+" TIME ," + COL4 + " TIME ,"+ COL5 + " INTEGER ," + COL6 + " INTEGER); ";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER" + TABLE_TIME + "TIME ," +COL3+" TIME ," + COL4 + " TIME ,"+ COL5 + " INTEGER ," + COL6 + " INTEGER); ";
         db.execSQL(createTable);
+        db.execSQL("DELETE FROM " +TABLE_NAME);
 
+    }
+    public void drop() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE " +TABLE_NAME);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
     }
 
-    public boolean addData(String id_task_block, String id_time, String time_start, String time_end, String part, String availability){
+    public boolean addData(String id_time_block, String id_time, String time_start, String time_end, String part, String availability){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL1, id_task_block);
+        contentValues.put(COL1, id_time_block);
         contentValues.put(COL2, id_time);
         contentValues.put(COL3, time_start);
         contentValues.put(COL4, time_end);
         contentValues.put(COL5, part);
         contentValues.put(COL6, availability);
-        Log.d(TAG, "addData: Adding "+id_time+" to "+TABLE_NAME);
+        Log.d(TAG, "addData: Adding "+id_time_block+" to "+TABLE_NAME);
         long result = db.insert(TABLE_NAME, null, contentValues);
         if(result == -1){
             return false;

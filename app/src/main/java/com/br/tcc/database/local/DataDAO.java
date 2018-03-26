@@ -33,10 +33,11 @@ public class DataDAO extends SQLiteOpenHelper {
     }
     public void create() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE " +TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME);
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER REFERENCES " + TABLE_USER + "," +COL3+" DATE); ";
+                " ("+COL1+" INTEGER PRIMARY KEY, "+COL2 + " INTEGER" + TABLE_USER + "," +COL3+" DATE); ";
         db.execSQL(createTable);
+        db.execSQL("DELETE FROM " +TABLE_NAME);
 
     }
     @Override
