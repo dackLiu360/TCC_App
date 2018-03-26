@@ -152,8 +152,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                     @Override
                     public void onResponse(String response) {
                         try {
-                            System.out.println("");
-                            System.out.println("RESPOSTA "+response.toString());
+                           
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
@@ -175,9 +174,9 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
                                                         tasksDAO.addData(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
-                                                        System.out.println("TABELA TASKS");
+
                                                     }
-                                                    System.out.println("AGORA1");
+
                                                     Intent intent = new Intent(AddTask.this, HomePage.class);
                                                     AddTask.this.startActivity(intent);
 
@@ -220,7 +219,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
                                                         dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
-                                                        System.out.println("Adicionou "+json_data.getString("id_time")+" "+json_data.getString("id_user")+" "+json_data.getString("day"));
+
 
 
 
@@ -239,7 +238,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                             {
                                                                                 JSONObject json_data = jArray2.getJSONObject(i);
                                                                                 timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
-                                                                                System.out.println("ADICIONOU2 "+json_data.getString("id_time_block")+" "+json_data.getString("id_time")+" "+json_data.getString("time_start")+" "+json_data.getString("time_end")+" "+json_data.getString("part")+" "+ json_data.getString("availability"));
+
                                                                             }
                                                                         }
                                                                         catch (Exception e)
@@ -373,7 +372,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
     }
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-        System.out.println(navigationView.toString());
+
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
