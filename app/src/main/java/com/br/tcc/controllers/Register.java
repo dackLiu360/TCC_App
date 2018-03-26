@@ -137,51 +137,49 @@ public class Register extends AppCompatActivity {
                                 if (confirm.trim().length() != 0) {
                                     if (matcher.matches()) {
                                         if (teste == true) {
-                                            if (userDAO.findByUsername(username)) {
 
-                                                if (password.trim().length() >= 8) {
-                                                    if (password.equals(confirm)) {
+                                            if (password.trim().length() >= 8) {
+                                                if (password.equals(confirm)) {
 
-                                                        Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response) {
-                                                                try {
-                                                                    System.out.println("RESPOSTA " + response.toString());
-                                                                    JSONObject jsonResponse = new JSONObject(response);
-                                                                    boolean success = jsonResponse.getBoolean("success");
-                                                                    if (success) {
+                                                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                System.out.println("RESPOSTA " + response.toString());
+                                                                JSONObject jsonResponse = new JSONObject(response);
+                                                                boolean success = jsonResponse.getBoolean("success");
+                                                                if (success) {
 
-                                                                        Intent intent = new Intent(Register.this, ActivityMain.class);
-                                                                        Register.this.startActivity(intent);
+                                                                    Intent intent = new Intent(Register.this, ActivityMain.class);
+                                                                    Register.this.startActivity(intent);
 
-                                                                    } else {
-                                                                        AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                                                                        builder.setMessage("O Cadastro falhou").setNegativeButton("Tentar novamente", null).create().show();
+                                                                } else {
+                                                                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                                                                    builder.setMessage("O Cadastro falhou").setNegativeButton("Tentar novamente", null).create().show();
 
-                                                                    }
-
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
                                                                 }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
                                                             }
-                                                        };
+                                                        }
+                                                    };
+                                                    RegisterDAO rdao = new RegisterDAO(name, username, email, password, responseListener);
+                                                    RequestQueue queue = Volley.newRequestQueue(Register.this);
+                                                    queue.add(rdao);
 
-                                                    } else {
 
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                                                        builder.setMessage("As senhas não conferem").setNegativeButton("Tentar novamente", null).create().show();
-                                                    }
                                                 } else {
 
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                                                    builder.setMessage
-                                                            ("A senha deve conter 8 digitos").setNegativeButton
-                                                            ("Tentar novamente", null).create().show();
-
+                                                    builder.setMessage("As senhas não conferem").setNegativeButton("Tentar novamente", null).create().show();
                                                 }
                                             } else {
+
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                                                builder.setMessage("Usuario já existe").setNegativeButton("Tentar novamente", null).create().show();
+                                                builder.setMessage
+                                                        ("A senha deve conter 8 digitos").setNegativeButton
+                                                        ("Tentar novamente", null).create().show();
 
                                             }
                                         } else {
@@ -227,6 +225,8 @@ public class Register extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                     builder.setMessage("Digite todos os campos").setNegativeButton("Tentar novamente", null).create().show();
                 }
+
+
             }
         });
 
@@ -238,10 +238,14 @@ public class Register extends AppCompatActivity {
     }
 
 
+}
+
+
+
     //public static boolean isValidPassword(String s) {
     //  Pattern PASSWORD_PATTERN = Pattern.compile(
     //    "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}"
     //);
     //return !TextUtils.isEmpty(s) && PASSWORD_PATTERN.matcher(s).matches();
     //}
-}
+
