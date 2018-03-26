@@ -45,8 +45,8 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
 
         switch (v.getId())
         {
-            case R.id.item_info:
-                Snackbar.make(v, "Descrição " +dataModel.getDescription(), Snackbar.LENGTH_LONG)
+            case R.id.description:
+                Snackbar.make(v, "Descrição: " +dataModel.getDescription(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
                 break;
         }
@@ -68,10 +68,10 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_task, parent, false);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.subject = (TextView) convertView.findViewById(R.id.type);
-            viewHolder.deadline = (TextView) convertView.findViewById(R.id.version_number);
-            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title_task);
+            viewHolder.subject = (TextView) convertView.findViewById(R.id.subject);
+            viewHolder.deadline = (TextView) convertView.findViewById(R.id.deadline);
+            viewHolder.info = (ImageView) convertView.findViewById(R.id.description);
 
             result=convertView;
 
