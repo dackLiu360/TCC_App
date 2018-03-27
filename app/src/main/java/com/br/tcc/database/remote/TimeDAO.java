@@ -21,6 +21,7 @@ public class TimeDAO extends StringRequest{
     public TimeDAO(JSONArray timesCSV, Response.Listener<String> listener){
         super(Method.POST, TIME_REQUEST_URL, listener, null);
         params = new HashMap<>();
+        System.out.println("LIST IN TIMEDAO "+timesCSV.toString());
         params.put("timesCSV", timesCSV.toString());
     }
 

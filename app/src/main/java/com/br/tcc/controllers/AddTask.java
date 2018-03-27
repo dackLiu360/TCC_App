@@ -179,9 +179,6 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                             .getDefaultSharedPreferences(getApplicationContext());
                                                     SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                     Gson gson = new Gson();
-                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                    editor.remove("TaskList");
-                                                    editor.commit();
                                                     prefsEditor.putString("TaskList", gson.toJson(tmodelList));
                                                     prefsEditor.apply();
                                                     prefsEditor.commit();
@@ -225,9 +222,6 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                             .getDefaultSharedPreferences(getApplicationContext());
                                                                     SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                     Gson gson = new Gson();
-                                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                                    editor.remove("TimeList");
-                                                                    editor.commit();
                                                                     prefsEditor.putString("TimeList", gson.toJson(tmlist));
                                                                     prefsEditor.apply();
                                                                     prefsEditor.commit();
@@ -257,9 +251,6 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                                                 .getDefaultSharedPreferences(getApplicationContext());
                                                                                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                                         Gson gson = new Gson();
-                                                                                        SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                                                        editor.remove("TimeBlockList");
-                                                                                        editor.commit();
                                                                                         prefsEditor.putString("TimeBlockList", gson.toJson(listTbmodel));
                                                                                         prefsEditor.apply();
                                                                                         prefsEditor.commit();
@@ -268,7 +259,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                                     {
                                                                                         e.printStackTrace();
                                                                                     }
-                                                                                    Intent intent = new Intent(AddTask.this, Profile.class);
+                                                                                    Intent intent = new Intent(AddTask.this, HomePage.class);
                                                                                     AddTask.this.startActivity(intent);
                                                                                 }else{
                                                                                 }
@@ -307,12 +298,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                 RequestQueue queue = Volley.newRequestQueue(AddTask.this);
                                                 queue.add(gtdao);
 
-
-
-
-
-                                                Intent intent = new Intent(AddTask.this, HomePage.class);
-                                                AddTask.this.startActivity(intent);
+                                                
                                             }else{
                                             }
 

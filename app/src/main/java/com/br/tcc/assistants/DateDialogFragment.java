@@ -26,7 +26,7 @@ import java.util.Date;
 
 public class DateDialogFragment extends DialogFragment {
     Cursor dataEach;
-    ArrayList<TimeBlockModel> listItems = new ArrayList<TimeBlockModel>();
+    ArrayList<TimeBlockModel> listItems = new ArrayList<>();
     ArrayList <Integer>positions =new ArrayList();
 
 
@@ -69,6 +69,7 @@ public class DateDialogFragment extends DialogFragment {
             }
         });
         for (int i = 0; i < listItems.size(); i++) {
+            System.out.println(listItems.size());
             if(listItems.get(i).getAvailability().equals("0")){
                 positions.add(i);
             }
@@ -86,6 +87,7 @@ public class DateDialogFragment extends DialogFragment {
                 // Get the current item from ListView
                 View view = super.getView(position,convertView,parent);
                 for (int i = 0; i < positions.size(); i++) {
+                    System.out.println("for");
                     if(positions.get(i)==(position)){
                         view.setBackgroundColor(Color.parseColor("#ff0000"));
                     }

@@ -12,6 +12,14 @@ public class TimeModelInitial {
 
     public TimeModelInitial(String id_user, String year, String month, String day, String initialTime, String finalTime) {
         this.id_user = id_user;
+        if(Integer.parseInt(month)>=1&&Integer.parseInt(month)<=9){
+            month = "0"+month;
+        }
+        if(Integer.parseInt(day)>=1&&Integer.parseInt(day)<=9){
+            day = "0"+day;
+        }
+
+
         date=year+"-"+month+"-"+day;
         this.initialTime = initialTime+ ":00";
         this.finalTime = finalTime+ ":00";

@@ -13,9 +13,13 @@ import android.view.ViewGroup;
 
 import com.br.tcc.assistants.CustomAdapter;
 import com.br.tcc.assistants.TaskModel;
+import com.br.tcc.assistants.TimeBlockModel;
+import com.br.tcc.assistants.TimeModel;
 import com.example.victor.tcc.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Tasks extends ListFragment {
@@ -56,9 +60,8 @@ Context c;
         Gson gson = new Gson();
         String json = appSharedPrefs.getString("TaskList", "");
 
-        final ArrayList<TaskModel> listTasks  = gson.fromJson(json, ArrayList.class);
-
-
+        Type type2 = new TypeToken<ArrayList<TaskModel>>() {}.getType();
+        ArrayList<TaskModel> listTasks = gson.fromJson(json, type2);
         System.out.println("TAMANHO N "+listTasks);
 
 

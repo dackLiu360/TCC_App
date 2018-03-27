@@ -78,18 +78,20 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
         String json3 = sharedPrefs2.getString("TimeList", "");
         Type type2 = new TypeToken<ArrayList<TimeModel>>() {}.getType();
         ArrayList<TimeModel> listTmodel = gson3.fromJson(json3, type2);
-        ArrayList<TimeBlockModel> listTbmodelAssistent = new ArrayList<>();
+
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String json = sharedPrefs.getString("TimeBlockList", "");
-        Type type = new TypeToken<ArrayList<TimeModel>>() {}.getType();
+        Type type = new TypeToken<ArrayList<TimeBlockModel>>() {}.getType();
         ArrayList<TimeBlockModel> listTbmodel = gson.fromJson(json, type);
+        System.out.println("LISTA NO PROFILE "+listTbmodel.size());
 
 
 
 
         for (TimeModel tm : listTmodel){
+            ArrayList<TimeBlockModel> listTbmodelAssistent = new ArrayList<>();
             DateDialogFragment dialogFragment = new DateDialogFragment ();
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -101,12 +103,14 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
             for (TimeBlockModel tbmAssistent : listTbmodel){
                 if(tbmAssistent.getId_time().equals(tm.getId_time())){
                     listTbmodelAssistent.add(tbmAssistent);
-                }
 
+                }
             }
+            System.out.println("ADDED "+listTbmodelAssistent);
             dialogFragment.addListItems(listTbmodelAssistent);
             Event ev1 = new Event(Color.GREEN, cal.getTimeInMillis(), dialogFragment);
             compactCalendarView.addEvent(ev1);
+
 
         }
 

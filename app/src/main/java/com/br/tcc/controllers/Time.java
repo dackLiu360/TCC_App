@@ -178,28 +178,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                         for (int i = 0; i < Integer.parseInt(repeat.getSelectedItem().toString()) ; i++) {
 
 
-                            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        JSONObject jsonResponse = new JSONObject(response);
 
-
-                                        boolean success = jsonResponse.getBoolean("success");
-                                        if (success) {
-
-
-
-                                        } else {
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(Time.this);
-                                            builder.setMessage("Falhou").setNegativeButton("Tentar novamente", null).create().show();
-                                        }
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            };
                             if (dayOfWeek.isChecked()) {
                                 String dayString = dayOfWeek.getText().toString();
                                 if (dayString.equals("Segunda-feira")) {
@@ -243,13 +222,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                 int cMonthAssistent = dateAssistent.get(Calendar.MONTH);
                                 int cYearAssistent = dateAssistent.get(Calendar.YEAR);
                                 int assistentOfMothAssistent = cMonthAssistent+1;
-                                String AssistentOfassistentOfMothAssistent="";
-                                if(assistentOfMothAssistent>=1&&assistentOfMothAssistent<=9){
-                                    AssistentOfassistentOfMothAssistent = "0"+assistentOfMothAssistent;
-                                }else{
-                                    AssistentOfassistentOfMothAssistent = Integer.toString(assistentOfMothAssistent);
-                                }
-                                TimeModelInitial tmodel = new TimeModelInitial(user_id,Integer.toString(cYearAssistent),AssistentOfassistentOfMothAssistent,Integer.toString(cDayAssistent),initialTimeLabel.getText().toString(),finalTimeLabel.getText().toString());
+                                TimeModelInitial tmodel = new TimeModelInitial(user_id,Integer.toString(cYearAssistent),Integer.toString(cMonthAssistent+1),Integer.toString(cDayAssistent),initialTimeLabel.getText().toString(),finalTimeLabel.getText().toString());
                                 times.add(tmodel);
                                 dateAssistent.add(Calendar.DATE, 1);
                             }

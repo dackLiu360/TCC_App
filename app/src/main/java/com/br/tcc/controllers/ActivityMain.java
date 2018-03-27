@@ -27,11 +27,13 @@ import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
 import com.example.victor.tcc.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ActivityMain extends Activity {
@@ -181,13 +183,9 @@ public class ActivityMain extends Activity {
                                                                             .getDefaultSharedPreferences(getApplicationContext());
                                                                     SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                     Gson gson = new Gson();
-                                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                                    editor.remove("TimeList");
-                                                                    editor.commit();
                                                                     prefsEditor.putString("TimeList", gson.toJson(tmlist));
                                                                     prefsEditor.apply();
                                                                     prefsEditor.commit();
-
 
 
                                                                     Response.Listener<String> responseListener3 = new Response.Listener<String>() {
@@ -205,20 +203,21 @@ public class ActivityMain extends Activity {
                                                                                         {
                                                                                             JSONObject json_data = jArray2.getJSONObject(i);
                                                                                             TimeBlockModel tbmodel = new TimeBlockModel(json_data.getString("id_time_block"),json_data.getString("id_time"), json_data.getString("time_start"), json_data.getString("time_end"), json_data.getString("part"),json_data.getString("availability"));
+
                                                                                             listTbmodel.add(tbmodel);
 
 
                                                                                         }
+                                                                                        System.out.println("LISTA TBMODEL NO ACTIVITiMAIN "+listTbmodel);
                                                                                         SharedPreferences appSharedPrefs = PreferenceManager
                                                                                                 .getDefaultSharedPreferences(getApplicationContext());
                                                                                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                                         Gson gson = new Gson();
-                                                                                        SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                                                        editor.remove("TimeBlockList");
-                                                                                        editor.commit();
+
                                                                                         prefsEditor.putString("TimeBlockList", gson.toJson(listTbmodel));
                                                                                         prefsEditor.apply();
                                                                                         prefsEditor.commit();
+
                                                                                     }
                                                                                     catch (Exception e)
                                                                                     {
