@@ -5,7 +5,8 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.br.tcc.controllers.Profile">
+    tools:context="com.br.tcc.controllers.Profile"
+    android:background="#138599">
 
 
 
@@ -41,6 +42,8 @@
             android:layout_height="60dp"
             android:layout_below="@id/CalendarView"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bluebutton"
             android:text="Adicionar Horário" />
 
 
@@ -55,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/drawermenu"
+
         android:layout_gravity="start"
         >
 

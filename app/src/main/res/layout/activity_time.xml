@@ -1,218 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.br.tcc.controllers.Time">
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/consLayout1"
+    android:id="@+id/layout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.constraint.Guideline
-        android:id="@+id/verGuideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/verGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+    android:layout_height="match_parent"
+    android:background="#138599">
 
 
-    <CheckBox
-        android:id="@+id/monday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Segunda-feira"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
-
-    <CheckBox
-        android:id="@+id/tuesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Terça-feira"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
-
-    <CheckBox
-        android:id="@+id/wednesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quarta-feira"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline2" />
-
-    <CheckBox
-        android:id="@+id/thursday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quinta-feira"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline2" />
-
-    <CheckBox
-        android:id="@+id/friday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sexta-feira"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline3" />
-
-    <CheckBox
-        android:id="@+id/saturday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sabado"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline3" />
-
-    <CheckBox
-        android:id="@+id/sunday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Domingo"
-        app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline4" />
-
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horGuideline5"
-        >
-
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawHorizontalTrack="true">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#138599"
+        tools:context="com.br.tcc.controllers.Time">
 
-        <Button
-            android:id="@+id/time_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Escolher horário inicial" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/consLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_bg_login">
 
-        <TextView
-            android:id="@+id/initialTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/time_start"
-            android:layout_centerHorizontal="true"
-            android:text="" />
 
-            <Button
-                android:id="@+id/time_end"
+            <android.support.constraint.Guideline
+                android:id="@+id/verGuideline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/initialTimeLabel"
-                android:layout_centerHorizontal="true"
-                android:text="Escolher horário final" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
 
-        <TextView
-            android:id="@+id/finalTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/time_end"
-            android:layout_centerHorizontal="true"
-            android:text="" />
+            <android.support.constraint.Guideline
+                android:id="@+id/verGuideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.60" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/horGuideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.12" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/horGuideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.20" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/horGuideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.28" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/horGuideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.36" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/horGuideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.45" />
+
 
             <TextView
-                android:id="@+id/repeatLabel"
+                android:id="@+id/AdicionarTarefa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/finalTimeLabel"
                 android:layout_centerHorizontal="true"
-                android:text="Repitir por quantas semanas?" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Adicionar Tarefa"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/verGuideline1"
+                app:layout_constraintRight_toRightOf="@id/verGuideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/repeatTime"
-                android:layout_width="match_parent"
+
+            <CheckBox
+                android:id="@+id/monday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/repeatLabel"
-                android:layout_centerHorizontal="true"
-                android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"/>
-        <Button
-            android:id="@+id/confirm"
+                android:background="#f4f4f4"
+                android:drawablePadding="10dp"
+                android:paddingRight="160dp"
+                android:text="Segunda-feira"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
+
+            <CheckBox
+                android:id="@+id/tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:text="Terça-feira"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
+
+            <CheckBox
+                android:id="@+id/wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:paddingRight="172dp"
+                android:text="Quarta-feira"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline2" />
+
+            <CheckBox
+                android:id="@+id/thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:text="Quinta-feira"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline2" />
+
+            <CheckBox
+                android:id="@+id/friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:paddingRight="178dp"
+                android:text="Sexta-feira"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline3" />
+
+            <CheckBox
+                android:id="@+id/saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:text="Sabado"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline2"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline3" />
+
+            <CheckBox
+                android:id="@+id/sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:paddingRight="50dp"
+                android:text="Domingo"
+                app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline4" />
+
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/horGuideline5">
+
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/tudo"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="0dp">
+
+                    <Button
+                        android:id="@+id/time_start"
+                        android:layout_width="125dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#ffffff"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="15sp"
+                        android:background="@drawable/bluebutton"
+                        android:text="Escolher horário inicial" />
+
+                    <TextView
+                        android:id="@+id/initialTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/time_start"
+                        android:layout_centerHorizontal="true"
+                        android:text="" />
+
+                    <Button
+                        android:id="@+id/time_end"
+                        android:layout_width="125dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/initialTimeLabel"
+                        android:textColor="#ffffff"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="15sp"
+                        android:background="@drawable/bluebutton"
+                        android:layout_centerHorizontal="true"
+                        android:text="Escolher horário final" />
+
+                    <TextView
+                        android:id="@+id/finalTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/time_end"
+                        android:layout_centerHorizontal="true"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/repeatLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/finalTimeLabel"
+                        android:layout_centerHorizontal="true"
+                        android:text="Repitir por quantas semanas?" />
+
+
+
+
+
+
+                    <Spinner
+                        android:id="@+id/repeatTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/repeatLabel"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                    <Button
+                        android:id="@+id/confirm"
+                        android:layout_width="125dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/redbutton"
+                        android:layout_below="@id/repeatTime"
+                        android:layout_centerHorizontal="true"
+                        android:text="Confirmar" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_below="@id/confirm" />
+
+                </RelativeLayout>
+
+
+            </ScrollView>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navMenuHome"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/repeatTime"
-            android:layout_centerHorizontal="true"
-            android:text="Confirmar" />
-            <View
-                android:layout_below="@id/confirm"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
-
-    </RelativeLayout>
-
-
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/drawermenu" />
+    </android.support.v4.widget.DrawerLayout>
 
 
 </android.support.constraint.ConstraintLayout>
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navMenuHome"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/drawermenu"
-        android:layout_gravity="start"
-        ></android.support.design.widget.NavigationView>
-</android.support.v4.widget.DrawerLayout>
-
-
-
 
 
 
