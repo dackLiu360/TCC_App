@@ -1,7 +1,6 @@
 package com.br.tcc.controllers;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,15 +13,12 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.br.tcc.database.local.UserDAO;
 import com.example.victor.tcc.R;
 import com.br.tcc.database.remote.RegisterDAO;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +29,6 @@ public class Register extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final UserDAO userDAO = new UserDAO(this);
-        userDAO.create();
         final EditText nameRegister = (EditText) findViewById(R.id.nameRegister);
         final EditText userRegister = (EditText) findViewById(R.id.userRegister);
         final EditText emailRegister = (EditText) findViewById(R.id.emailRegister);

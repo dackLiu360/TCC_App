@@ -16,12 +16,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.br.tcc.database.local.DataDAO;
-import com.br.tcc.database.local.TasksDAO;
-import com.br.tcc.database.local.TimeBlockDAO;
-import com.br.tcc.database.local.UserDAO;
 import com.br.tcc.database.remote.GetTasksDAO;
-import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
 import com.example.victor.tcc.R;
@@ -39,16 +34,6 @@ public class ActivityMain extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-
-        final UserDAO udao = new UserDAO(this);
-        final DataDAO dataDAO = new DataDAO(this);
-        dataDAO.create();
-        final TimeBlockDAO timeBlockDAO = new TimeBlockDAO(this);
-        timeBlockDAO.create();
-        final TasksDAO tasksDAO = new TasksDAO(this);
-        tasksDAO.create();
-        udao.create();
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
@@ -58,13 +43,6 @@ public class ActivityMain extends Activity {
         final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
         final ArrayList idTimes = new ArrayList();
 
-        // buttonTest.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //     public void onClick(View view) {
-        //        Intent testIntent = new Intent(ActivityMain.this, Test.class);
-        //       ActivityMain.this.startActivity(testIntent);
-        //   }
-        // });
         buttonGoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,9 +141,9 @@ public class ActivityMain extends Activity {
 
 
 
-                                                        GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
-                                                        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-                                                        queue.add(gtbdao);
+                                                        //GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
+                                                        //RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                                        //queue.add(gtbdao);
                                                     }
 
 

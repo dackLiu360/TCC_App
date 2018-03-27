@@ -1,6 +1,5 @@
 package com.br.tcc.controllers;
 
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,23 +15,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.br.tcc.assistants.DateDialogFragment;
-import com.br.tcc.database.local.DataDAO;
-import com.br.tcc.database.local.TimeBlockDAO;
 import com.example.victor.tcc.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

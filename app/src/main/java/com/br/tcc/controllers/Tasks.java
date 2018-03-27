@@ -8,11 +8,9 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.br.tcc.assistants.CustomAdapter;
 import com.br.tcc.assistants.TaskModel;
-import com.br.tcc.database.local.TasksDAO;
 import com.example.victor.tcc.R;
 
 import java.util.ArrayList;

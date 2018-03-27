@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -28,12 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.CustomTimePickerDialog;
-import com.br.tcc.database.local.DataDAO;
-import com.br.tcc.database.local.TasksDAO;
-import com.br.tcc.database.local.TimeBlockDAO;
-import com.br.tcc.database.local.UserDAO;
 import com.br.tcc.database.remote.GetTasksDAO;
-import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.TaskDAO;
 import com.example.victor.tcc.R;
@@ -43,8 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class AddTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -152,7 +144,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                     @Override
                     public void onResponse(String response) {
                         try {
-                           
+
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
@@ -259,9 +251,9 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
 
 
 
-                                                        GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
-                                                        RequestQueue queue = Volley.newRequestQueue(AddTask.this);
-                                                        queue.add(gtbdao);
+                                                        //GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
+                                                        //RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                                        //queue.add(gtbdao);
                                                     }
 
 

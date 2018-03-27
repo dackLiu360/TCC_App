@@ -21,7 +21,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.br.tcc.database.local.UserDAO;
 import com.example.victor.tcc.R;
 
 import java.util.ArrayList;
