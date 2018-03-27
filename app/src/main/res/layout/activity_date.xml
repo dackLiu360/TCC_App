@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#138599">
 
     <ListView
         android:id="@+id/listDates"

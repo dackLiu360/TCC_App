@@ -1,61 +1,141 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/consLayout1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent"
+    android:background="#138599">
 
-    <TextView
-        android:id="@+id/title_task"
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verGuideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="Marshmallow"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/black" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
 
-
-    <TextView
-        android:id="@+id/subject"
+    <android.support.constraint.Guideline
+        android:id="@+id/verGuideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_task"
-        android:layout_marginTop="5dp"
-        android:text="Android 6.0"
-        android:textColor="@android:color/black" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
 
-    <ImageView
-        android:id="@+id/description"
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@android:drawable/ic_dialog_info" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="100" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horGuideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/layout_bg_tasks"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.646"
+        app:layout_constraintLeft_toLeftOf="@id/verGuideline1"
+        app:layout_constraintRight_toRightOf="@id/verGuideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
 
         <TextView
-            android:id="@+id/title_deadline"
+            android:id="@+id/title_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data da Entrega"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:layout_alignParentTop="true"
+            android:text="Marshmallow"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black" />
+
 
         <TextView
-            android:id="@+id/deadline"
+            android:id="@+id/subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="23"
-            android:layout_below="@id/title_deadline"
-            android:textAppearance="?android:attr/textAppearanceButton"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:layout_below="@+id/title_task"
+            android:layout_marginTop="5dp"
+            android:text="Android 6.0"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_dialog_info" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/title_deadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data da Entrega"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/deadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_deadline"
+                android:text="23"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
