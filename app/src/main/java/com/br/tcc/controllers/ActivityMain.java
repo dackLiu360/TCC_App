@@ -3,6 +3,8 @@ package com.br.tcc.controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +18,15 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.br.tcc.assistants.TaskModel;
+import com.br.tcc.assistants.TimeBlockModel;
+import com.br.tcc.assistants.TimeModel;
 import com.br.tcc.database.remote.GetTasksDAO;
+import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.LoginDAO;
 import com.example.victor.tcc.R;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,79 +94,26 @@ public class ActivityMain extends Activity {
                             boolean success = jsonResponse.getBoolean("success");
                             if(success){
 
-                                Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response2) {
-                                        try {
-                                            JSONObject jsonResponse = new JSONObject(response2);
-                                            boolean success = jsonResponse.getBoolean("success");
-                                            if(success){
-                                                try
-                                                {
-
-                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");
-                                                    for (int i = 0; i < jArray.length(); i++)
-                                                    {
-                                                        JSONObject json_data = jArray.getJSONObject(i);
-                                                        dataDAO.addData(json_data.getString("id_time"),json_data.getString("id_user"),json_data.getString("day"));
 
 
+                                String username = jsonResponse.getString("username");
+                                final int user_id = jsonResponse.getInt("user_id");
+                                String email = jsonResponse.getString("email");
+                                String name = jsonResponse.getString("name");
+                                String password = jsonResponse.getString("password");
 
 
-                                                        Response.Listener<String> responseListener3 = new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response23) {
-                                                                try {
-                                                                    JSONObject jsonResponse = new JSONObject(response23);
-                                                                    boolean success = jsonResponse.getBoolean("success");
-                                                                    if(success){
-                                                                        try
-                                                                        {
-                                                                            JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
-                                                                            for (int i = 0; i < jArray2.length(); i++)
-                                                                            {
-                                                                                JSONObject json_data = jArray2.getJSONObject(i);
-                                                                                timeBlockDAO.addData(json_data.getString("id_time_block"),json_data.getString("id_time"),json_data.getString("time_start"),json_data.getString("time_end"),json_data.getString("part"), json_data.getString("availability"));
-                                                                                System.out.println("AQUI");
-                                                                            }
+                                SharedPreferences appSharedPrefs = PreferenceManager
+                                        .getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                                Gson gson = new Gson();
+                                prefsEditor.putString("username", gson.toJson(username));
+                                prefsEditor.putString("userId", gson.toJson(Integer.toString(user_id)));
+                                prefsEditor.putString("email", gson.toJson(email));
+                                prefsEditor.putString("name", gson.toJson(name));
+                                prefsEditor.apply();
+                                prefsEditor.commit();
 
-                                                                        }
-                                                                        catch (Exception e)
-                                                                        {
-                                                                            e.printStackTrace();
-                                                                        }
-                                                                    }else{
-                                                                    }
-
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
-                                                            }
-                                                        };
-
-
-
-
-
-                                                        //GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(json_data.getString("id_time"),responseListener3);
-                                                        //RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-                                                        //queue.add(gtbdao);
-                                                    }
-
-
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    e.printStackTrace();
-                                                }
-                                            }else{
-                                            }
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                };
                                 Response.Listener<String> responseListener4 = new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response4) {
@@ -169,23 +123,144 @@ public class ActivityMain extends Activity {
                                             if(success){
                                                 try
                                                 {
+                                                    ArrayList<TaskModel> tmodelList = new ArrayList<>();
                                                     JSONArray jArray = jsonResponse.getJSONArray("tasksArray");
                                                     for (int i = 0; i < jArray.length(); i++)
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
-                                                        tasksDAO.addData(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
-                                                        System.out.println("TABELA TASKS");
+                                                        TaskModel tmodel = new TaskModel(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
+                                                        tmodelList.add(tmodel);
                                                     }
-                                                    System.out.println("AGORA1");
-                                                    Intent intent = new Intent(ActivityMain.this, HomePage.class);
-                                                    ActivityMain.this.startActivity(intent);
-
+                                                    SharedPreferences appSharedPrefs = PreferenceManager
+                                                            .getDefaultSharedPreferences(getApplicationContext());
+                                                    SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                                                    Gson gson = new Gson();
+                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
+                                                    editor.remove("TaskList");
+                                                    editor.commit();
+                                                    prefsEditor.putString("TaskList", gson.toJson(tmodelList));
+                                                    prefsEditor.apply();
+                                                    prefsEditor.commit();
 
                                                 }
                                                 catch (Exception e)
                                                 {
                                                     e.printStackTrace();
                                                 }
+
+
+
+
+
+                                                Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response2) {
+
+                                                        try {
+                                                            JSONObject jsonResponse = new JSONObject(response2);
+                                                            boolean success = jsonResponse.getBoolean("success");
+                                                            if(success){
+                                                                System.out.println("AQUI1");
+                                                                try
+                                                                {
+
+                                                                    JSONArray jArray = jsonResponse.getJSONArray("timesArray");
+                                                                    ArrayList<String> times_r2 = new ArrayList<String>();
+                                                                    ArrayList<TimeModel> tmlist = new ArrayList<>();
+                                                                    JSONArray times_r2JSON = new JSONArray();
+                                                                    for (int i = 0; i < jArray.length(); i++) {
+                                                                        JSONObject json_data = jArray.getJSONObject(i);
+                                                                        times_r2.add(json_data.getString("id_time")+","+json_data.getString("id_user")+","+json_data.getString("day"));
+                                                                        times_r2JSON.put(json_data.getString("id_time"));
+                                                                        TimeModel tmodel = new TimeModel(json_data.getString("id_time"), json_data.getString("id_user"), json_data.getString("day"));
+                                                                        tmlist.add(tmodel);
+                                                                    }
+
+
+                                                                    SharedPreferences appSharedPrefs = PreferenceManager
+                                                                            .getDefaultSharedPreferences(getApplicationContext());
+                                                                    SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                                                                    Gson gson = new Gson();
+                                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
+                                                                    editor.remove("TimeList");
+                                                                    editor.commit();
+                                                                    prefsEditor.putString("TimeList", gson.toJson(tmlist));
+                                                                    prefsEditor.apply();
+                                                                    prefsEditor.commit();
+
+
+
+                                                                    Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                                                        @Override
+                                                                        public void onResponse(String response23) {
+                                                                            try {
+                                                                                JSONObject jsonResponse = new JSONObject(response23);
+                                                                                boolean success = jsonResponse.getBoolean("success");
+                                                                                if(success){
+                                                                                    ArrayList<TimeBlockModel> listTbmodel = new ArrayList<>();
+                                                                                    try
+                                                                                    {
+                                                                                        JSONArray jArray2 = jsonResponse.getJSONArray("timesBlockArray");
+                                                                                        for (int i = 0; i < jArray2.length(); i++)
+                                                                                        {
+                                                                                            JSONObject json_data = jArray2.getJSONObject(i);
+                                                                                            TimeBlockModel tbmodel = new TimeBlockModel(json_data.getString("id_time_block"),json_data.getString("id_time"), json_data.getString("time_start"), json_data.getString("time_end"), json_data.getString("part"),json_data.getString("availability"));
+                                                                                            listTbmodel.add(tbmodel);
+
+
+                                                                                        }
+                                                                                        SharedPreferences appSharedPrefs = PreferenceManager
+                                                                                                .getDefaultSharedPreferences(getApplicationContext());
+                                                                                        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                                                                                        Gson gson = new Gson();
+                                                                                        SharedPreferences.Editor editor = appSharedPrefs.edit();
+                                                                                        editor.remove("TimeBlockList");
+                                                                                        editor.commit();
+                                                                                        prefsEditor.putString("TimeBlockList", gson.toJson(listTbmodel));
+                                                                                        prefsEditor.apply();
+                                                                                        prefsEditor.commit();
+                                                                                    }
+                                                                                    catch (Exception e)
+                                                                                    {
+                                                                                        e.printStackTrace();
+                                                                                    }
+                                                                                    Intent intent = new Intent(ActivityMain.this, HomePage.class);
+                                                                                    ActivityMain.this.startActivity(intent);
+                                                                                }else{
+                                                                                }
+
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                        }
+                                                                    };
+
+
+                                                                    System.out.println("AQUI5 "+times_r2JSON.toString());
+                                                                    GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(times_r2JSON,responseListener3);
+                                                                    RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                                                    queue.add(gtbdao);
+
+
+
+                                                                }
+                                                                catch (Exception e)
+                                                                {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }else{
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                };
+
+                                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
+                                                RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+                                                queue.add(gtdao);
+
                                             }else{
                                             }
 
@@ -195,24 +270,14 @@ public class ActivityMain extends Activity {
                                     }
                                 };
 
-                                String username = jsonResponse.getString("username");
-                                int user_id = jsonResponse.getInt("user_id");
-                                String email = jsonResponse.getString("email");
-                                String name = jsonResponse.getString("name");
-                                String password = jsonResponse.getString("password");
-                                udao.addData(Integer.toString(user_id),name,username,email,password);
-
-
-                                System.out.println("ID DO USER "+Integer.toString(user_id));
-
-
                                 GetTasksDAO gtsksdao = new GetTasksDAO(Integer.toString(user_id),responseListener4);
                                 RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
                                 queue.add(gtsksdao);
 
-                                GetTimeDAO gtdao = new GetTimeDAO(Integer.toString(user_id),responseListener2);
-                                queue = Volley.newRequestQueue(ActivityMain.this);
-                                queue.add(gtdao);
+
+
+
+
 
                             }else{
                                 layout1.setVisibility(View.VISIBLE);

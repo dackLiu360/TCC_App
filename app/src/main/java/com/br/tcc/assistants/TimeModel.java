@@ -5,16 +5,22 @@ package com.br.tcc.assistants;
  */
 
 public class TimeModel {
+    String id_time;
     String id_user;
-    String initialTime;
-    String finalTime;
-    String date;
+    String day;
 
-    public TimeModel(String id_user, String year, String month, String day, String initialTime, String finalTime) {
+    public TimeModel(String id_time, String id_user, String day) {
+        this.id_time = id_time;
         this.id_user = id_user;
-        date=year+"-"+month+"-"+day;
-        this.initialTime = initialTime+ ":00";
-        this.finalTime = finalTime+ ":00";
+        this.day = day;
+    }
+
+    public String getId_time() {
+        return id_time;
+    }
+
+    public void setId_time(String id_time) {
+        this.id_time = id_time;
     }
 
     public String getId_user() {
@@ -25,32 +31,11 @@ public class TimeModel {
         this.id_user = id_user;
     }
 
-    public String getInitialTime() {
-        return initialTime;
+    public String getDay() {
+        return day;
     }
 
-    public void setInitialTime(String initialTime) {
-        this.initialTime = initialTime;
-    }
-
-    public String getFinalTime() {
-        return finalTime;
-    }
-
-    public void setFinalTime(String finalTime) {
-        this.finalTime = finalTime;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return id_user+","+date+","+initialTime +","+finalTime;
+    public void setDay(String day) {
+        this.day = day;
     }
 }

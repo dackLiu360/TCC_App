@@ -4,7 +4,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -26,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.TimeBlockModel;
 import com.br.tcc.assistants.TimeModel;
+import com.br.tcc.assistants.TimeModelInitial;
 import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.example.victor.tcc.R;
@@ -124,7 +124,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<TimeModel> times = new ArrayList<TimeModel>();
+                ArrayList<TimeModelInitial> times = new ArrayList<TimeModelInitial>();
 
 
 
@@ -249,21 +249,15 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                 }else{
                                     AssistentOfassistentOfMothAssistent = Integer.toString(assistentOfMothAssistent);
                                 }
-                                TimeModel tmodel = new TimeModel(user_id,Integer.toString(cYearAssistent),AssistentOfassistentOfMothAssistent,Integer.toString(cDayAssistent),initialTimeLabel.getText().toString(),finalTimeLabel.getText().toString());
+                                TimeModelInitial tmodel = new TimeModelInitial(user_id,Integer.toString(cYearAssistent),AssistentOfassistentOfMothAssistent,Integer.toString(cDayAssistent),initialTimeLabel.getText().toString(),finalTimeLabel.getText().toString());
                                 times.add(tmodel);
                                 dateAssistent.add(Calendar.DATE, 1);
                             }
 
                         }
                     }
-                    SharedPreferences appSharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-                    Gson gson = new Gson();
-                    String timeListJson = gson.toJson(times);
-                    prefsEditor.putString("TimeList", timeListJson);
-                    prefsEditor.apply();
-                    prefsEditor.commit();
+
+
 
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
@@ -287,12 +281,27 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
                                                         JSONArray jArray = jsonResponse.getJSONArray("timesArray");
                                                         ArrayList<String> times_r2 = new ArrayList<String>();
+                                                        ArrayList<TimeModel> tmlist = new ArrayList<>();
                                                         JSONArray times_r2JSON = new JSONArray();
                                                         for (int i = 0; i < jArray.length(); i++) {
                                                             JSONObject json_data = jArray.getJSONObject(i);
                                                             times_r2.add(json_data.getString("id_time")+","+json_data.getString("id_user")+","+json_data.getString("day"));
                                                             times_r2JSON.put(json_data.getString("id_time"));
+                                                            TimeModel tmodel = new TimeModel(json_data.getString("id_time"), json_data.getString("id_user"), json_data.getString("day"));
+                                                            tmlist.add(tmodel);
                                                         }
+
+
+                                                        SharedPreferences appSharedPrefs = PreferenceManager
+                                                                .getDefaultSharedPreferences(getApplicationContext());
+                                                        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                                                        Gson gson = new Gson();
+                                                        SharedPreferences.Editor editor = appSharedPrefs.edit();
+                                                        editor.remove("TimeList");
+                                                        editor.commit();
+                                                        prefsEditor.putString("TimeList", gson.toJson(tmlist));
+                                                        prefsEditor.apply();
+                                                        prefsEditor.commit();
 
 
 
@@ -319,8 +328,10 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                                                                     .getDefaultSharedPreferences(getApplicationContext());
                                                                             SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                             Gson gson = new Gson();
-                                                                            String timeListJson = gson.toJson(listTbmodel);
-                                                                            prefsEditor.putString("TimeBlockList", timeListJson);
+                                                                            SharedPreferences.Editor editor = appSharedPrefs.edit();
+                                                                            editor.remove("TimeBlockList");
+                                                                            editor.commit();
+                                                                            prefsEditor.putString("TimeBlockList", gson.toJson(listTbmodel));
                                                                             prefsEditor.apply();
                                                                             prefsEditor.commit();
                                                                         }

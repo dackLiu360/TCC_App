@@ -69,16 +69,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        final UserDAO udao = new UserDAO(this);
-        String username = null;
-
-
-        Cursor data = udao.getData();
-        while(data.moveToNext()){
-            username = data.getString(1);
-
-        }
-
 
 
         final Button buttonProfile = (Button) findViewById(R.id.buttonProfile);

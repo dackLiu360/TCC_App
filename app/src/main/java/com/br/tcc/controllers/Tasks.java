@@ -2,8 +2,10 @@ package com.br.tcc.controllers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import com.br.tcc.assistants.CustomAdapter;
 import com.br.tcc.assistants.TaskModel;
 import com.example.victor.tcc.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -47,14 +50,15 @@ Context c;
         super.onActivityCreated(savedInstanceState);
 
         System.out.println("AGORA2");
-        final ArrayList<TaskModel> listTasks = new ArrayList<>();
-        final TasksDAO tdao = new TasksDAO(c);
-        Cursor dataTasks = tdao.getData();
-        while(dataTasks.moveToNext()){
-            System.out.println("ENTROU NO WHILE");
-            TaskModel tmodel = new TaskModel(dataTasks.getString(0),dataTasks.getString(1) ,dataTasks.getString(2) ,dataTasks.getString(3) ,dataTasks.getString(4) ,dataTasks.getString(5) ,dataTasks.getString(6) ,dataTasks.getString(7));
-            listTasks.add(tmodel);
-        }
+
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(c);
+        Gson gson = new Gson();
+        String json = appSharedPrefs.getString("TaskList", "");
+
+        final ArrayList<TaskModel> listTasks  = gson.fromJson(json, ArrayList.class);
+
+
         System.out.println("TAMANHO N "+listTasks);
 
 

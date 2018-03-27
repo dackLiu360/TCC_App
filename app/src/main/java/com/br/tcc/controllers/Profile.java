@@ -3,8 +3,10 @@ package com.br.tcc.controllers;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,12 +20,19 @@ import android.view.View;
 import android.widget.Button;
 
 import com.br.tcc.assistants.DateDialogFragment;
+import com.br.tcc.assistants.TimeBlockModel;
+import com.br.tcc.assistants.TimeModel;
+import com.br.tcc.assistants.TimeModelInitial;
 import com.example.victor.tcc.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,10 +47,8 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TimeBlockDAO timeBlockDAO = new TimeBlockDAO(this);
         NavigationView navigationView = findViewById(R.id.navMenuHome);
         setContentView(R.layout.activity_profile);
-        DataDAO dataDAO = new DataDAO(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
@@ -62,21 +69,42 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.CalendarView);
-        Cursor data = dataDAO.getData();
-        while(data.moveToNext()){
+
+
+
+
+        SharedPreferences sharedPrefs2 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson3 = new Gson();
+        String json3 = sharedPrefs2.getString("TimeList", "");
+        Type type2 = new TypeToken<ArrayList<TimeModel>>() {}.getType();
+        ArrayList<TimeModel> listTmodel = gson3.fromJson(json3, type2);
+        ArrayList<TimeBlockModel> listTbmodelAssistent = new ArrayList<>();
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("TimeBlockList", "");
+        Type type = new TypeToken<ArrayList<TimeModel>>() {}.getType();
+        ArrayList<TimeBlockModel> listTbmodel = gson.fromJson(json, type);
+
+
+
+
+        for (TimeModel tm : listTmodel){
             DateDialogFragment dialogFragment = new DateDialogFragment ();
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date d = null;
             try {
-                d = sdf.parse(data.getString(2));
+                cal.setTime(sdf.parse(tm.getDay()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            cal.setTime(d);
+            for (TimeBlockModel tbmAssistent : listTbmodel){
+                if(tbmAssistent.getId_time().equals(tm.getId_time())){
+                    listTbmodelAssistent.add(tbmAssistent);
+                }
 
-            Cursor dataEach = timeBlockDAO.getDataId(data.getString(0));
-            dialogFragment.addListItems(dataEach);
+            }
+            dialogFragment.addListItems(listTbmodelAssistent);
             Event ev1 = new Event(Color.GREEN, cal.getTimeInMillis(), dialogFragment);
             compactCalendarView.addEvent(ev1);
 

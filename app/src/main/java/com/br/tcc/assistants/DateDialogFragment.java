@@ -26,7 +26,6 @@ import java.util.Date;
 
 public class DateDialogFragment extends DialogFragment {
     Cursor dataEach;
-    Cursor dataEach2;
     ArrayList<TimeBlockModel> listItems = new ArrayList<TimeBlockModel>();
     ArrayList <Integer>positions =new ArrayList();
 
@@ -36,10 +35,7 @@ public class DateDialogFragment extends DialogFragment {
     int clickCounter=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        while(dataEach.moveToNext()){
-            TimeBlockModel tbm = new TimeBlockModel(dataEach.getString(0), dataEach.getString(1), dataEach.getString(2), dataEach.getString(3), dataEach.getString(4) ,dataEach.getString(5));
-            listItems.add(tbm);
-        }
+
 
 
         View rootView = inflater.inflate(R.layout.activity_date, container, false);
@@ -115,8 +111,7 @@ public class DateDialogFragment extends DialogFragment {
 
         return rootView;
     }
-    public void addListItems(Cursor item) {
-        dataEach = item;
-        dataEach2 = dataEach;
+    public void addListItems(ArrayList<TimeBlockModel> listItems) {
+        this.listItems = listItems;
     }
 }
