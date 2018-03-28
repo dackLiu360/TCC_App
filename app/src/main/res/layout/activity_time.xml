@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#138599"
+    tools:context="com.br.tcc.controllers.Time">
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,16 +18,7 @@
     android:background="#138599">
 
 
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#138599"
-        tools:context="com.br.tcc.controllers.Time">
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/consLayout1"
@@ -82,13 +82,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Adicionar Tarefa"
+                android:text="Adicionar Horários"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintLeft_toLeftOf="@id/verGuideline1"
                 app:layout_constraintRight_toRightOf="@id/verGuideline2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:background="#f4f4f4"
                 android:drawablePadding="10dp"
-                android:paddingRight="160dp"
+                android:paddingRight="182dp"
                 android:text="Segunda-feira"
                 app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
                 app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
@@ -122,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:background="#f4f4f4"
                 android:drawablePadding="20dp"
-                android:paddingRight="172dp"
+                android:paddingRight="170dp"
                 android:text="Quarta-feira"
                 app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
                 app:layout_constraintTop_toTopOf="@+id/horGuideline2" />
@@ -143,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:background="#f4f4f4"
                 android:drawablePadding="20dp"
-                android:paddingRight="178dp"
+                android:paddingRight="197dp"
                 android:text="Sexta-feira"
                 app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
                 app:layout_constraintTop_toTopOf="@+id/horGuideline3" />
@@ -164,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:background="#f4f4f4"
                 android:drawablePadding="20dp"
-                android:paddingRight="50dp"
+                android:paddingRight="209dp"
                 android:text="Domingo"
                 app:layout_constraintLeft_toLeftOf="@+id/verGuideline1"
                 app:layout_constraintTop_toTopOf="@+id/horGuideline4" />
@@ -271,6 +269,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
+</android.support.constraint.ConstraintLayout>
         <android.support.design.widget.NavigationView
             android:id="@+id/navMenuHome"
             android:layout_width="wrap_content"
@@ -280,7 +279,7 @@
     </android.support.v4.widget.DrawerLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+
 
 
 

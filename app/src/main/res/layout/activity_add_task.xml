@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.br.tcc.controllers.AddTask">
+
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -207,13 +208,11 @@
                 android:id="@+id/hour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/labelChoose"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
 
 
+                android:layout_alignLeft="@+id/description"
+                android:layout_alignStart="@+id/description"
+                android:layout_below="@+id/labelChoose"
                 android:background="#f4f4f4"
                 android:drawablePadding="20dp"
                 android:hint="Hora"
@@ -247,15 +246,16 @@
                 android:id="@+id/btn_set_date_time"
                 android:layout_width="125dp"
                 android:layout_height="60dp"
-                android:layout_below="@id/minute"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignLeft="@+id/addTask"
+                android:layout_alignStart="@+id/addTask"
+                android:layout_below="@+id/minute"
                 android:background="@drawable/bluebutton"
-
                 android:onClick="showTimePickerDialog"
                 android:text="Data da entrega"
                 android:textColor="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                />
 
             <TextView
 
@@ -271,13 +271,13 @@
 
                 android:id="@+id/addTask"
                 android:layout_width="125dp"
-                android:layout_height="50dp"
+                android:layout_height="2000dp"
                 android:layout_below="@id/et_show_date_time"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/redbutton"
                 android:onClick="showTimePickerDialog"
-                android:text="Finalizar" />
+                android:text="Confirmar" />
 
 
         </RelativeLayout>
