@@ -135,7 +135,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-        System.out.println(navigationView.toString());
+
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }

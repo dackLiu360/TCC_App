@@ -132,7 +132,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         String json = appSharedPrefs.getString("userId", "");
         final String user_id = gson.fromJson(json, String.class);
 
-        System.out.println("ID DO USER "+user_id);
+
 
 
         buttonAddTask.setOnClickListener(new View.OnClickListener() {

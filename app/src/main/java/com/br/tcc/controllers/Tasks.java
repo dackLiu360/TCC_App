@@ -53,7 +53,7 @@ Context c;
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        System.out.println("AGORA2");
+
 
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(c);
@@ -62,7 +62,8 @@ Context c;
 
         Type type2 = new TypeToken<ArrayList<TaskModel>>() {}.getType();
         ArrayList<TaskModel> listTasks = gson.fromJson(json, type2);
-        System.out.println("TAMANHO N "+listTasks);
+
+
 
 
         adapter= new CustomAdapter(listTasks,getActivity());

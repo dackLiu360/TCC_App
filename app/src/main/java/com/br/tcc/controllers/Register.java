@@ -139,7 +139,7 @@ public class Register extends AppCompatActivity {
                                                         @Override
                                                         public void onResponse(String response) {
                                                             try {
-                                                                System.out.println("RESPOSTA " + response.toString());
+
                                                                 JSONObject jsonResponse = new JSONObject(response);
                                                                 boolean success = jsonResponse.getBoolean("success");
                                                                 if (success) {

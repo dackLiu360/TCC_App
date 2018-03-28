@@ -106,7 +106,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
                 }
             }
-            System.out.println("ADDED "+listTbmodelAssistent);
+
             dialogFragment.addListItems(listTbmodelAssistent);
             Event ev1 = new Event(Color.GREEN, cal.getTimeInMillis(), dialogFragment);
             compactCalendarView.addEvent(ev1);
@@ -203,7 +203,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     }
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navMenuHome);
-        System.out.println(navigationView.toString());
+
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
