@@ -1,6 +1,7 @@
 package com.br.tcc.controllers;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 public class Register extends AppCompatActivity {
 
     @Override
@@ -29,6 +32,9 @@ public class Register extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        final ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.consLayout1);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         final EditText nameRegister = (EditText) findViewById(R.id.nameRegister);
         final EditText userRegister = (EditText) findViewById(R.id.userRegister);
         final EditText emailRegister = (EditText) findViewById(R.id.emailRegister);

@@ -46,6 +46,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 public class AddTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -118,10 +120,13 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mDrawerLayout.bringToFront();
+        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
