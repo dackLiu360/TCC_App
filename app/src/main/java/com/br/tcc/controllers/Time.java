@@ -275,9 +275,6 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                                                 .getDefaultSharedPreferences(getApplicationContext());
                                                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                         Gson gson = new Gson();
-                                                        SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                        editor.remove("TimeList");
-                                                        editor.commit();
                                                         prefsEditor.putString("TimeList", gson.toJson(tmlist));
                                                         prefsEditor.apply();
                                                         prefsEditor.commit();
@@ -307,9 +304,6 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                                                                                     .getDefaultSharedPreferences(getApplicationContext());
                                                                             SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                                             Gson gson = new Gson();
-                                                                            SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                                            editor.remove("TimeBlockList");
-                                                                            editor.commit();
                                                                             prefsEditor.putString("TimeBlockList", gson.toJson(listTbmodel));
                                                                             prefsEditor.apply();
                                                                             prefsEditor.commit();
@@ -375,7 +369,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
                     for (int i = 0; i < times.size(); i++) {
                         timesJSON.put(times.get(i).toString());
                     }
-                    System.out.println(timesJSON);
+
 
 
                     TimeDAO tdao = new TimeDAO(timesJSON,responseListener);

@@ -69,7 +69,7 @@ public class ActivityMain extends Activity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("LOGIN");
+
                 final String username = userLogin.getText().toString();
                 final String password = passwordLogin.getText().toString();
                 if (username.trim().length() != 0) {
@@ -143,9 +143,6 @@ public class ActivityMain extends Activity {
                                                             .getDefaultSharedPreferences(getApplicationContext());
                                                     SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                                                     Gson gson = new Gson();
-                                                    SharedPreferences.Editor editor = appSharedPrefs.edit();
-                                                    editor.remove("TaskList");
-                                                    editor.commit();
                                                     prefsEditor.putString("TaskList", gson.toJson(tmodelList));
                                                     prefsEditor.apply();
                                                     prefsEditor.commit();
@@ -168,7 +165,7 @@ public class ActivityMain extends Activity {
                                                             JSONObject jsonResponse = new JSONObject(response2);
                                                             boolean success = jsonResponse.getBoolean("success");
                                                             if(success){
-                                                                System.out.println("AQUI1");
+
                                                                 try
                                                                 {
 
@@ -214,7 +211,7 @@ public class ActivityMain extends Activity {
 
 
                                                                                         }
-                                                                                        System.out.println("LISTA TBMODEL NO ACTIVITiMAIN "+listTbmodel);
+
                                                                                         SharedPreferences appSharedPrefs = PreferenceManager
                                                                                                 .getDefaultSharedPreferences(getApplicationContext());
                                                                                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
@@ -241,7 +238,7 @@ public class ActivityMain extends Activity {
                                                                     };
 
 
-                                                                    System.out.println("AQUI5 "+times_r2JSON.toString());
+
                                                                     GetTimeBlockDAO gtbdao = new GetTimeBlockDAO(times_r2JSON,responseListener3);
                                                                     RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
                                                                     queue.add(gtbdao);

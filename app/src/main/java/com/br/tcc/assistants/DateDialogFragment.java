@@ -42,7 +42,6 @@ public class DateDialogFragment extends DialogFragment {
         getDialog().setTitle("Simple Dialog");
         Button dismiss = (Button) rootView.findViewById(R.id.dismiss);
         ListView list = (ListView) rootView.findViewById(R.id.listDates);
-        System.out.println("TAMANHO: "+positions.size());
 
 
         //sort listItems
@@ -69,7 +68,6 @@ public class DateDialogFragment extends DialogFragment {
             }
         });
         for (int i = 0; i < listItems.size(); i++) {
-            System.out.println(listItems.size());
             if(listItems.get(i).getAvailability().equals("0")){
                 positions.add(i);
             }
@@ -87,7 +85,6 @@ public class DateDialogFragment extends DialogFragment {
                 // Get the current item from ListView
                 View view = super.getView(position,convertView,parent);
                 for (int i = 0; i < positions.size(); i++) {
-                    System.out.println("for");
                     if(positions.get(i)==(position)){
                         view.setBackgroundColor(Color.parseColor("#ff0000"));
                     }
