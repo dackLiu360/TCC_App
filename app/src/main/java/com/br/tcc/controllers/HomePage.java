@@ -27,7 +27,6 @@ import com.example.victor.tcc.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawerLayout;
@@ -68,8 +67,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mDrawerLayout.bringToFront();
-        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

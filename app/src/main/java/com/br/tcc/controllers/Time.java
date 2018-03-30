@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class Time extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
@@ -67,8 +66,6 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
 
         ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.consLayout1);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);

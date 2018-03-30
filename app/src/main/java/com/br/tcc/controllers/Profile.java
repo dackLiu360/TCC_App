@@ -40,7 +40,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 
 public class Profile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,8 +63,6 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mDrawerLayout.bringToFront();
-        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

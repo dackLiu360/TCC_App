@@ -37,7 +37,6 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class ActivityMain extends Activity {
     LottieAnimationView animationView;
@@ -47,8 +46,6 @@ public class ActivityMain extends Activity {
 
         setContentView(R.layout.activity_main);
         final ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.consLayout1);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         final EditText userLogin = (EditText) findViewById(R.id.userLogin);
         final EditText passwordLogin = (EditText) findViewById(R.id.passwordLogin);
         final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
