@@ -1,11 +1,14 @@
 package com.br.tcc.controllers;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +27,17 @@ import java.util.ArrayList;
 
 public class Tasks extends ListFragment {
 Context c;
+FragmentManager fm;
+Activity a;
     private static CustomAdapter adapter;
     public Tasks() {
         // Required empty public constructor
     }
     @SuppressLint("ValidFragment")
-    public Tasks(Context c) {
+    public Tasks(Context c, FragmentManager fm, Activity a) {
         this.c = c;
+        this.fm = fm;
+        this.a = a;
     }
 
     @Override
@@ -64,10 +71,9 @@ Context c;
         ArrayList<TaskModel> listTasks = gson.fromJson(json, type2);
 
 
-
-
-        adapter= new CustomAdapter(listTasks,getActivity());
+        adapter= new CustomAdapter(listTasks,getActivity(),fm, a);
         setListAdapter(adapter);
+
 
     }
 

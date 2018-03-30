@@ -1,5 +1,6 @@
 package com.br.tcc.controllers;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    Activity activity = this;
 
 
     @Override
@@ -145,9 +147,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         adapter.addFragment(new Recommendations(), "Recomendações");
 
 
-
-
-        adapter.addFragment(new Tasks(this), "Tarefas");
+        FragmentManager fm = getSupportFragmentManager();
+        adapter.addFragment(new Tasks(this, fm, activity), "Tarefas");
         viewPager.setAdapter(adapter);
     }
 

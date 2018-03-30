@@ -113,6 +113,7 @@ public class ActivityMain extends Activity {
                                 prefsEditor.putString("userId", gson.toJson(Integer.toString(user_id)));
                                 prefsEditor.putString("email", gson.toJson(email));
                                 prefsEditor.putString("name", gson.toJson(name));
+                                prefsEditor.putString("password", gson.toJson(password));
                                 prefsEditor.apply();
                                 prefsEditor.commit();
 

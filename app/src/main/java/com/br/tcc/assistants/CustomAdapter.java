@@ -1,6 +1,10 @@
 package com.br.tcc.assistants;
 
+import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.victor.tcc.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -20,6 +25,11 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
     private ArrayList<TaskModel> dataSet;
     Context mContext;
     private static CustomAdapter adapter;
+    FragmentManager fm;
+    Activity a;
+
+
+
 
     // View lookup cache
     private static class ViewHolder {
@@ -29,10 +39,12 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
         ImageView info;
     }
 
-    public CustomAdapter(ArrayList<TaskModel> data, Context context) {
+    public CustomAdapter(ArrayList<TaskModel> data, Context context, FragmentManager fm, Activity a) {
         super(context, R.layout.item_task, data);
         this.dataSet = data;
         this.mContext=context;
+        this.fm =fm;
+        this.a=a;
 
     }
 
@@ -46,8 +58,19 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
         switch (v.getId())
         {
             case R.id.description:
-                Snackbar.make(v, "Descrição: " +dataModel.getDescription(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
+                String json;
+                SharedPreferences appSharedPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(mContext);
+                Gson gson = new Gson();
+                json = appSharedPrefs.getString("username", "");
+                String username = gson.fromJson(json, String.class);
+                json = appSharedPrefs.getString("email", "");
+                String email = gson.fromJson(json, String.class);
+                json = appSharedPrefs.getString("password", "");
+                String password = gson.fromJson(json, String.class);
+                ChatFragment chat = new ChatFragment();
+                chat.setData(dataModel.getId_task(),username, email, password, a);
+                chat.show(fm,"Chat");
                 break;
         }
     }

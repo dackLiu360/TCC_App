@@ -35,8 +35,6 @@ public class Register extends AppCompatActivity {
         final EditText passwordRegister = (EditText) findViewById(R.id.passwordRegister);
         final EditText confirmPassword = (EditText) findViewById(R.id.confirmPassword);
         final Button buttonRegister = (Button) findViewById(R.id.buttonRegister);
-
-
         final TextView buttonGoToLogin = (TextView) findViewById(R.id.buttonGoToLogin);
 
         buttonGoToLogin.setOnClickListener(new View.OnClickListener() {

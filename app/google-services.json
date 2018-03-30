@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "918677238083",
+    "firebase_url": "https://tcctarefachatfinal.firebaseio.com",
+    "project_id": "tcctarefachatfinal",
+    "storage_bucket": "tcctarefachatfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918677238083:android:70272d58a03833a7",
+        "android_client_info": {
+          "package_name": "com.example.victor.tcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918677238083-5v5ja9i168vmg61doq4pbirl8c3olj4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADF2ryALjKWGoCc-Sz0eCcXb5NS7DKFEM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
