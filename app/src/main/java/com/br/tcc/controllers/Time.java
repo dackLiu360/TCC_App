@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 public class Time extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private DrawerLayout mDrawerLayout;
@@ -63,12 +66,15 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
         dropdown[0].setAdapter(adapter);
 
 
-
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.consLayout1);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cl, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mDrawerLayout.bringToFront();
+
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

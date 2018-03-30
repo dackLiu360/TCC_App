@@ -30,7 +30,8 @@
         <activity android:name="com.br.tcc.controllers.Register"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.br.tcc.controllers.HomePage" />
-        <activity android:name="com.br.tcc.controllers.Profile" />
+        <activity android:name="com.br.tcc.controllers.Profile"
+            />
         <activity android:name="com.br.tcc.controllers.Time" />
         <activity android:name="com.br.tcc.controllers.AddTask" />
 

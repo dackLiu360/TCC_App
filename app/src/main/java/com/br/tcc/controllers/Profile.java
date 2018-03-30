@@ -4,25 +4,27 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.br.tcc.assistants.DateDialogFragment;
 import com.br.tcc.assistants.TimeBlockModel;
 import com.br.tcc.assistants.TimeModel;
-import com.br.tcc.assistants.TimeModelInitial;
 import com.example.victor.tcc.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -36,6 +38,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 
 public class Profile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,20 +48,28 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     private static final String TAG = "TESTE" ;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private ActionBar toolbar;
+    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MMM - yyyy", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         NavigationView navigationView = findViewById(R.id.navMenuHome);
+
         setContentView(R.layout.activity_profile);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
+
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mDrawerLayout.bringToFront();
+        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(mDrawerLayout, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         final Button buttonAddTime = (Button) findViewById(R.id.buttonAddTime);
 
@@ -87,7 +100,27 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
         ArrayList<TimeBlockModel> listTbmodel = gson.fromJson(json, type);
         System.out.println("LISTA NO PROFILE "+listTbmodel.size());
 
+        toolbar = getSupportActionBar();
+        toolbar.setTitle(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
 
+
+
+
+
+
+      /*  showPreviousMonthBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendarView.showPreviousMonth();
+            }
+        });
+
+        showNextMonthBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendarView.showNextMonth();
+            }
+        });*/
 
 
         for (TimeModel tm : listTmodel){
@@ -114,6 +147,11 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
         }
 
+        // final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.CalendarView);
+
+        //toolbar.setTitle(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        // Calendar c = Calendar.getInstance();
       //  c.setTime(Calendar.getInstance().getTime());
         //c.add(Calendar.DATE, 1);  // number of days to add
@@ -137,6 +175,7 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
+                toolbar.setTitle(dateFormatForMonth.format(firstDayOfNewMonth));
                 Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
             }
         });
@@ -144,6 +183,12 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
 
 
     }
+
+
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(mToggle.onOptionsItemSelected(item)){

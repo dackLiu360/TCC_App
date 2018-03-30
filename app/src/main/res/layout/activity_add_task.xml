@@ -8,69 +8,68 @@
     android:layout_height="match_parent"
     tools:context="com.br.tcc.controllers.AddTask">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/consLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#138599">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/verGuideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        <android.support.constraint.Guideline
+            android:id="@+id/verGuideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/verGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        <android.support.constraint.Guideline
+            android:id="@+id/verGuideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.10" />
+        <android.support.constraint.Guideline
+            android:id="@+id/horGuideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
+        <android.support.constraint.Guideline
+            android:id="@+id/horGuideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
+        <android.support.constraint.Guideline
+            android:id="@+id/horGuideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.28" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="100" />
+        <android.support.constraint.Guideline
+            android:id="@+id/horGuideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="100" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/horGuideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        <android.support.constraint.Guideline
+            android:id="@+id/horGuideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -249,16 +248,15 @@
                 android:id="@+id/btn_set_date_time"
                 android:layout_width="125dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="5dp"
                 android:layout_alignLeft="@+id/addTask"
                 android:layout_alignStart="@+id/addTask"
                 android:layout_below="@+id/minute"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bluebutton"
                 android:onClick="showTimePickerDialog"
                 android:text="Data da entrega"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
 
             <TextView
 
@@ -286,7 +284,6 @@
         </RelativeLayout>
 
 
-
     </android.support.constraint.ConstraintLayout>
 
 
@@ -294,10 +291,8 @@
         android:id="@+id/navMenuHome"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:menu="@menu/drawermenu"
         android:layout_gravity="start"
-        ></android.support.design.widget.NavigationView>
+        app:menu="@menu/drawermenu"></android.support.design.widget.NavigationView>
 
 
-
-    </android.support.v4.widget.DrawerLayout>
+</android.support.v4.widget.DrawerLayout>

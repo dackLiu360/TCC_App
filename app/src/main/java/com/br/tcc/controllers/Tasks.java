@@ -13,6 +13,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.br.tcc.assistants.CustomAdapter;
 import com.br.tcc.assistants.TaskModel;
@@ -24,6 +25,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class Tasks extends ListFragment {
 Context c;
@@ -42,6 +45,8 @@ Activity a;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
     }
@@ -53,7 +58,8 @@ Activity a;
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.activity_tasks, container, false);
-
+        OverScrollDecoratorHelper.setUpStaticOverScroll(rootView, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(rootView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         return rootView;
     }
     @Override
