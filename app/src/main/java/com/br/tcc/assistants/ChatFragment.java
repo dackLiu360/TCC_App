@@ -70,7 +70,7 @@ public class ChatFragment extends DialogFragment {
          //else{
         System.out.println("EMAIL: "+email);
         System.out.println("PASSWORD: "+password);
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword("teste@teste2.com", "123456");
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword("teste@teste3.com", "123456");
          //@}
 
         displayChatMessage();

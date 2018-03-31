@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TCC_App.iml" filepath="$PROJECT_DIR$/TCC_App.iml" />
+      <module fileurl="file://C:\Users\Victor\AndroidStudioProjects\TCC_App\TCC_App.iml" filepath="C:\Users\Victor\AndroidStudioProjects\TCC_App\TCC_App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Victor\AndroidStudioProjects\TCC_App\app\app.iml" filepath="C:\Users\Victor\AndroidStudioProjects\TCC_App\app\app.iml" />
     </modules>
   </component>
 </project>
