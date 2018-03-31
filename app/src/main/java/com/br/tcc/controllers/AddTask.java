@@ -37,6 +37,7 @@ import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.TaskDAO;
 import com.example.victor.tcc.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -129,11 +130,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        String json = appSharedPrefs.getString("userId", "");
-        final String user_id = gson.fromJson(json, String.class);
+        final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 

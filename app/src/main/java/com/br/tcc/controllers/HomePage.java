@@ -23,6 +23,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.victor.tcc.R;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,13 +114,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        finish();
-                        Intent i=new Intent();
-                        i = new Intent(HomePage.this, ActivityMain.class);
-                        HomePage.this.startActivity(i);
-
-                        finish();
-
+                        AuthUI.getInstance().signOut(activity).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent logoutIntent = new Intent(HomePage.this, ActivityMain.class);
+                                HomePage.this.startActivity(logoutIntent);
+                            }
+                        });
                     }
                 });
 

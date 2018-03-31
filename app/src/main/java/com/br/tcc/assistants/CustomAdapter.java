@@ -69,7 +69,7 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
                 json = appSharedPrefs.getString("password", "");
                 String password = gson.fromJson(json, String.class);
                 ChatFragment chat = new ChatFragment();
-                chat.setData(dataModel.getId_task(),username, email, password, a);
+                chat.setData(dataModel.getId_task());
                 chat.show(fm,"Chat");
                 break;
         }

@@ -69,6 +69,7 @@ Activity a;
                 .getDefaultSharedPreferences(c);
         Gson gson = new Gson();
         String json = appSharedPrefs.getString("TaskList", "");
+        System.out.println("TASKLIST "+json);
 
         Type type2 = new TypeToken<ArrayList<TaskModel>>() {}.getType();
         ArrayList<TaskModel> listTasks = gson.fromJson(json, type2);

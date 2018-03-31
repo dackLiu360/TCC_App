@@ -40,9 +40,6 @@ public class ChatFragment extends DialogFragment {
     FloatingActionButton fab;
     View rootView;
     String taskID;
-    String username;
-    String email;
-    String password;
     Activity a;
 
 
@@ -58,21 +55,16 @@ public class ChatFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 EditText input = (EditText)rootView.findViewById(R.id.input);
-                FirebaseDatabase.getInstance().getReference().child(taskID).push().setValue(new ChatMessage(input.getText().toString(), username));
+                FirebaseDatabase.getInstance().getReference().child(taskID).push().setValue(new ChatMessage(input.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
                 input.setText("");
             }
         });
 
 
         // if(FirebaseAuth.getInstance().getCurrentUser() == null){
-        // startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),SIGN_IN_REQUEST_CODE);
+         //startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),SIGN_IN_REQUEST_CODE);
         // }
          //else{
-        System.out.println("EMAIL: "+email);
-        System.out.println("PASSWORD: "+password);
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword("teste@teste3.com", "123456");
-         //@}
-
         displayChatMessage();
 
         return rootView;
@@ -104,12 +96,9 @@ public class ChatFragment extends DialogFragment {
         listOfMessage.setAdapter(adapter);
     }
 
-    public void setData(String taskID, String username, String email, String password, Activity a){
+    public void setData(String taskID){
         this.taskID = taskID;
-        this.username = username;
-        this.email = email;
-        this.password=password;
-        //this.a = a;
+
     }
 
 }

@@ -32,6 +32,7 @@ import com.br.tcc.database.remote.GetTimeDAO;
 import com.example.victor.tcc.R;
 import com.br.tcc.database.remote.TimeDAO;
 import com.br.tcc.assistants.TimePickerFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -77,13 +78,7 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-
-
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        String json = appSharedPrefs.getString("userId", "");
-        final String user_id = gson.fromJson(json, String.class);
+        final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final Button time_start = (Button) findViewById(R.id.time_start);
         final Button time_end = (Button) findViewById(R.id.time_end);
         time_end.setEnabled(false);
