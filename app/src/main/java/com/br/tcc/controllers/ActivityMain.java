@@ -173,7 +173,9 @@ public class ActivityMain extends Activity {
             @Override
             public void onResponse(String response4) {
                 try {
+                    System.out.println("RESPOSTA 2"+response4);
                     JSONObject jsonResponse = new JSONObject(response4);
+                    System.out.println("RESPOSTA "+response4);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
                         try {
