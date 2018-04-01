@@ -15,19 +15,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+import android.widget.ListView;
+import android.widget.TextView;
 import com.br.tcc.assistants.DateDialogFragment;
 import com.br.tcc.assistants.TimeBlockModel;
 import com.br.tcc.assistants.TimeModel;
 import com.example.victor.tcc.R;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -250,4 +254,5 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
             navigationView.setNavigationItemSelectedListener(this);
         }
     }
+
 }

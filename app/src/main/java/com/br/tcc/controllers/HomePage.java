@@ -14,18 +14,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import com.br.tcc.assistants.Recomendation;
 import com.example.victor.tcc.R;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +52,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
 
         FloatingActionButton buttonAddTask = findViewById(R.id.buttonAddTask);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
@@ -184,4 +191,5 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             return mFragmentTitleList.get(position);
         }
     }
+
 }

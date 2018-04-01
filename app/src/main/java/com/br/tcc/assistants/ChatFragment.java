@@ -87,7 +87,6 @@ public class ChatFragment extends DialogFragment {
 
 
         listOfMessage = (ListView)rootView.findViewById(R.id.list_of_message);
-            System.out.println("TAREFA "+taskID);
         adapter = new FirebaseListAdapter<ChatMessage>(a,ChatMessage.class,R.layout.list_item,FirebaseDatabase.getInstance().getReference().child("Tasks").child(taskID))
 
         {

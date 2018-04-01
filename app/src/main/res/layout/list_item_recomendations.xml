@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_date"
+        android:id="@+id/img_date"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:layout_below="@id/img_date"
+        android:id="@+id/recomendation_time_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:layout_below="@id/recomendation_time_day"
+        android:id="@+id/recomendation_time_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:layout_below="@id/pb"
+        android:id="@+id/task_title"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/task_title"
+        android:src="@drawable/ic_task"
+        android:layout_marginTop="15dp"
+        android:id="@+id/img_task" />
+    <TextView
+        android:layout_below="@id/task_title"
+        android:id="@+id/range"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

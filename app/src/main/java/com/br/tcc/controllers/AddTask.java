@@ -29,6 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.CustomTimePickerDialog;
+import com.br.tcc.assistants.Recomendation;
 import com.br.tcc.assistants.TaskModel;
 import com.br.tcc.assistants.TimeBlockModel;
 import com.br.tcc.assistants.TimeModel;
@@ -36,16 +37,21 @@ import com.br.tcc.database.remote.GetTasksDAO;
 import com.br.tcc.database.remote.GetTimeBlockDAO;
 import com.br.tcc.database.remote.GetTimeDAO;
 import com.br.tcc.database.remote.TaskDAO;
+import com.br.tcc.database.remote.TaskInsertedDAO;
 import com.example.victor.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class AddTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -154,7 +160,110 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
+
                             if (success) {
+                                String lastTaskInserted = jsonResponse.getString("taskInserted");
+
+                                Response.Listener<String> responseListener6 = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response6) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response6);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if(success==true){
+                                                JSONArray jArray = jsonResponse.getJSONArray("taskBlockArray");
+                                                long timeBlockBefore=0;
+                                                long timeStart=0;
+                                                long timeEnd=0;
+                                                Date dateStartToInsert = null;
+                                                Date dateEndToInsert= null;
+                                                long progress = 0;
+                                                int counter = 0;
+                                                for (int i = 0; i < jArray.length(); i++) {
+                                                    JSONObject json_data = jArray.getJSONObject(i);
+                                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                    Date dateStart = null;
+                                                    Date dateEnd = null;
+
+                                                    try {
+                                                        dateStart = format.parse(json_data.getString("day")+" "+json_data.getString("time_start"));
+                                                        dateEnd= format.parse(json_data.getString("day")+" "+json_data.getString("time_end"));
+                                                        long time = dateStart.getTime();
+
+                                                        if(time-timeBlockBefore==1800000){
+                                                            timeEnd = dateEnd.getTime();
+                                                            dateEndToInsert = dateEnd;
+                                                            counter++;
+                                                        }else{
+                                                            if(timeStart==0){
+                                                                timeStart = dateStart.getTime();
+                                                                dateStartToInsert = dateStart;
+
+                                                            }else{
+                                                                if(counter == 0){
+                                                                    timeStart = dateStart.getTime();
+                                                                    dateStartToInsert = dateStart;
+
+                                                                    timeEnd = dateEnd.getTime();
+                                                                    dateEndToInsert = dateEnd;
+                                                                }
+                                                                System.out.println("Data inserida: "+dateStartToInsert.toString()+"---"+dateEndToInsert.toString());
+                                                                double progressToCommit = ((progress/((double)(jArray.length())))*100);
+                                                                System.out.println();
+                                                                Date deadline= format.parse(json_data.getString("deadline"));
+                                                                FirebaseDatabase.getInstance().getReference().child("Recomendations").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(new Recomendation(json_data.getString("title"), json_data.getString("subject"), timeStart, timeEnd,deadline.getTime(), progressToCommit, false));
+                                                                timeStart = dateStart.getTime();
+                                                                dateStartToInsert = dateStart;
+                                                                progress = i;
+                                                                counter=0;
+                                                            }
+                                                        }
+
+                                                        timeBlockBefore=time;
+                                                    } catch (ParseException e) {
+                                                        // TODO Auto-generated catch block
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+
+                                            }else{
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+
+
+
+
+
+
+
+
+
+
+                                TaskInsertedDAO tidao = new TaskInsertedDAO(lastTaskInserted, responseListener6);
+                                RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                queue.add(tidao);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -165,6 +274,8 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                             JSONObject jsonResponse = new JSONObject(response4);
                                             boolean success = jsonResponse.getBoolean("success");
                                             if(success){
+
+
                                                 try
                                                 {
                                                     ArrayList<TaskModel> tmodelList = new ArrayList<>();
@@ -309,7 +420,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                 };
 
                                 GetTasksDAO gtsksdao = new GetTasksDAO(user_id,responseListener4);
-                                RequestQueue queue = Volley.newRequestQueue(AddTask.this);
+                                queue = Volley.newRequestQueue(AddTask.this);
                                 queue.add(gtsksdao);
 
 

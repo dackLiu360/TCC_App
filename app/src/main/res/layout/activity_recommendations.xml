@@ -5,14 +5,9 @@
     tools:context="com.br.tcc.controllers.Recommendations"
     android:background="#138599">
 
-    <TextView
+    <ListView
+        android:id="@+id/list_recomendations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recomendações"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
-
-
-
+        />
 </RelativeLayout>
