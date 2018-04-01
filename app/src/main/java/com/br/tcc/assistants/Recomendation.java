@@ -12,11 +12,12 @@ public class Recomendation {
     long startTime, endTime, deadline;
     double progress;
     boolean group;
+    long day;
 
     public Recomendation() {
     }
 
-    public Recomendation(String taskTitle, String subject, long startTime, long endTime, long deadline, double progress, boolean group) {
+    public Recomendation(String taskTitle, String subject, long startTime, long endTime, long deadline, double progress, boolean group, long day) {
         this.taskTitle = taskTitle;
         this.subject = subject;
         this.startTime = startTime;
@@ -24,6 +25,7 @@ public class Recomendation {
         this.deadline = deadline;
         this.progress = progress;
         this.group = group;
+        this.day = day;
     }
 
     public String getTaskTitle() {
@@ -80,5 +82,13 @@ public class Recomendation {
 
     public void setGroup(boolean group) {
         this.group = group;
+    }
+
+    public long getDay() {
+        return day;
+    }
+
+    public void setDay(long day) {
+        this.day = day;
     }
 }

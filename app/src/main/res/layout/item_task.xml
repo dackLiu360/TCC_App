@@ -108,7 +108,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@android:drawable/ic_dialog_info" />
+            android:src="@drawable/ic_chat" />
 
 
         <RelativeLayout

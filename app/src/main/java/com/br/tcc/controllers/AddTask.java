@@ -51,7 +51,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 
 public class AddTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -172,6 +175,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                             boolean success = jsonResponse.getBoolean("success");
                                             if(success==true){
                                                 JSONArray jArray = jsonResponse.getJSONArray("taskBlockArray");
+                                                jArray = sortJsonArrayByDate(jArray);
                                                 long timeBlockBefore=0;
                                                 long timeStart=0;
                                                 long timeEnd=0;
@@ -179,27 +183,47 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                 Date dateEndToInsert= null;
                                                 long progress = 0;
                                                 int counter = 0;
+                                                boolean last=false;
                                                 for (int i = 0; i < jArray.length(); i++) {
+                                                    if(i==jArray.length()-1) {
+                                                        last = true;
+                                                    }
                                                     JSONObject json_data = jArray.getJSONObject(i);
                                                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                     Date dateStart = null;
                                                     Date dateEnd = null;
+                                                    SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                    Date day = null;
+
+
 
                                                     try {
                                                         dateStart = format.parse(json_data.getString("day")+" "+json_data.getString("time_start"));
                                                         dateEnd= format.parse(json_data.getString("day")+" "+json_data.getString("time_end"));
+                                                        day = dayFormat.parse(json_data.getString("day"));
                                                         long time = dateStart.getTime();
 
-                                                        if(time-timeBlockBefore==1800000){
+                                                        if(time-timeBlockBefore==1800000 && last==false){
                                                             timeEnd = dateEnd.getTime();
                                                             dateEndToInsert = dateEnd;
                                                             counter++;
                                                         }else{
-                                                            if(timeStart==0){
+                                                            if(timeStart==0 && last==false){
                                                                 timeStart = dateStart.getTime();
                                                                 dateStartToInsert = dateStart;
-
+                                                                counter++;
                                                             }else{
+                                                                if(last==true &&timeStart==0){
+                                                                    timeStart = dateStart.getTime();
+                                                                    dateStartToInsert = dateStart;
+
+                                                                    timeEnd = dateEnd.getTime();
+                                                                    dateEndToInsert = dateEnd;
+                                                                }
+                                                                if(last==true){
+                                                                    timeEnd = dateEnd.getTime();
+                                                                    dateEndToInsert = dateEnd;
+                                                                }
                                                                 if(counter == 0){
                                                                     timeStart = dateStart.getTime();
                                                                     dateStartToInsert = dateStart;
@@ -211,7 +235,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                 double progressToCommit = ((progress/((double)(jArray.length())))*100);
                                                                 System.out.println();
                                                                 Date deadline= format.parse(json_data.getString("deadline"));
-                                                                FirebaseDatabase.getInstance().getReference().child("Recomendations").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(new Recomendation(json_data.getString("title"), json_data.getString("subject"), timeStart, timeEnd,deadline.getTime(), progressToCommit, false));
+                                                                FirebaseDatabase.getInstance().getReference().child("Recomendations").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(new Recomendation(json_data.getString("title"), json_data.getString("subject"), timeStart, timeEnd,deadline.getTime(), progressToCommit, false, day.getTime()));
                                                                 timeStart = dateStart.getTime();
                                                                 dateStartToInsert = dateStart;
                                                                 progress = i;
@@ -236,34 +260,9 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                     }
                                 };
 
-
-
-
-
-
-
-
-
-
                                 TaskInsertedDAO tidao = new TaskInsertedDAO(lastTaskInserted, responseListener6);
                                 RequestQueue queue = Volley.newRequestQueue(AddTask.this);
                                 queue.add(tidao);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -562,5 +561,37 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                 }, mHour, mMinute, false);
 
         timePickerDialog.show();
+    }
+
+    public static JSONArray sortJsonArrayByDate(JSONArray array) {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                jsons.add(array.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+
+                Date dateStart1 = null;
+                Date dateStart2 = null;
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    dateStart1 =  format.parse(lhs.getString("day")+" "+lhs.getString("time_start"));
+                    dateStart2 =  format.parse(rhs.getString("day")+" "+rhs.getString("time_start"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // Here you could parse string id to integer and then compare.
+                return dateStart1.compareTo(dateStart2);
+            }
+        });
+        return new JSONArray(jsons);
     }
 }

@@ -155,7 +155,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Recommendations(), "Recomendações");
+        adapter.addFragment(new Recommendations(new Intent(HomePage.this, HomePage.class)), "Recomendações");
 
 
         FragmentManager fm = getSupportFragmentManager();
