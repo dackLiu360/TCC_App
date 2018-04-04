@@ -188,7 +188,7 @@ public class ActivityMain extends Activity {
                             System.out.println("JARRAY "+jArray);
                             for (int i = 0; i < jArray.length(); i++) {
                                 JSONObject json_data = jArray.getJSONObject(i);
-                                TaskModel tmodel = new TaskModel(json_data.getString("id_task"), json_data.getString("id_user"), json_data.getString("title"), json_data.getString("subject"), json_data.getString("description"), json_data.getString("estimated_time"), json_data.getString("deadline"), json_data.getString("progress"));
+                                TaskModel tmodel = new TaskModel(json_data.getString("id_task"), json_data.getString("id_user"), json_data.getString("title"), json_data.getString("subject"), json_data.getString("description"), json_data.getString("estimated_time"), json_data.getString("deadline"), json_data.getString("progress"), json_data.getString("group"));
                                 System.out.println("TMODEL "+tmodel);
                                 tmodelList.add(tmodel);
                             }

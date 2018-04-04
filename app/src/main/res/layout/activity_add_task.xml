@@ -125,6 +125,7 @@
                 <RadioButton
                     android:id="@+id/radio_individual"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:onClick="onRadioInvidigualClicked"
                     android:text="Individual" />
@@ -137,12 +138,55 @@
                     android:text="Grupo" />
             </RadioGroup>
 
+            <TextView
+                android:id="@+id/members"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/taskGroupId"
+                android:layout_centerHorizontal="true"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+            <EditText
+                android:id="@+id/groupMember"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/members"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+
+                android:background="#f4f4f4"
+                android:drawablePadding="20dp"
+                android:hint="Email do Usuário"
+                android:inputType="text"
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp" />
+
+            <Button
+                android:id="@+id/add_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/members"
+                android:layout_toRightOf="@+id/groupMember"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button_bg"
+                android:onClick="showTimePickerDialog"
+                android:text="Adicionar"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+
+
             <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/taskGroupId"
+                android:layout_below="@id/groupMember"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
@@ -151,10 +195,10 @@
                 android:drawablePadding="20dp"
                 android:hint="Título"
                 android:inputType="text"
-                android:paddingBottom="12dp"
+                android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="12dp"
-                android:paddingTop="12dp" />
+                android:paddingTop="8dp" />
 
             <EditText
                 android:id="@+id/subject"
@@ -171,10 +215,10 @@
                 android:drawablePadding="20dp"
                 android:hint="Matéria"
                 android:inputType="text"
-                android:paddingBottom="12dp"
+                android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="12dp"
-                android:paddingTop="12dp" />
+                android:paddingTop="8dp" />
 
             <EditText
                 android:id="@+id/description"
@@ -191,10 +235,10 @@
                 android:drawablePadding="20dp"
                 android:hint="Descrição"
                 android:inputType="text"
-                android:paddingBottom="12dp"
+                android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="12dp"
-                android:paddingTop="12dp" />
+                android:paddingTop="8dp" />
 
             <TextView
 
@@ -206,43 +250,46 @@
                 android:onClick="showTimePickerDialog"
                 android:text="Estimativa para término da tarefa" />
 
-            <EditText
-                android:id="@+id/hour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                android:layout_alignLeft="@+id/description"
-                android:layout_alignStart="@+id/description"
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:id="@+id/time"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/labelChoose"
-                android:background="#f4f4f4"
-                android:drawablePadding="20dp"
-                android:hint="Hora"
-                android:inputType="text"
-                android:paddingBottom="12dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="12dp"
-                android:paddingTop="12dp" />
+                android:orientation="horizontal"
+                android:background="@android:color/white">
 
-            <EditText
-                android:id="@+id/minute"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/hour"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:padding="0dp"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/button_bg"
+                    android:id="@+id/decrement"
+                    android:textStyle="bold"
+                    android:text="—"/>
 
-
-                android:background="#f4f4f4"
-                android:drawablePadding="20dp"
-                android:hint="Minuto"
-                android:inputType="text"
-                android:paddingBottom="12dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="12dp"
-                android:paddingTop="12dp" />
+                <TextView
+                    android:layout_width="70dp"
+                    android:background="@android:color/white"
+                    android:layout_height="match_parent"
+                    android:text="0:30"
+                    android:textColor="@android:color/black"
+                    android:inputType="text"
+                    android:id="@+id/timeLabel"
+                    android:gravity="center"
+                    />
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:padding="0dp"
+                    android:textSize="25sp"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/button_bg"
+                    android:id="@+id/increment"
+                    android:text="+"/>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_set_date_time"
@@ -250,7 +297,7 @@
                 android:layout_height="60dp"
                 android:layout_alignLeft="@+id/addTask"
                 android:layout_alignStart="@+id/addTask"
-                android:layout_below="@+id/minute"
+                android:layout_below="@+id/time"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bluebutton"
                 android:onClick="showTimePickerDialog"
@@ -272,10 +319,10 @@
 
                 android:id="@+id/addTask"
                 android:layout_width="125dp"
-                android:layout_height="2000dp"
-                android:layout_below="@id/et_show_date_time"
+                android:layout_height="60dp"
+
+                android:layout_below="@+id/et_show_date_time"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/redbutton"
                 android:onClick="showTimePickerDialog"
                 android:text="Confirmar" />

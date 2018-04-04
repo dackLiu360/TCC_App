@@ -13,8 +13,9 @@ public class TaskModel {
             String estimated_time;
             String deadline;
             String progress;
+            String group;
 
-    public TaskModel(String id_task, String id_user, String title, String subject, String description, String estimated_time, String deadline, String progress) {
+    public TaskModel(String id_task, String id_user, String title, String subject, String description, String estimated_time, String deadline, String progress, String group) {
         this.id_task = id_task;
         this.id_user = id_user;
         this.title = title;
@@ -23,6 +24,7 @@ public class TaskModel {
         this.estimated_time = estimated_time;
         this.deadline = deadline;
         this.progress = progress;
+        this.group = group;
     }
 
     public String getId_task() {
@@ -89,17 +91,11 @@ public class TaskModel {
         this.progress = progress;
     }
 
-    @Override
-    public String toString() {
-        return "TaskModel{" +
-                "id_task='" + id_task + '\'' +
-                ", id_user='" + id_user + '\'' +
-                ", title='" + title + '\'' +
-                ", subject='" + subject + '\'' +
-                ", description='" + description + '\'' +
-                ", estimated_time='" + estimated_time + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", progress='" + progress + '\'' +
-                '}';
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

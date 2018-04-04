@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#f2f2f2"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="20dp"
+
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_recomendations">
+
     <ProgressBar
         android:id="@+id/pb"
         android:layout_width="match_parent"
         android:layout_marginLeft="35dp"
+
         android:layout_marginRight="35dp"
         android:layout_height="wrap_content"
         style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
@@ -20,12 +27,14 @@
     <TextView
         android:layout_below="@id/img_date"
         android:id="@+id/recomendation_time_day"
+        android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />
     <TextView
         android:layout_below="@id/recomendation_time_day"
         android:id="@+id/recomendation_time_time"
+        android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />
@@ -33,6 +42,7 @@
         android:layout_below="@id/pb"
         android:id="@+id/task_title"
         android:layout_width="wrap_content"
+        android:textColor="#000000"
         android:layout_marginTop="5dp"
         android:textSize="15sp"
 
@@ -49,6 +59,7 @@
         android:layout_below="@id/task_title"
         android:id="@+id/range"
         android:layout_width="wrap_content"
+        android:textColor="#000000"
         android:layout_marginTop="5dp"
         android:textSize="15sp"
 

@@ -94,6 +94,7 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
             viewHolder.title = (TextView) convertView.findViewById(R.id.title_task);
             viewHolder.subject = (TextView) convertView.findViewById(R.id.subject);
             viewHolder.deadline = (TextView) convertView.findViewById(R.id.deadline);
+
             viewHolder.info = (ImageView) convertView.findViewById(R.id.description);
 
             result=convertView;
@@ -113,6 +114,9 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
         viewHolder.deadline.setText(dataModel.getDeadline());
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);
+        if(dataModel.getGroup().equals("0")){
+            convertView.findViewById(R.id.description).setVisibility(View.GONE);
+        }
         // Return the completed view to render on screen
         return convertView;
     }

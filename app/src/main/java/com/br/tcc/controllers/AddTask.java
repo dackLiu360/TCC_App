@@ -1,5 +1,6 @@
 package com.br.tcc.controllers;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -22,8 +23,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -64,6 +68,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle mToggle;
     public static TimePicker timePicker;
     String date_time = "";
+    Activity activity = this;
     int mYear;
     int mMonth;
     int mDay;
@@ -112,13 +117,111 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
 
         et_show_date_time = (TextView) findViewById(R.id.et_show_date_time);
         btn_set_date_time = (Button) findViewById(R.id.btn_set_date_time);
+        Button increment = findViewById(R.id.increment);
+        Button decrement = findViewById(R.id.decrement);
+        final Button addMember = findViewById(R.id.add_member);
+        RadioGroup type = findViewById(R.id.taskGroupId);
+        RadioButton individual = findViewById(R.id.radio_individual);
+        RadioButton group = findViewById(R.id.radio_group);
+        type.check(R.id.radio_individual);
+
+
+
+
 
         final EditText titleTask = (EditText) findViewById(R.id.title);
         final EditText subjectTask = (EditText) findViewById(R.id.subject);
         final EditText descriptionTask = (EditText) findViewById(R.id.description);
-        final EditText hourTask = (EditText) findViewById(R.id.hour);
-        final EditText minuteTask = (EditText) findViewById(R.id.minute);
+        final EditText groupMember = (EditText) findViewById(R.id.groupMember);
+        final TextView timeLabel = findViewById(R.id.timeLabel);
+        final TextView members = findViewById(R.id.members);
         final Button buttonAddTask = (Button) findViewById(R.id.addTask);
+        final int[] hour = new int[1];
+        final int[] minute = new int[1];
+
+        addMember.setVisibility(View.GONE);
+        groupMember.setVisibility(View.GONE);
+        members.setVisibility(View.GONE);
+
+
+
+        individual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                members.setText("");
+                addMember.setVisibility(View.GONE);
+                groupMember.setVisibility(View.GONE);
+                members.setVisibility(View.GONE);
+            }
+        });
+
+        group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addMember.setVisibility(View.VISIBLE);
+                groupMember.setVisibility(View.VISIBLE);
+                members.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
+        increment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String time = timeLabel.getText().toString();
+                String[] timeSplit = time.split(":");
+                int hour = Integer.parseInt(timeSplit[0]);
+                if(hour<=13) {
+                    if (timeSplit[1].equals("00")) {
+                        timeLabel.setText(timeSplit[0] + ":30");
+                    }
+                    if (timeSplit[1].equals("30")) {
+                            timeLabel.setText((hour + 1) + ":00");
+                    }
+                }
+            }
+        });
+
+        decrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String time = timeLabel.getText().toString();
+                String[] timeSplit = time.split(":");
+                int hour = Integer.parseInt(timeSplit[0]);
+                if(!(hour==0&&timeSplit[1].equals("30"))) {
+                    if (timeSplit[1].equals("00")) {
+                        timeLabel.setText((hour - 1) + ":30");
+                    }
+                    if (timeSplit[1].equals("30")) {
+                        timeLabel.setText((hour) + ":00");
+                    }
+                }
+            }
+        });
+
+        addMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (groupMember.getText().toString().matches("")) {
+                    Toast.makeText(activity, "Digite um Email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(members.getText().toString().matches("")){
+                    members.setText(groupMember.getText().toString());
+
+                }else{
+                    members.setText(members.getText().toString()+","+groupMember.getText().toString());
+
+                }
+
+                groupMember.setText("");
+            }
+        });
+
+
+
 
 
 
@@ -147,20 +250,40 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (titleTask.getText().toString().matches("")) {
+                    Toast.makeText(activity, "Digite um Título", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (subjectTask.getText().toString().matches("")) {
+                    Toast.makeText(activity, "Digite uma Matéria", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (descriptionTask.getText().toString().matches("")) {
+                    Toast.makeText(activity, "Digite uma Descrição", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (date_time.matches("")) {
+                    Toast.makeText(activity, "Entre com Data e Hora", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String time = timeLabel.getText().toString();
+                String[] timeSplit = time.split(":");
+                hour[0] = Integer.parseInt(timeSplit[0]);
+                minute[0] = Integer.parseInt(timeSplit[1]);
+
 
                 final String title = titleTask.getText().toString();
                 final String subject = subjectTask.getText().toString();
                 final String description = descriptionTask.getText().toString();
-                final String hour = hourTask.getText().toString();
-                final String minute = minuteTask.getText().toString();
                 final String end_date = et_show_date_time.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-
+                            System.out.println("RESPOSTA TASK "+response);
                             JSONObject jsonResponse = new JSONObject(response);
+
                             boolean success = jsonResponse.getBoolean("success");
 
 
@@ -282,7 +405,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                     for (int i = 0; i < jArray.length(); i++)
                                                     {
                                                         JSONObject json_data = jArray.getJSONObject(i);
-                                                        TaskModel tmodel = new TaskModel(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"));
+                                                        TaskModel tmodel = new TaskModel(json_data.getString("id_task"),json_data.getString("id_user"),json_data.getString("title"),json_data.getString("subject"),json_data.getString("description"),json_data.getString("estimated_time"),json_data.getString("deadline"),json_data.getString("progress"),json_data.getString("group"));
                                                         tmodelList.add(tmodel);
                                                     }
                                                     SharedPreferences appSharedPrefs = PreferenceManager
@@ -426,15 +549,20 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                             } else {
                                 String totalAvailable = jsonResponse.getString("available");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
-                                builder.setMessage("Você possui apenas "+totalAvailable+" horas até a data da entrega, e quer cadastrar "+hour+":"+minute+" Horas."+ " Cadastre mais horas acessando o seu Perfil").setNegativeButton("Ok", null).create().show();
+                                builder.setMessage("Você possui apenas "+totalAvailable+" horas até a data da entrega, e quer cadastrar "+ hour[0] +":"+ minute[0] +" Horas."+ " Cadastre mais horas acessando o seu Perfil").setNegativeButton("Ok", null).create().show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 };
-
-                TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour+":"+minute, end_date, responseListener);
+                String group = "0";
+if(members.getText().toString().matches("")){
+    group = "0";
+}else{
+    group = "1";
+}
+                TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour[0] +":"+ minute[0], end_date, members.getText().toString(), group,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(AddTask.this);
                 queue.add(rdao);
 
@@ -511,9 +639,6 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
-
-    public void onRadioInvidigualClicked(View view) {
-    }
 
     public void onRadioGroupClicked(View view) {
     }
