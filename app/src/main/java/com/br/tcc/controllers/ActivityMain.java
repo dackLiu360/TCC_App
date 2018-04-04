@@ -58,11 +58,9 @@ public class ActivityMain extends Activity {
         setContentView(R.layout.activity_main);
         LottieAnimationView animationView;
         final RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layout1);
-        final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             layout1.setVisibility(View.INVISIBLE);
-            layout2.setVisibility(View.INVISIBLE);
             animationView = findViewById(R.id.loadAnimation);
             animationView.setAnimation("loading.json");
 
@@ -125,7 +123,6 @@ public class ActivityMain extends Activity {
             //startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),SIGN_IN_REQUEST_CODE);
         }else{
             layout1.setVisibility(View.VISIBLE);
-            layout2.setVisibility(View.VISIBLE);
             final Button buttonLoginEmail = (Button) findViewById(R.id.buttonEmail);
             final Button buttonLoginGoogle = (Button) findViewById(R.id.buttonLoginGoogle);
 
