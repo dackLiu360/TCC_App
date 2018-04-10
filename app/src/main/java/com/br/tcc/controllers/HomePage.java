@@ -35,6 +35,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,15 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenuHome);
+        View headerView = navigationView.getHeaderView(0);
+        TextView emailMenu = (TextView) headerView.findViewById(R.id.emailMenu);
+        TextView nameMenu = (TextView) headerView.findViewById(R.id.nameMenu);
+        emailMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        nameMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
+
         FloatingActionButton buttonAddTask = findViewById(R.id.buttonAddTask);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,7 +71,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 HomePage.this.startActivity(taskIntent);
             }
         });
-        NavigationView navigationView = findViewById(R.id.navMenuHome);
+        //NavigationView navigationView = findViewById(R.id.navMenuHome);
 
 
 

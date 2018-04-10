@@ -15,8 +15,8 @@ public class GetTasksDAO extends StringRequest{
     private static final String TIME_REQUEST_URL="http://tcctarefas.xyz/tasks.php";
     private Map<String, String> params;
 
-    public GetTasksDAO(String id_user,Response.Listener<String> listener){
-        super(Method.POST, TIME_REQUEST_URL, listener, null);
+    public GetTasksDAO(String id_user,Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Method.POST, TIME_REQUEST_URL, listener, errorListener);
         params = new HashMap<>();
         params.put("id_user", id_user);
     }

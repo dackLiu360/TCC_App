@@ -31,6 +31,7 @@ import com.example.victor.tcc.R;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,9 +59,15 @@ public class Profile extends AppCompatActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        NavigationView navigationView = findViewById(R.id.navMenuHome);
-
         setContentView(R.layout.activity_profile);
+        //NavigationView navigationView = findViewById(R.id.navMenuHome);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenuHome);
+        View headerView = navigationView.getHeaderView(0);
+        TextView emailMenu = (TextView) headerView.findViewById(R.id.emailMenu);
+        TextView nameMenu = (TextView) headerView.findViewById(R.id.nameMenu);
+        emailMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        nameMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerLayout.requestLayout();
 

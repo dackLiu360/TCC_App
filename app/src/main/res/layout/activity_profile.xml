@@ -59,18 +59,12 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navMenuHome"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:menu="@menu/drawermenu"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/drawermenu"></android.support.design.widget.NavigationView>
 
-        android:layout_gravity="start">
-
-
-
-
-
-
-    </android.support.design.widget.NavigationView>
 
 
 

@@ -56,9 +56,15 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationView navigationView = findViewById(R.id.navMenuHome);
-
         setContentView(R.layout.activity_time);
+        //NavigationView navigationView = findViewById(R.id.navMenuHome);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenuHome);
+        View headerView = navigationView.getHeaderView(0);
+        TextView emailMenu = (TextView) headerView.findViewById(R.id.emailMenu);
+        TextView nameMenu = (TextView) headerView.findViewById(R.id.nameMenu);
+        emailMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        nameMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
 
         final Spinner[] dropdown = {findViewById(R.id.repeatTime)};
         String[] items = new String[]{"1", "2", "3", "4"};

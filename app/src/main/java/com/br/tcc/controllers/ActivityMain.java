@@ -2,6 +2,7 @@ package com.br.tcc.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,10 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.TaskModel;
 import com.br.tcc.assistants.TimeBlockModel;
@@ -50,6 +54,7 @@ import java.util.ArrayList;
 public class ActivityMain extends Activity {
     LottieAnimationView animationView;
     private int SIGN_IN_REQUEST_CODE;
+    Context c = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class ActivityMain extends Activity {
         final RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layout2);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            System.out.println("USUARIO "+FirebaseAuth.getInstance().getCurrentUser());
             layout1.setVisibility(View.INVISIBLE);
             layout2.setVisibility(View.INVISIBLE);
             animationView = findViewById(R.id.loadAnimation);
@@ -114,6 +120,7 @@ public class ActivityMain extends Activity {
                             populate();
                         }
                     } catch (Exception e) {
+
                         e.printStackTrace();
                     }
                 }
@@ -155,6 +162,8 @@ public class ActivityMain extends Activity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("CODIGO "+SIGN_IN_REQUEST_CODE);
+        System.out.println("OK "+RESULT_OK);
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == SIGN_IN_REQUEST_CODE)
         {
@@ -174,6 +183,7 @@ public class ActivityMain extends Activity {
 
 
         Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response4) {
                 try {
@@ -308,13 +318,42 @@ public class ActivityMain extends Activity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    System.out.println("AQUIII");
                 }
+            }
+
+        };
+        Response.ErrorListener errorListener4 = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                };
+                AlertDialog builder = new AlertDialog.Builder(ActivityMain.this)
+                        .setTitle("Erro na conexão")
+                        .setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ActivityMain.this, ActivityMain.class);
+                                ActivityMain.this.startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.exit(1);
+                            }
+                        }).create();
+                builder.show();
             }
         };
 
-        GetTasksDAO gtsksdao = new GetTasksDAO(FirebaseAuth.getInstance().getCurrentUser().getUid(), responseListener4);
-        RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
-        queue.add(gtsksdao);
+            GetTasksDAO gtsksdao = new GetTasksDAO(FirebaseAuth.getInstance().getCurrentUser().getUid(), responseListener4, errorListener4);
+            RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
+            queue.add(gtsksdao);
+
 
     }
 

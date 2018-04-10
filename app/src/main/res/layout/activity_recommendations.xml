@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.br.tcc.controllers.Recommendations"
-    android:background="#138599">
+    android:background="#f2f2f2">
 
     <ListView
         android:id="@+id/list_recomendations"

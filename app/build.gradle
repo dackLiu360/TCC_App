@@ -32,6 +32,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:0.6.2'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.hrules:horizontalnumberpicker:1.1.1'
+    compile 'com.mindorks:placeholderview:0.2.7'
 
 
 }

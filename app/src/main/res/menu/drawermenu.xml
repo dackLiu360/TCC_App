@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/drawermenu">
-    <item android:id="@+id/buttonHome" android:title="Home"/>
-    <item android:id="@+id/buttonProfile" android:title="Perfil"/>
-    <item android:id="@+id/buttonLogout" android:title="Sair"/>
+    <group>
+        <item android:id="@+id/buttonHome"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item android:id="@+id/buttonProfile"
+            android:icon="@drawable/ic_profile"
+            android:title="Perfil" />
+        <item android:id="@+id/buttonLogout"
+            android:icon="@drawable/ic_logout"
+            android:title="Sair" />
+    </group>
 </menu>

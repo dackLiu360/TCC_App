@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.br.tcc.controllers.HomePage"
-    android:background="#138599">
+    android:background="#f2f2f2">
   <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
@@ -56,6 +56,7 @@
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       app:menu="@menu/drawermenu"
+      app:headerLayout="@layout/nav_header_main"
       android:layout_gravity="start"
       ></android.support.design.widget.NavigationView>
 

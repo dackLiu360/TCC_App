@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,8 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.CustomTimePickerDialog;
 import com.br.tcc.assistants.Recomendation;
@@ -63,7 +66,7 @@ import java.util.List;
 
 public class AddTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    Context c = this;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     public static TimePicker timePicker;
@@ -114,6 +117,12 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenuHome);
+        View headerView = navigationView.getHeaderView(0);
+        TextView emailMenu = (TextView) headerView.findViewById(R.id.emailMenu);
+        TextView nameMenu = (TextView) headerView.findViewById(R.id.nameMenu);
+        emailMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        nameMenu.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         et_show_date_time = (TextView) findViewById(R.id.et_show_date_time);
         btn_set_date_time = (Button) findViewById(R.id.btn_set_date_time);
@@ -540,8 +549,21 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                         }
                                     }
                                 };
+                                Response.ErrorListener errorListener4 = new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        if (volleyError.networkResponse == null) {
+                                            if (volleyError.getClass().equals(TimeoutError.class)) {
+                                                // Show timeout error message
+                                                Toast.makeText(c,
+                                                        "Oops. Timeout error!",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    }
+                                };
 
-                                GetTasksDAO gtsksdao = new GetTasksDAO(user_id,responseListener4);
+                                GetTasksDAO gtsksdao = new GetTasksDAO(user_id,responseListener4,errorListener4);
                                 queue = Volley.newRequestQueue(AddTask.this);
                                 queue.add(gtsksdao);
 
