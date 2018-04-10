@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.TimeBlockModel;
 import com.br.tcc.assistants.TimeModel;
@@ -370,7 +371,33 @@ public class Time extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-                    TimeDAO tdao = new TimeDAO(timesJSON,responseListener);
+                    Response.ErrorListener errorListener4 = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            };
+                            AlertDialog builder = new AlertDialog.Builder(Time.this)
+                                    .setTitle("Erro na conexão")
+                                    .setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(Time.this, ActivityMain.class);
+                                            Time.this.startActivity(intent);
+                                        }
+                                    })
+                                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            System.exit(1);
+                                        }
+                                    }).create();
+                            builder.show();
+                        }
+                    };
+                    TimeDAO tdao = new TimeDAO(timesJSON,responseListener, errorListener4);
                     RequestQueue queue = Volley.newRequestQueue(Time.this);
                     queue.add(tdao);
 

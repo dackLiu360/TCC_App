@@ -15,8 +15,8 @@ public class TaskDAO extends StringRequest {
     private static final String REQUISTER_REQUEST_URL="http://tcctarefas.xyz/task.php";
     private Map<String, String> params;
 
-    public TaskDAO(String user_id, String title, String subject,  String description, String estimated_time, String deadline, String members, String group, Response.Listener<String> listener){
-        super(Method.POST, REQUISTER_REQUEST_URL, listener, null);
+    public TaskDAO(String user_id, String title, String subject,  String description, String estimated_time, String deadline, String members, String group, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Method.POST, REQUISTER_REQUEST_URL, listener, errorListener);
         params = new HashMap<>();
         params.put("id_user", user_id);
         params.put("title", title);

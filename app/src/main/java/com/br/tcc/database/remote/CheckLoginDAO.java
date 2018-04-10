@@ -15,8 +15,8 @@ public class CheckLoginDAO extends StringRequest{
     private static final String REQUISTER_REQUEST_URL="http://tcctarefas.xyz/checkuser.php";
     private Map<String, String> params;
 
-    public CheckLoginDAO(String id_firebase, Response.Listener<String> listener){
-        super(Method.POST, REQUISTER_REQUEST_URL, listener, null);
+    public CheckLoginDAO(String id_firebase, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Method.POST, REQUISTER_REQUEST_URL, listener, errorListener);
         params = new HashMap<>();
         params.put("id_firebase", id_firebase);
     }

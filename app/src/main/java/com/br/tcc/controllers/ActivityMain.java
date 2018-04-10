@@ -123,8 +123,33 @@ public class ActivityMain extends Activity {
                     }
                 }
             };
+            Response.ErrorListener errorListener4 = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener(){
 
-            CheckLoginDAO cldao = new CheckLoginDAO(FirebaseAuth.getInstance().getCurrentUser().getUid(), responseListener);
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    };
+                    AlertDialog builder = new AlertDialog.Builder(ActivityMain.this)
+                            .setTitle("Erro na conexão")
+                            .setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(ActivityMain.this, ActivityMain.class);
+                                    ActivityMain.this.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    System.exit(1);
+                                }
+                            }).create();
+                    builder.show();
+                }
+            };
+            CheckLoginDAO cldao = new CheckLoginDAO(FirebaseAuth.getInstance().getCurrentUser().getUid(), responseListener, errorListener4);
             RequestQueue queue = Volley.newRequestQueue(ActivityMain.this);
             queue.add(cldao);
             //startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),SIGN_IN_REQUEST_CODE);

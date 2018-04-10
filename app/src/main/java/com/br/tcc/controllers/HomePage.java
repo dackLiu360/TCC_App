@@ -3,7 +3,9 @@ package com.br.tcc.controllers;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,10 +25,24 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.br.tcc.assistants.Recomendation;
+import com.br.tcc.assistants.TaskModel;
+import com.br.tcc.assistants.TimeBlockModel;
+import com.br.tcc.assistants.TimeModel;
+import com.br.tcc.database.remote.GetTasksDAO;
+import com.br.tcc.database.remote.GetTimeBlockDAO;
+import com.br.tcc.database.remote.GetTimeDAO;
 import com.example.victor.tcc.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -34,7 +50,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -91,11 +111,14 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setNavigationViewListener();
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
-
         final Button buttonProfile = (Button) findViewById(R.id.buttonProfile);
+
+
+
+
+
+
+
 
 
 

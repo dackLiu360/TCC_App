@@ -14,4 +14,13 @@
         android:layout_height="wrap_content"
         />
 
+    <ImageView
+        android:id="@+id/refresh"
+        android:layout_width="150px"
+        android:layout_height="150px"
+        android:clickable="true"
+        android:layout_below="@android:id/list"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_refresh" />
+
 </RelativeLayout>

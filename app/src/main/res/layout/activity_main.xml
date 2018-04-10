@@ -92,41 +92,30 @@
         app:layout_constraintRight_toRightOf="@id/verGuideline2"
         app:layout_constraintTop_toTopOf="@id/horGuideline3">
 
-        <TextView
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="LOGIN"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
 
 
-        <Button
-            android:id="@+id/buttonEmail"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/login"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_email_white_18dp"
-            android:background="@color/common_google_signin_btn_text_light_focused"
-            android:text="Login com Email"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
 
         <Button
             android:id="@+id/buttonLoginGoogle"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_below="@id/buttonEmail"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/google_button"
-            android:background="@color/common_google_signin_btn_text_light_focused"
-            android:text="Login com Google"
+            android:background="@drawable/login_google"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/buttonEmail"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/buttonLoginGoogle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_email"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 

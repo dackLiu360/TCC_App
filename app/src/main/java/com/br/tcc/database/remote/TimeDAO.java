@@ -18,8 +18,8 @@ public class TimeDAO extends StringRequest{
     private static final String TIME_REQUEST_URL="http://tcctarefas.xyz/time.php";
     private Map<String, String> params;
 
-    public TimeDAO(JSONArray timesCSV, Response.Listener<String> listener){
-        super(Method.POST, TIME_REQUEST_URL, listener, null);
+    public TimeDAO(JSONArray timesCSV, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Method.POST, TIME_REQUEST_URL, listener, errorListener);
         params = new HashMap<>();
         System.out.println("LIST IN TIMEDAO "+timesCSV.toString());
         params.put("timesCSV", timesCSV.toString());

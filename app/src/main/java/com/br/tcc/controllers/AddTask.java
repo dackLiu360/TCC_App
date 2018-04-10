@@ -584,7 +584,33 @@ if(members.getText().toString().matches("")){
 }else{
     group = "1";
 }
-                TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour[0] +":"+ minute[0], end_date, members.getText().toString(), group,responseListener);
+                Response.ErrorListener errorListener4 = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener(){
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        };
+                        AlertDialog builder = new AlertDialog.Builder(AddTask.this)
+                                .setTitle("Erro na conexão")
+                                .setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(AddTask.this, ActivityMain.class);
+                                        AddTask.this.startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        System.exit(1);
+                                    }
+                                }).create();
+                        builder.show();
+                    }
+                };
+                TaskDAO rdao = new TaskDAO(user_id,title, subject, description, hour[0] +":"+ minute[0], end_date, members.getText().toString(), group,responseListener, errorListener4);
                 RequestQueue queue = Volley.newRequestQueue(AddTask.this);
                 queue.add(rdao);
 
