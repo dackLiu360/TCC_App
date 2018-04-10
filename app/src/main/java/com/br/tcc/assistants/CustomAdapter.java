@@ -115,7 +115,9 @@ public class CustomAdapter extends ArrayAdapter<TaskModel> implements View.OnCli
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);
         if(dataModel.getGroup().equals("0")){
-            convertView.findViewById(R.id.description).setVisibility(View.GONE);
+            convertView.findViewById(R.id.description).setVisibility(View.INVISIBLE);
+        }else{
+            convertView.findViewById(R.id.description).setVisibility(View.VISIBLE);
         }
         // Return the completed view to render on screen
         return convertView;

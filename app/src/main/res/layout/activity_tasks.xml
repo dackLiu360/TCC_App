@@ -7,20 +7,21 @@
     tools:context="com.br.tcc.controllers.Tasks"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main">
+    <ImageView
+        android:id="@+id/refresh"
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:clickable="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_refresh" />
 
     <ListView
         android:id="@android:id/list"
+        android:layout_below="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="150px"
-        android:layout_height="150px"
-        android:clickable="true"
-        android:layout_below="@android:id/list"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_refresh" />
+
 
 </RelativeLayout>

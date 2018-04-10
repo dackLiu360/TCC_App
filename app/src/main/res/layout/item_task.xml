@@ -28,7 +28,7 @@
             android:id="@+id/title_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:text="Marshmallow"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black" />
@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_task"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:text="Android 6.0"
             android:textColor="@android:color/black" />
@@ -47,21 +48,16 @@
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_chat" />
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
 
             <TextView
                 android:id="@+id/title_deadline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/subject"
+                android:layout_centerHorizontal="true"
                 android:text="Data da Entrega"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
@@ -72,12 +68,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_deadline"
                 android:text="23"
+                android:layout_centerHorizontal="true"
                 android:textAppearance="?android:attr/textAppearanceButton"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
-    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

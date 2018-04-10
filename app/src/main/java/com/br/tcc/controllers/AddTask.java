@@ -363,7 +363,7 @@ public class AddTask extends AppCompatActivity implements NavigationView.OnNavig
                                                                     timeEnd = dateEnd.getTime();
                                                                     dateEndToInsert = dateEnd;
                                                                 }
-                                                                System.out.println("Data inserida: "+dateStartToInsert.toString()+"---"+dateEndToInsert.toString());
+                                                                //System.out.println("Data inserida: "+dateStartToInsert.toString()+"---"+dateEndToInsert.toString());
                                                                 double progressToCommit = ((progress/((double)(jArray.length())))*100);
                                                                 System.out.println();
                                                                 Date deadline= format.parse(json_data.getString("deadline"));
