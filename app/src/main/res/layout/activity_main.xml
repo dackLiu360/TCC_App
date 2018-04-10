@@ -72,6 +72,7 @@
         android:text="TaskAtHand"
         android:textColor="#ffffff"
         android:textSize="32sp"
+        android:layout_marginTop="20dp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -81,6 +82,7 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/layout_bg_login"
@@ -138,37 +140,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <RelativeLayout
-        android:id="@+id/layout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#52B5CC"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/verGuideline1"
-        app:layout_constraintRight_toRightOf="@id/verGuideline2">
-
-        <TextView
-            android:id="@+id/registerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="12dp"
-            android:text="Não é um membro ainda?"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/buttonGoToRegister"
-            android:layout_width="125dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/registerText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/redbutton"
-            android:text="Cadastrar" />
-    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
 
